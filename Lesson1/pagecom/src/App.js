@@ -1,32 +1,51 @@
 /* eslint-disable no-undef */
 // @ts-nocheck
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./App.css";
-import {Header} from './components/Header';
+import { Header } from "./components/Header";
 import { TaskList } from "./components/TaskList";
+import { AddTask } from "./components/AddTask";
+
 function App() {
   const [count, setCount] = useState(0);
- 
-  // Manejo del estado del contador
+  const [tasks, setTasks] = useState([
+    { id: 5270, name: "Record React Lecturas", completed: true },
+    { id: 3467, name: "Record React Lecturas", completed: true },
+    { id: 7963, name: "Edit React Lecturas", completed: true },
+    { id: 4727, name: "Record React Lecturas", completed: true },
+    { id: 9765, name: "Watch React Lecturas", completed: true },
+  ]);
+
+  // Función para agregar una tarea
+  function handleAddTask(taskName) {
+    if (taskName.trim() === "") return;
+
+    const newTask = {
+      id: Date.now(), // Genera un ID único
+      name: taskName,
+      completed: false,
+    };
+
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  }
+
+  // Función para eliminar una tarea
+  function handleDeleteTask(id) {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  }
+
+  // Contador
   function handleAdd() {
-    setCount(prev => prev + 3); // Incrementa directamente en 3
+    setCount((prev) => prev + 3);
   }
 
   function handleSub() {
-    setCount(prev => prev - 1);
+    setCount((prev) => prev - 1);
   }
 
   function handleReset() {
     setCount(0);
   }
-
-  // Efecto para ver los cambios de `count` en consola
-  useEffect(() => {
-    console.log("Count actualizado:", count);
-  }, [count]);
-
-  // Función para eliminar una tarea
-
 
   const username = "Carlos";
 
@@ -37,17 +56,24 @@ function App() {
         <h1 className="active">{username}</h1>
         <div className="box">
           <p>Count: {count}</p>
-          <button onClick={handleSub} className="sub">SUB</button>
-          <button onClick={handleAdd} className="add">ADD</button>
-          <button onClick={handleReset} className="reset">RESET</button>
+          <button onClick={handleSub} className="sub">
+            SUB
+          </button>
+          <button onClick={handleAdd} className="add">
+            ADD
+          </button>
+          <button onClick={handleReset} className="reset">
+            RESET
+          </button>
           <p>X * 2 = {count * 2}</p>
           <p>X * 3 = {count * 3}</p>
           <p>X * 10 = {count * 10}</p>
         </div>
-        <div className="App">
-          <TaskList />
-        </div>
 
+        <div className="App">
+          <AddTask onAddTask={handleAddTask} />
+          <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
+        </div>
       </div>
     </>
   );

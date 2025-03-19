@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { TaskCard } from "./TaskCard";
 import { BoxCard } from "./BoxCard";
+import { AddTask } from "./AddTask";
 
 export const TaskList = () => {
   const [tasks, setTasks] = useState([
@@ -19,16 +20,28 @@ export const TaskList = () => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   }
 
+  function handleAddTask(taskName) {
+    if (taskName.trim() === "") return;
+
+    const newTask = {
+      id: Date.now(), // Genera un id único basado en el tiempo
+      name: taskName,
+      completed: false,
+    };
+
+    setTasks((prevTasks) => [...prevTasks, newTask]);
+  }
+
   return (
     <>
       <h1>Task list</h1>
 
-      {/* El botón de Toggle ahora está fuera de la lista */}
+      <AddTask onAddTask={handleAddTask} />
+
       <button className="trigger" onClick={() => setShow(!show)}>
         Toggle
       </button>
 
-      {/* Lista de tareas */}
       <ul>
         {show &&
           tasks.map((task) => (
@@ -36,7 +49,6 @@ export const TaskList = () => {
           ))}
       </ul>
 
-      {/* Cajas de mensajes con BoxCard */}
       <BoxCard result="success" setShow={setShow} show={show}>
         <p className="title">Lorem ipsum dolor sit amet</p>
         <p className="description">
@@ -52,7 +64,6 @@ export const TaskList = () => {
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
       </BoxCard>
 
-      {/* Eliminados los divs innecesarios que estaban mal cerrados */}
       <BoxCard result="alert" setShow={setShow} show={show}>
         <p className="title">Lorem ipsum dolor sit amet</p>
         <p className="description">
