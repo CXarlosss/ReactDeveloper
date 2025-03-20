@@ -1,0 +1,33 @@
+{
+    "products": [
+        {
+            "id": 1001,
+            "name":"Basics To Advanced In React",
+            "price": 29,
+            "in_stock":true
+        },
+         {
+            "id": 1002,
+            "name":"The Complete Guide of React",
+            "price": 39,
+            "in_stock":true
+        }, 
+        {
+            "id": 1003,
+            "name":"Django Basics",
+            "price": 9,
+            "in_stock":false
+        },{
+            "id": 1004,
+            "name":"The Lost World of React",
+            "price": 19,
+            "in_stock":true
+        }, 
+        {
+            "id": 1005,
+            "name":"Amazing guide of React",
+            "price": 19,
+            "in_stock":false
+        }]
+
+}
