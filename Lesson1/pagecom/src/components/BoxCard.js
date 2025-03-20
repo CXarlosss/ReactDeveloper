@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./BoxCard.css";
 
 export const BoxCard = ({ result = "default", children, setShow, show }) => {
   return (

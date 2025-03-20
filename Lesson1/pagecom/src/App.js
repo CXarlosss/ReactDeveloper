@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./App.css";
 import { Header } from "./components/Header";
 import { TaskList } from "./components/TaskList";
-import { AddTask } from "./components/AddTask";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,17 +17,7 @@ function App() {
   ]);
 
   // Función para agregar una tarea
-  function handleAddTask(taskName) {
-    if (taskName.trim() === "") return;
 
-    const newTask = {
-      id: Date.now(), // Genera un ID único
-      name: taskName,
-      completed: false,
-    };
-
-    setTasks((prevTasks) => [...prevTasks, newTask]);
-  }
 
   // Función para eliminar una tarea
   function handleDeleteTask(id) {
@@ -71,7 +61,7 @@ function App() {
         </div>
 
         <div className="App">
-          <AddTask onAddTask={handleAddTask} />
+         
           <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
         </div>
       </div>

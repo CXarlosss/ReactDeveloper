@@ -1,7 +1,7 @@
 // @ts-nocheck
 /* eslint-disable no-undef */
 import React from 'react'
-
+import "./TaskCard.css"
 export const TaskCard = ({task, handleDelete}) => {
     
   return (

@@ -4,14 +4,16 @@ import React, { useState } from "react";
 import { TaskCard } from "./TaskCard";
 import { BoxCard } from "./BoxCard";
 import { AddTask } from "./AddTask";
+import "./TaskList.css";
+
 
 export const TaskList = () => {
   const [tasks, setTasks] = useState([
     { id: 5270, name: "Record React Lecturas", completed: true },
     { id: 3467, name: "Record React Lecturas", completed: true },
-    { id: 7963, name: "Edit React Lecturas", completed: true },
+    { id: 7963, name: "Edit React Lecturas", completed: false },
     { id: 4727, name: "Record React Lecturas", completed: true },
-    { id: 9765, name: "Watch React Lecturas", completed: true },
+    { id: 9765, name: "Watch React Lecturas", completed: false },
   ]);
 
   const [show, setShow] = useState(true);
@@ -20,55 +22,54 @@ export const TaskList = () => {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   }
 
-  function handleAddTask(taskName) {
-    if (taskName.trim() === "") return;
+  function handleAddTask(taskName, taskStatus) {
+    if (!taskName.trim()) return;
 
     const newTask = {
-      id: Date.now(), // Genera un id único basado en el tiempo
+      id: Date.now(),
       name: taskName,
-      completed: false,
+      completed: taskStatus === "true",
     };
 
     setTasks((prevTasks) => [...prevTasks, newTask]);
+    console.log("Added Task:", newTask);
   }
 
   return (
     <>
-      <h1>Task list</h1>
-
+      <h1>Task List</h1>
+      
+      {/* Aseguramos que solo haya un AddTask */}
       <AddTask onAddTask={handleAddTask} />
-
+      
       <button className="trigger" onClick={() => setShow(!show)}>
-        Toggle
+        {show ? "Hide Tasks" : "Show Tasks"}
       </button>
-
+      
       <ul>
         {show &&
           tasks.map((task) => (
-            <TaskCard task={task} key={task.id} handleDelete={handleDelete} />
+            <TaskCard 
+              key={task.id} 
+              task={task} 
+              handleDelete={handleDelete} 
+            />
           ))}
       </ul>
-
+      
       <BoxCard result="success" setShow={setShow} show={show}>
         <p className="title">Lorem ipsum dolor sit amet</p>
-        <p className="description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </p>
+      
       </BoxCard>
-
+      
       <BoxCard result="warning" setShow={setShow} show={show}>
         <p className="title">Lorem ipsum dolor sit amet</p>
-        <p className="description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+       
       </BoxCard>
-
+      
       <BoxCard result="alert" setShow={setShow} show={show}>
         <p className="title">Lorem ipsum dolor sit amet</p>
-        <p className="description">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </p>
+      
       </BoxCard>
     </>
   );

@@ -1,0 +1,61 @@
+/* Estilos base de BoxCard */
+.box {
+    width: 80%;
+    max-width: 400px;
+    margin: 15px auto;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Variantes de BoxCard según el resultado */
+  .box.success {
+    background-color: #e8f5e9;
+    border-left: 5px solid #4CAF50;
+  }
+  
+  .box.warning {
+    background-color: #fff3cd;
+    border-left: 5px solid #ff9800;
+  }
+  
+  .box.alert {
+    background-color: #f8d7da;
+    border-left: 5px solid #f44336;
+  }
+  
+  /* Botón para mostrar/ocultar BoxCard */
+  .trigger {
+    margin-top: 10px;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    color: white;
+  }
+  
+  .trigger:hover {
+    opacity: 0.8;
+  }
+  
+  .box .trigger {
+    background-color: #007BFF;
+  }
+  
+  .box.success .trigger {
+    background-color: #4CAF50;
+  }
+  
+  .box.warning .trigger {
+    background-color: #ff9800;
+  }
+  
+  .box.alert .trigger {
+    background-color: #f44336;
+  }
+  
