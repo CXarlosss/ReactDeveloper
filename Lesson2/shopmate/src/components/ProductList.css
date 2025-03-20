@@ -1,0 +1,108 @@
+/* Estilos generales */
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Estilos para la barra de filtros */
+.filter {
+    display: flex;
+    margin-left: 37%;
+    justify-content: center;
+    gap: 15px;
+    width: 30%;
+
+    flex-wrap: wrap;
+}
+/* Botones */
+.filter button {
+    background-color: #7d3cff; /* Morado vibrante */
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.filter button:hover {
+    background-color: #5a26d8; /* Morado más oscuro */
+}
+
+/* Botón Counter */
+.filter button:first-child {
+    background-color: #ff9800; /* Naranja */
+}
+
+.filter button:first-child:hover {
+    background-color: #e68900;
+}
+
+/* Tarjeta del producto */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* ID con fondo morado en forma de cuadrado */
+.id {
+    display: inline-block;
+    background-color: #7d3cff;
+    color: white;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Nombre del producto */
+.name {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #333;
+}
+
+/* Precio */
+.price {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Estado de stock */
+.stock-status {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+/* In Stock: verde */
+.in-stock .stock-status {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Out of Stock: rojo */
+.out-of-stock .stock-status {
+    background-color: #E74C3C;
+    color: white;
+}
