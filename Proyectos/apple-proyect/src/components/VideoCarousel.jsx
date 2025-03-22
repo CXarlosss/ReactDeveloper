@@ -1,5 +1,4 @@
 // @ts-nocheck
-import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
@@ -8,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { hightlightsSlides } from "../constants";
 import { pauseImg, playImg, replayImg } from "../utils";
+import React from "react";
 
 const VideoCarousel = () => {
   const videoRef = useRef([]);
