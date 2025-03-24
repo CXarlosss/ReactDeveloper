@@ -1,36 +1,30 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
-import './ProductList.css'; // Importamos los estilos
+import './ProductList.css';
+import { useFetch } from '../hooks/useFetch';
+import Loading from '../assets/loading.gif';
 
 export const ProductList = () => {
-    const [products, setProducts] = useState([]);
     const [url, setUrl] = useState("http://localhost:8000/products");
+    const { data, loading, error } = useFetch(url);
     const [counter, setCounter] = useState(0);
 
     useEffect(() => {
-        fetch(url) // Ahora usa la URL dinámica
-            .then(res => res.json())
-            .then(data => setProducts(data))
-            .catch(error => console.error("Error fetching products:", error));
-    }, [url]); // Se ejecutará cada vez que cambie `url`
-
-    useEffect(() => {
         console.log(counter);
-    }, [counter]); // Se ejecutará cada vez que cambie `counter`
+    }, [counter]);
 
     return (
         <section className="product-container">
             <div className="filter">
                 <button onClick={() => setCounter(counter + 1)}>Counter: {counter}</button>
-                <button onClick={() => url !== "http://localhost:8000/products" && setUrl("http://localhost:8000/products")}>
-                    All
-                </button>
-                <button onClick={() => setUrl("http://localhost:8000/products?in_stock=true")}>
-                    In Stock
-                </button>
+                <button onClick={() => url !== "http://localhost:8000/products" && setUrl("http://localhost:8000/products")}>All</button>
+                <button onClick={() => setUrl("http://localhost:8000/products?in_stock=true")}>In Stock</button>
             </div>
 
-            {products.map(product => (
+            {loading && <p className='loading' ><img src={Loading} alt="loading" /></p>}
+            
+            {error && <p>Error loading products: {error.message}</p>}
+            {data?.map(product => (
                 <div className={`card ${product.in_stock ? "in-stock" : "out-of-stock"}`} key={product.id}>
                     <p className="id">ID: {product.id}</p>
                     <h2 className="name">{product.name}</h2>
