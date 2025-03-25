@@ -9,6 +9,9 @@ import ProductList from './components/ProductList'
 import Contact from './components/Contact'
 import Admin from './components/Admin'
 import  PageNoFound from './components/PageNoFound.jsx'
+import ContactEu from './components/contact/ContactEu'
+import ContactUs from './components/contact/ContactUs'
+import ContactIn from './components/contact/ContactIn'
 function App() {
   const user = false
 
@@ -20,7 +23,11 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/products' element={<ProductList />} />
           <Route path='/products/:id' element={<ProductDetail />} />
-          <Route path='/contact' element={<Contact />} />
+          <Route path='/contact' element={<Contact />} >
+            <Route path='eu' element={<ContactEu />} />
+            <Route path='us' element={<ContactUs />} />
+            <Route path='in' element={<ContactIn />} />
+          </Route>
           <Route path='/admin' element={user ? <Admin/> : <Navigate to="/" />} />  
           <Route path='*' element={<PageNoFound  />} />
         </Routes>
