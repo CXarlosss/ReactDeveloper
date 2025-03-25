@@ -1,15 +1,22 @@
 // @ts-nocheck
 import React from 'react'
-import logo from '../assets/logo.png'; // ✅ Asegúrate de usar la ruta correcta
+import { NavLink } from 'react-router-dom'
+import logo from '../assets/logo.png'
 
 const Header = () => {
   return (
- <header>
-  <div>
-    <img src={logo} alt="logo" />
-    <h1>Product Store</h1>
-  </div>
- </header>
+    <header>
+      <NavLink to="/" className='logo'>
+        <img src={logo} alt='Routemate Logo' />
+        <span>Routemate</span>
+      </NavLink>
+      
+      <nav className="navigation">
+        <NavLink to="/" className='link'>Home</NavLink>
+        <NavLink to="/products" className='link'>Products</NavLink>
+        <NavLink to="/contact" className='link'>Contact</NavLink>
+      </nav>
+    </header>
   )
 }
 

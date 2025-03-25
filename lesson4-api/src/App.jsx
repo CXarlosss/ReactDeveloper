@@ -1,29 +1,34 @@
 import './App.css'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate  } from 'react-router-dom'
 import React from 'react'
+import Header from './components/Header'
+import Footer from './components/Footer'
 import Home from './components/Home'
 import ProductDetail from './components/ProductDetail'
 import ProductList from './components/ProductList'
 import Contact from './components/Contact'
-import Footer from './components/Footer'
-import Header from './components/Header'
-
+import Admin from './components/Admin'
+import  PageNoFound from './components/PageNoFound.jsx'
 function App() {
+  const user = false
+
   return (
-    <>
-      <div className='App'>
-        <header>Header</header>
+    <div className='App'>
+      <Header />
+      <main>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/products' element={<ProductList />} />
           <Route path='/products/:id' element={<ProductDetail />} />
           <Route path='/contact' element={<Contact />} />
+          <Route path='/admin' element={user ? <Admin/> : <Navigate to="/" />} />  
+          <Route path='*' element={<PageNoFound  />} />
         </Routes>
-        <footer>Footer</footer>
-      </div>
-    </>
+      </main>
+
+      <Footer />
+    </div>
   )
 }
-
 
 export default App

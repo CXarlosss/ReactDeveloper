@@ -1,0 +1,97 @@
+/* Estilos base para diseño minimalista y moderno */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #FFFFFF;
+    color: #3A3A3A;
+  }
+  
+  .App {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #EDEDED;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #3A3A3A;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .logo img {
+    width: 32px;
+    height: auto;
+  }
+  
+  .navigation {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: #3A3A3A;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .link:hover {
+    background-color: #EDEDED;
+  }
+  
+  main {
+    flex: 1;
+    padding: 2rem;
+  }
+  
+  button {
+    background-color: #0A84FF;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #006EDC;
+  }
+  
+  footer {
+    padding: 1rem 2rem;
+    background-color: #FFFFFF;
+    border-top: 1px solid #EDEDED;
+    text-align: center;
+    color: #A0A0A0;
+    font-size: 0.9rem;
+  }
+  
+  /* Extra para cards o secciones */
+  .card {
+    background-color: #FFFFFF;
+    border: 1px solid #EDEDED;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #3A3A3A;
+    margin-top: 0;
+  }
