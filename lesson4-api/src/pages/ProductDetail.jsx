@@ -4,8 +4,9 @@ const ProductDetail = () => {
   const params = useParams()
   console.log(params)
   return (
-    <div className='component'>Product Detail Component</div>
-
+    <main>
+      <div className='component'>Product Detail Component</div>
+    </main>
   )
 }
 

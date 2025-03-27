@@ -9,8 +9,9 @@ const ProductList = () => {
   console.log(location)
 
   return (
-    <div className='component'>Product List Component</div>
-
+    <main>
+      <div className="component">Product List</div>
+    </main>
   )
 }
 

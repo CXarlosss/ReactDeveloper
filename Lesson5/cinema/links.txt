@@ -1,0 +1,42 @@
+f7c53cdf42767e5a41eccd4b61a4cb77
+eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q
+
+Individual:
+curl --request GET \
+     --url 'https://api.themoviedb.org/3/account/21908658/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc' \
+     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q' \
+     --header 'accept: application/json'
+Popular
+curl --request GET \
+     --url 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1' \
+     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q' \
+     --header 'accept: application/json'
+TopRAted:
+curl --request GET \
+     --url 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1' \
+     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q' \
+     --header 'accept: application/json'
+Upcoming:
+curl --request GET \
+     --url 'https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1' \
+     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q' \
+     --header 'accept: application/json'
+
+
+NowPlaying:
+curl --request GET \
+     --url 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_release_type=2|3&release_date.gte={min_date}&release_date.lte={max_date}' \
+     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q' \
+     --header 'accept: application/json'
+
+SearchMovie:
+curl --request GET \
+     --url 'https://api.themoviedb.org/3/search/movie?query=name&include_adult=false&language=en-US&page=1' \
+     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q' \
+     --header 'accept: application/json'
+
+Trending :
+curl --request GET \
+     --url 'https://api.themoviedb.org/3/trending/movie/day?language=en-US' \
+     --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmN2M1M2NkZjQyNzY3ZTVhNDFlY2NkNGI2MWE0Y2I3NyIsIm5iZiI6MTc0MzA2Njc1NS41NTUsInN1YiI6IjY3ZTUxNjgzMjA3NGIwZWU1NjAwMmZhYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.2qA-MPTvrcNHC9iHGwzZfIwpw8pWusyQTo07aFfdA4Q' \
+     --header 'accept: application/json'
