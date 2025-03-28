@@ -1,11 +1,11 @@
 import React from 'react'
 
-export const Card = () => {
+const Card = () => {
   return (
     <div>
-        Card
-        
+      Czarads
     </div>
   )
 }
 
+export default Card

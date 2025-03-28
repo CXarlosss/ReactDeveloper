@@ -1,3 +1,5 @@
 // @ts-nocheck
+
 export { Home } from "./Home";
-export { Card } from "./Card";
+export { Cart } from "./Cart";
+export { Favorites } from "./Favorites"; // ← ¡esto es clave!

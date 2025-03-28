@@ -1,13 +1,22 @@
-// src/routes/AllRoutes.js
-import React from "react"
-import { Routes, Route } from "react-router-dom"
-import { Home, Card } from "../pages"
 
-export const AllRoutes = () => {
-    return (
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/card" element={<Card />} />          
-        </Routes>
-    )
-}
+// @ts-nocheck
+import { Routes, Route } from "react-router-dom";
+import { Home, Favorites } from "../pages";
+
+export const AllRoutes = ({ cards, favorites, addToFavorites, removeFromFavorites }) => (
+  <Routes>
+    <Route
+      path="/"
+      element={<Home cards={cards} addToFavorites={addToFavorites} />}
+    />
+    <Route
+      path="/favorites"
+      element={
+        <Favorites
+          favorites={favorites}
+          removeFromFavorites={removeFromFavorites}
+        />
+      }
+    />
+  </Routes>
+);

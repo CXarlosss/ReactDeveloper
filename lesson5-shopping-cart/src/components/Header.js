@@ -1,45 +1,67 @@
 // @ts-nocheck
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import Logo from "../assets/Logo1.png"; // Asegúrate de tener tu logo
+import Logo from "../assets/Logo1.png";
 
-export const Header = () => {
+export const Header = ({ favoritesCount = 0 }) => {
   return (
-    <header className="flex items-center justify-between px-6 py-4 shadow-md bg-white dark:bg-gray-900">
-      {/* Logo y nombre */}
-      <Link to="/" className="flex items-center gap-3">
-        <img src={Logo} alt="Magic Logo" className="w-10 h-10" />
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Magic Shop</h1>
-      </Link>
+    <header className="backdrop-blur-md bg-white/80 dark:bg-gray-900/80 fixed top-0 left-0 w-full z-50 shadow-md border-b border-gray-200 dark:border-gray-700">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo y nombre */}
+        <Link to="/" className="flex items-center gap-3">
+          <img src={Logo} alt="Magic Logo" className="w-10 h-10 rounded-full shadow" />
+          <h1 className="text-2xl font-extrabold text-gray-800 dark:text-white tracking-tight">
+            Magic<span className="text-blue-600 dark:text-blue-400">Shop</span>
+          </h1>
+        </Link>
 
-      {/* Navegación */}
-      <nav className="flex gap-6 items-center text-gray-600 dark:text-gray-300">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            isActive ? "font-bold text-blue-600 dark:text-blue-400" : "hover:text-blue-600"
-          }
-        >
-          Home
-        </NavLink>
-        <NavLink
+        {/* Navegación */}
+        <nav className="hidden sm:flex gap-6 items-center text-gray-700 dark:text-gray-300 font-medium">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 dark:text-blue-400 font-bold"
+                : "hover:text-blue-600 transition"
+            }
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/favorites"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 dark:text-blue-400 font-bold"
+                : "hover:text-blue-600 transition"
+            }
+          >
+            Favoritos
+          </NavLink>
+          <NavLink
+            to="/cart"
+            className={({ isActive }) =>
+              isActive
+                ? "text-blue-600 dark:text-blue-400 font-bold"
+                : "hover:text-blue-600 transition"
+            }
+          >
+            Carrito
+          </NavLink>
+        </nav>
+
+        {/* Botón carrito */}
+        <Link
           to="/cart"
-          className={({ isActive }) =>
-            isActive ? "font-bold text-blue-600 dark:text-blue-400" : "hover:text-blue-600"
-          }
+          className="relative bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition"
         >
-          Cart
-        </NavLink>
-      </nav>
-
-      {/* Botón carrito */}
-      <Link
-        to="/cart"
-        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
-      >
-        Cart: 2
-      </Link>
+          🛒 <span>Cart</span>
+          {favoritesCount > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full px-2 py-0.5">
+              {favoritesCount}
+            </span>
+          )}
+        </Link>
+      </div>
     </header>
   );
 };
-
