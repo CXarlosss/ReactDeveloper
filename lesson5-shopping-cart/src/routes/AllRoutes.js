@@ -1,13 +1,28 @@
-
 // @ts-nocheck
 import { Routes, Route } from "react-router-dom";
-import { Home, Favorites } from "../pages";
+import { Home, Favorites, Cart } from "../pages";
 
-export const AllRoutes = ({ cards, favorites, addToFavorites, removeFromFavorites }) => (
+export const AllRoutes = ({
+  cards,
+  favorites,
+  cartItems,
+  addToFavorites,
+  removeFromFavorites,
+  addToCart,
+  removeFromCart
+}) => (
   <Routes>
     <Route
       path="/"
-      element={<Home cards={cards} addToFavorites={addToFavorites} />}
+      element={
+        <Home
+          cards={cards}
+          favorites={favorites}
+          cartItems={cartItems}
+          addToFavorites={addToFavorites}
+          addToCart={addToCart}
+        />
+      }
     />
     <Route
       path="/favorites"
@@ -18,5 +33,16 @@ export const AllRoutes = ({ cards, favorites, addToFavorites, removeFromFavorite
         />
       }
     />
+   <Route
+  path="/cart"
+  element={
+    <Cart
+      cartItems={cartItems}
+      addToCart={addToCart}
+      removeFromCart={removeFromCart}
+    />
+  }
+/>
+
   </Routes>
 );

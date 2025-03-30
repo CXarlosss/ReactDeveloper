@@ -2,19 +2,18 @@
 import React, { useState } from "react";
 import { ProductCard } from "../components/ProductCard";
 
-export const Home = ({ cards, addToFavorites }) => {
+export const Home = ({ cards, favorites, cartItems, addToFavorites, addToCart }) => {
   const [selectedRarity, setSelectedRarity] = useState("all");
 
   const rarities = ["all", "common", "uncommon", "rare", "mythic"];
 
-  const filteredCards = selectedRarity === "all"
-    ? cards
-    : cards.filter((card) => card.rarity?.toLowerCase() === selectedRarity);
+  const filteredCards =
+    selectedRarity === "all"
+      ? cards
+      : cards.filter((card) => card.rarity?.toLowerCase() === selectedRarity);
 
   return (
     <main className="p-6">
-     
-
       {/* Filtro de rareza */}
       <div className="mb-6 flex flex-wrap gap-2">
         {rarities.map((rarity) => (
@@ -35,7 +34,14 @@ export const Home = ({ cards, addToFavorites }) => {
       {/* Cartas filtradas */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {filteredCards.map((card) => (
-          <ProductCard key={card.id} card={card} addToFavorites={addToFavorites} />
+          <ProductCard
+            key={card.id}
+            card={card}
+            favorites={favorites}
+            cartItems={cartItems}
+            addToFavorites={addToFavorites}
+            addToCart={addToCart}
+          />
         ))}
       </div>
     </main>
