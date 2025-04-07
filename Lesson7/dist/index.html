@@ -1,85 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Firebase App</title>
-</head>
-<body>
-  <h1>🎬 Firebase Firestore: Películas</h1>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>🎬 Firebase Auth + Firestore</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <h1>🎬 Mis Pelis + Login</h1>
+    <p id="welcome-msg" class="hidden"></p>
 
-  <form id="add-movie-form">
-    <input type="text" id="name" placeholder="Nombre" required />
-    <input type="text" id="description" placeholder="Descripción" required />
-    <button type="submit">Añadir película</button>
-  </form>
+    <!-- 🔐 FORM LOGIN -->
+    <div id="auth-section">
+      <form id="auth-form">
+        <input type="email" id="email" placeholder="Correo" required />
+        <input
+          type="password"
+          id="password"
+          placeholder="Contraseña"
+          required
+        />
+        <button type="submit" id="login-btn">Iniciar sesión</button>
+        <button type="button" id="register-btn">Registrarse</button>
+      </form>
+    </div>
 
-  <ul id="movie-list"></ul>
+    <!-- 🔓 Botón logout -->
+    <button id="logout-btn" class="hidden">Cerrar sesión</button>
 
-  <!-- Firebase CDN y lógica -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      getDocs,
-      addDoc,
-      deleteDoc,
-      doc
-    } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+    <!-- 🎬 FORM PELIS -->
+    <form id="add-movie-form" class="hidden">
+      <input type="text" id="name" placeholder="Nombre" required />
+      <input type="text" id="description" placeholder="Descripción" required />
+      <input type="text" id="category" placeholder="Categoría" required />
+      <input type="number" id="year" placeholder="Año" required />
+      <button type="submit">Guardar película</button>
+    </form>
 
-    // Configuración
-    const firebaseConfig = {
-      apiKey: "AIzaSyBpw1nSSTiq88vvJRwBKXo015kUWldbM8A",
-      authDomain: "notnotion-7c994.firebaseapp.com",
-      projectId: "notnotion-7c994",
-      storageBucket: "notnotion-7c994.firebasestorage.app",
-      messagingSenderId: "886248722011",
-      appId: "1:886248722011:web:6dd506d3034c7f958af97e"
-    };
+    <ul id="movie-list"></ul>
 
-    // Inicializar
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const colRef = collection(db, "movies");
-
-    const movieList = document.getElementById("movie-list");
-
-    // Mostrar datos existentes
-    async function loadMovies() {
-      movieList.innerHTML = ""; // limpiar
-      const snapshot = await getDocs(colRef);
-      snapshot.docs.forEach(docSnap => {
-        const data = docSnap.data();
-        const li = document.createElement("li");
-        li.innerHTML = `
-          <strong>${data.name}</strong>: ${data.description}
-          <button data-id="${docSnap.id}">❌ Eliminar</button>
-        `;
-        movieList.appendChild(li);
-      });
-    }
-
-    loadMovies();
-
-    // Añadir película
-    document.getElementById("add-movie-form").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value;
-      const description = document.getElementById("description").value;
-
-      await addDoc(colRef, { name, description });
-      e.target.reset();
-      loadMovies();
-    });
-
-    // Delegar clicks de eliminar
-    movieList.addEventListener("click", async (e) => {
-      if (e.target.tagName === "BUTTON" && e.target.dataset.id) {
-        const id = e.target.dataset.id;
-        await deleteDoc(doc(db, "movies", id));
-        loadMovies();
-      }
-    });
-  </script>
-</body>
+    <script type="module" src="./allJavascript.js"></script>
+  </body>
 </html>
