@@ -1,10 +1,25 @@
-import React from 'react'
+// @ts-nocheck
+import { doc, deleteDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/config";
+import React from "react";
+export const PostCard = ({post, toggle, setToggle}) => {
+    const {id, title, description, author} = post;
+    const isAuth = JSON.parse(localStorage.getItem("isAuth"));
 
-export const PostCard = () => {
+    async function handleDelete(){
+      const document = doc(db, "posts", id);
+      await deleteDoc(document);
+      setToggle(!toggle);
+    }
+
   return (
-    <div>
-        <h1>Post</h1>
+    <div className="card">
+        <p className="title">{title}</p>
+        <p className="description">{description}</p>
+        <p className="control">
+            <span className="author">{author.name}</span>
+            { isAuth && (author.id === auth.currentUser.uid) && <span onClick={handleDelete} className="delete"><i className="bi bi-trash3"></i></span> }
+        </p>
     </div>
   )
 }
-

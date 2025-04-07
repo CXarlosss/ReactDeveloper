@@ -1,10 +1,14 @@
-// @ts-nocheck
+import { Header, Footer } from './components';
+import { AllRoutes } from './routes/AllRoutes';
 import './App.css';
+import React from 'react';
 
 function App() {
   return (
     <div className="App">
-      <h1>Hello World</h1>
+      <Header />
+      <AllRoutes />
+      <Footer />
     </div>
   );
 }

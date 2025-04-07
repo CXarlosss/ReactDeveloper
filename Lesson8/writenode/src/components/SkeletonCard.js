@@ -1,11 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonCard = () => {
   return (
-    <div>
-        <h1>Skeleton</h1>
+    <div className="card">
+        <p className="title">{<Skeleton />}</p>
+        <p className="description"><Skeleton count={3} /></p>
+        <p className="control">
+          <Skeleton width="70px" />
+        </p>
     </div>
   )
 }
-
-export default SkeletonCard

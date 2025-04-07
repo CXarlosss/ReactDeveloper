@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react"
+import { Link } from "react-router-dom"
 
 export const Footer = () => {
   return (
-    <div>
-      <h1>Footer</h1>
-    </div>
+    <footer>
+      <p>© 2030 <Link to="/">WriteNode</Link>. All Rights Reserved.</p>
+    </footer>
   )
 }
-
