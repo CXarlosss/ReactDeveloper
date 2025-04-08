@@ -1,0 +1,46 @@
+/* src/styles/footer.css */
+
+.main-footer {
+  background-color: #f9f9f9;
+  padding: 2rem 1rem;
+  border-top: 1px solid #e0e0e0;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.footer-logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.footer-text {
+  color: #777;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  color: #555;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #111;
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

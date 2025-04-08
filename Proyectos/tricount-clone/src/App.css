@@ -1,0 +1,84 @@
+/* src/App.css */
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  header, footer {
+    padding: 1rem 2rem;
+    background-color: var(--primary);
+    color: #fff;
+    text-align: center;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  nav a.active {
+    text-decoration: underline;
+  }
+  
+  button {
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  button:hover {
+    background-color: var(--primary-light);
+  }
+  
+  form {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: var(--radius);
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: var(--card-bg);
+    box-shadow: var(--shadow);
+    padding: 1rem;
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  h2, h3, h4 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+  

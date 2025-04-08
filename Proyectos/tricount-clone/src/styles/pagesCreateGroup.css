@@ -1,0 +1,92 @@
+/* src/styles/createGroup.css */
+
+.form-container {
+  max-width: 550px;
+  margin: auto;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.6rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.form-container h2 {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+input[type="text"],
+input[type="email"] {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  outline-color: var(--primary);
+  width: 100%;
+}
+
+.member-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.member-input button {
+  align-self: flex-start;
+  padding: 0.4rem 0.8rem;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+
+.member-input button:hover {
+  background-color: var(--primary-dark);
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li {
+  display: flex;
+  justify-content: space-between;
+  background: #f9f9f9;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+ul li button {
+  background: transparent;
+  color: crimson;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button[type="submit"] {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--primary-dark);
+}

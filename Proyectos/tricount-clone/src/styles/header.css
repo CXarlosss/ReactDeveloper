@@ -1,0 +1,34 @@
+/* src/styles/header.css */
+
+.main-header {
+  background-color: #ffffff;
+  border-bottom: 2px solid #f0f0f0;
+  padding: 1.2rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #4a4a4a;
+  background: linear-gradient(to right, #f472b6, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.8;
+}

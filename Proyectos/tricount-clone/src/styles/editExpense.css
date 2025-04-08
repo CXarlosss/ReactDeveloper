@@ -1,0 +1,62 @@
+/* src/styles/editExpense.css */
+
+.form-container {
+    max-width: 500px;
+    margin: auto;
+    background-color: #fefefe;
+    padding: 2rem;
+    border-radius: 0.7rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e0e0e0;
+  }
+  
+  .form-container h2 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  input[type="text"],
+  input[type="number"],
+  select {
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    outline-color: var(--primary);
+    background-color: #fff;
+  }
+  
+  .checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-left: 0.5rem;
+  }
+  
+  .checkbox-list label {
+    font-size: 0.95rem;
+  }
+  
+  button[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 0.7rem 1rem;
+    border-radius: 0.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #388e3c;
+  }
+  

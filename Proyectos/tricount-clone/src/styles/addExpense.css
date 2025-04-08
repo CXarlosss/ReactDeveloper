@@ -1,0 +1,15 @@
+/* Estilos básicos para AddExpense */
+.add-expense-form {
+    max-width: 600px;
+    margin: auto;
+    padding: 2rem;
+  }
+  
+  .add-expense-form input,
+  .add-expense-form select {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+  }
+  
