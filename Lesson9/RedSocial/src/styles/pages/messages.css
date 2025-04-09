@@ -1,0 +1,26 @@
+.messages-page {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .messages-page h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .messages-page__container {
+    padding: 2rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .messages-page__info {
+    margin-top: 0.5rem;
+    color: #888;
+    font-size: 0.9rem;
+  }
+  

@@ -1,0 +1,28 @@
+.home {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+  }
+  
+  .home__welcome {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .home__welcome h2 span {
+    color: #4aa6f0;
+  }
+  
+  .home__form {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+  }
+  
+  .home__feed h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  

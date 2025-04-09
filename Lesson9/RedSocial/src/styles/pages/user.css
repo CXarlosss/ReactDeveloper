@@ -1,0 +1,39 @@
+.user-profile {
+    padding: 2rem;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .user-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1.5rem;
+  }
+  
+  .user-info h2 {
+    margin: 0;
+    font-size: 2rem;
+    color: #222;
+  }
+  
+  .user-info p {
+    color: #888;
+    margin: 0.3rem 0;
+    font-size: 1rem;
+  }
+  
+  .user-info span {
+    color: #444;
+    font-size: 1.1rem;
+    display: block;
+  }
+  
+  .user-posts h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #3498db;
+  }
+  

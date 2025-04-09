@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Sidebar = ({ user }) => (
+export const Sidebar = ({ user }) => (
     <aside className="sidebar">
       <div className="sidebar__profile">
         <img src={user.avatar} alt="avatar" />

@@ -1,0 +1,20 @@
+.user-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .user-avatar__img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+  }
+  
+  .user-avatar__name {
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #444;
+  }
+  

@@ -1,0 +1,49 @@
+/* src/index.css */
+:root {
+    --primary-color: #2d9cdb;
+    --secondary-color: #f2f2f2;
+    --text-color: #333;
+    --bg-color: #fff;
+    --border-radius: 10px;
+    --transition: all 0.3s ease;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    height: 100%;
+  }
+  
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  button {
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  img {
+    max-width: 100%;
+    display: block;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .app-main {
+    flex: 1;
+    padding: 1rem;
+  }
+  
