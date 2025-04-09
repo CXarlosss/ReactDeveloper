@@ -1,0 +1,43 @@
+/* src/styles/userCard.css */
+.user-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f7f9fc;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 1rem;
+  }
+  
+  .user-card:hover {
+    background-color: #e6f0fb;
+  }
+  
+  .user-card__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .user-card__info {
+    flex: 1;
+    margin-left: 1rem;
+  }
+  
+  .user-card__btn {
+    background-color: #0f82f5;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  
+  .user-card__btn.unfollow {
+    background-color: #aaa;
+  }
+  

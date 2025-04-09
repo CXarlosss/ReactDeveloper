@@ -1,0 +1,13 @@
+.post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  
+  .post-list__empty {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 2rem;
+  }
+  
