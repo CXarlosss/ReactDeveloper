@@ -1,18 +1,23 @@
-import React from 'react'
+import React from "react";
+import { useAuth } from "../../context/AuthContext";
 
-export const Sidebar = ({ user }) => (
+export const Sidebar = () => {
+  const { user } = useAuth();
+
+  // Seguridad: si aún no hay usuario cargado, no renderizar
+  if (!user) return null;
+
+  return (
     <aside className="sidebar">
-      <div className="sidebar__profile">
-        <img src={user.avatar} alt="avatar" />
-        <h3>{user.name}</h3>
+      <div className="sidebar__user">
+        <img
+          src={user?.avatar || "assets/img/user.png"}
+          alt="Avatar"
+          className="sidebar__avatar"
+        />
+        <h4>{user.displayName || user.email}</h4>
       </div>
-      <form className="sidebar__form">
-        <textarea placeholder="¿Qué estás pensando?" />
-        <button disabled>Publicar</button>
-      </form>
+      {/* otros elementos del sidebar */}
     </aside>
   );
-  
-
-
-export default Sidebar
+};

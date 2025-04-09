@@ -1,17 +1,16 @@
 /* eslint-disable no-unused-vars */
 // @ts-nocheck
-import React, { useContext } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { PostList } from "../components/publication/PostList";
 import { UserAvatar } from "../components/user/UserAvatar";
 import "../styles/pages/profile.css";
 
 export const Profile = () => {
   const { username } = useParams();
-  const { user } = useContext(UserContext);
+  const { user } = useAuth(); // ✅ Aquí el cambio
 
-  // Simulación: si el perfil es el del propio usuario
   const isOwnProfile = username === user?.username;
 
   return (
