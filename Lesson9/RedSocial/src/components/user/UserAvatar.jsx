@@ -2,9 +2,11 @@
 import React from "react";
 import "../../styles/userAvatar.css";
 
-export const UserAvatar = ({ user, size = 60 }) => {
+export const UserAvatar = ({ user, size = 60, className = "" }) => {
+  if (!user) return null;
+
   return (
-    <div className="user-avatar" style={{ width: size, height: size }}>
+    <div className={`user-avatar ${className}`} style={{ width: size, height: size }}>
       <img
         src={user?.photoURL || "/assets/img/user.png"}
         alt="Avatar"

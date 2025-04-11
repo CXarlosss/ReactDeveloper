@@ -9,7 +9,10 @@ export const PostForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (typeof onSubmit === "function") {
+      onSubmit(post);
+    }
+    
     if (!content.trim() && !image) {
       alert("Escribe algo o sube una imagen");
       return;

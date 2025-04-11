@@ -9,6 +9,7 @@ export const Register = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "", name: "" });
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -27,6 +28,7 @@ export const Register = () => {
     }
 
     try {
+      setLoading(true);
       const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
       await updateProfile(userCredential.user, {
         displayName: form.name
@@ -35,6 +37,8 @@ export const Register = () => {
     } catch (error) {
       console.error("Register error:", error);
       setErrorMsg("Error al registrar. Es posible que el correo ya esté en uso.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,6 +52,7 @@ export const Register = () => {
           placeholder="Nombre"
           value={form.name}
           onChange={handleChange}
+          required
         />
 
         <input
@@ -56,6 +61,7 @@ export const Register = () => {
           placeholder="Correo electrónico"
           value={form.email}
           onChange={handleChange}
+          required
         />
 
         <input
@@ -64,15 +70,29 @@ export const Register = () => {
           placeholder="Contraseña"
           value={form.password}
           onChange={handleChange}
+          required
         />
 
         {errorMsg && <p className="register__error">{errorMsg}</p>}
 
-        <button type="submit" className="register__button">Registrarse</button>
+        <button
+          type="submit"
+          className="register__button"
+          disabled={loading}
+        >
+          {loading ? "Creando cuenta..." : "Registrarse"}
+        </button>
       </form>
 
       <p className="register__hint">
-        ¿Ya tienes cuenta? <span onClick={() => navigate("/login")}>Inicia sesión</span>
+        ¿Ya tienes cuenta?{" "}
+        <button
+          type="button"
+          onClick={() => navigate("/login")}
+          className="register__link"
+        >
+          Inicia sesión
+        </button>
       </p>
     </div>
   );

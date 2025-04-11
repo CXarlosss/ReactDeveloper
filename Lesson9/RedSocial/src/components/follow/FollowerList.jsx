@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { UserCard } from '../user/UserCard';
 import "../../styles/follow.css"

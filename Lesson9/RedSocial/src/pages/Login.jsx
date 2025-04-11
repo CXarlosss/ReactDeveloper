@@ -10,10 +10,12 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    setLoading(true);
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -21,6 +23,8 @@ export const Login = () => {
     } catch (error) {
       console.error("Login error:", error);
       setErrorMsg("Correo o contraseña incorrectos.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,11 +50,20 @@ export const Login = () => {
 
         {errorMsg && <p className="login__error">{errorMsg}</p>}
 
-        <button type="submit" className="login__button">Entrar</button>
+        <button
+          type="submit"
+          className="login__button"
+          disabled={loading}
+        >
+          {loading ? "Entrando..." : "Entrar"}
+        </button>
       </form>
 
       <p className="login__hint">
-        ¿No tienes cuenta? <span onClick={() => navigate("/register")}>Regístrate</span>
+        ¿No tienes cuenta?{" "}
+        <button type="button" onClick={() => navigate("/register")} className="login__link">
+          Regístrate
+        </button>
       </p>
     </div>
   );

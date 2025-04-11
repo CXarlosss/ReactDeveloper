@@ -8,6 +8,7 @@ export const UserList = ({ users, currentUserId, onFollow, onUnfollow, following
   return (
     <div className="user-list">
       {users.map(user => (
+        
         user.id !== currentUserId && (
           <UserCard
             key={user.id}

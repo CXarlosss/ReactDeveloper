@@ -10,20 +10,37 @@ export const User = () => {
   const { username } = useParams();
   const [userData, setUserData] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function fetchData() {
-      const user = await getUserByUsername(username);
-      setUserData(user);
-      if (user?.id) {
-        const posts = await getPostsByUserId(user.id);
-        setUserPosts(posts);
+      try {
+        setLoading(true);
+        const user = await getUserByUsername(username);
+        if (!user) {
+          setError("Usuario no encontrado.");
+          return;
+        }
+
+        setUserData(user);
+        if (user?.id) {
+          const posts = await getPostsByUserId(user.id);
+          setUserPosts(posts);
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Error al cargar el perfil.");
+      } finally {
+        setLoading(false);
       }
     }
+
     fetchData();
   }, [username]);
 
-  if (!userData) return <p>Cargando perfil...</p>;
+  if (loading) return <p className="user-loading">Cargando perfil...</p>;
+  if (error) return <p className="user-error">{error}</p>;
 
   return (
     <div className="user-profile">
@@ -37,7 +54,7 @@ export const User = () => {
       </div>
 
       <div className="user-posts">
-        <h3>Publicaciones</h3>
+        <h3>📢 Publicaciones</h3>
         <PostList posts={userPosts} />
       </div>
     </div>

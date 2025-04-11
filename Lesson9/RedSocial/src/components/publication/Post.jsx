@@ -14,8 +14,8 @@ export const Post = ({ post, onDelete, onEdit }) => {
           className="post__avatar"
         />
         <div className="post__info">
-          <span className="post__author">{author?.name || "Usuario anónimo"}</span>
-          <span className="post__date">
+        <span className="post__author">{author?.name ?? author?.email ?? "Usuario anónimo"}</span>
+        <span className="post__date">
             {createdAt ? new Date(createdAt).toLocaleString() : "Justo ahora"}
           </span>
         </div>
