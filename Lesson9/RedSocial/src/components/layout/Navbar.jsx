@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Navbar = () => (
-  <nav className="navbar">
-    <ul>
+export const Navbar = () => (
+  <nav className="navbar" aria-label="Navegación principal">
+    <ul className="navbar__menu">
       <li><Link to="/">Inicio</Link></li>
       <li><Link to="/timeline">Timeline</Link></li>
       <li><Link to="/people">Gente</Link></li>
@@ -12,4 +12,3 @@ const Navbar = () => (
   </nav>
 );
 
-export default Navbar;

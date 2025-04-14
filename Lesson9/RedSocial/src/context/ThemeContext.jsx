@@ -1,26 +1,27 @@
 // @ts-nocheck
-// src/context/ThemeContext.js
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-const ThemeContext = createContext();
+// Crear contexto
+const ThemeContext = createContext(null);
 
+// Proveedor
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");
 
+  // Leer tema guardado
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
+    const stored = localStorage.getItem("theme");
+    if (stored) setTheme(stored);
   }, []);
 
+  // Guardar y aplicar tema
   useEffect(() => {
     localStorage.setItem("theme", theme);
-    document.body.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", theme); // O usa clases si prefieres
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
@@ -30,4 +31,11 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+// Hook personalizado con validación
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (context === null) {
+    throw new Error("useTheme debe usarse dentro de un ThemeProvider");
+  }
+  return context;
+};

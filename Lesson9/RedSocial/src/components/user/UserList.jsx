@@ -1,15 +1,20 @@
 // @ts-nocheck
-// src/components/user/UserList.jsx
 import React from "react";
 import { UserCard } from "./UserCard";
 import "../styles/userList.css";
 
-export const UserList = ({ users, currentUserId, onFollow, onUnfollow, following }) => {
+export const UserList = ({
+  users = [],
+  currentUserId,
+  onFollow,
+  onUnfollow,
+  following = [],
+}) => {
   return (
     <div className="user-list">
-      {users.map(user => (
-        
-        user.id !== currentUserId && (
+      {users
+        .filter((user) => user.id !== currentUserId)
+        .map((user) => (
           <UserCard
             key={user.id}
             user={user}
@@ -17,8 +22,7 @@ export const UserList = ({ users, currentUserId, onFollow, onUnfollow, following
             onUnfollow={onUnfollow}
             isFollowing={following.includes(user.id)}
           />
-        )
-      ))}
+        ))}
     </div>
   );
 };

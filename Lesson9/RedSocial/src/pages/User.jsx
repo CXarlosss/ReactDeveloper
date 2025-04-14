@@ -14,9 +14,11 @@ export const User = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       try {
         setLoading(true);
+        setError("");
+
         const user = await getUserByUsername(username);
         if (!user) {
           setError("Usuario no encontrado.");
@@ -24,39 +26,51 @@ export const User = () => {
         }
 
         setUserData(user);
+
         if (user?.id) {
           const posts = await getPostsByUserId(user.id);
           setUserPosts(posts);
         }
       } catch (err) {
-        console.error(err);
+        console.error("Error al cargar perfil:", err);
         setError("Error al cargar el perfil.");
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchData();
   }, [username]);
 
-  if (loading) return <p className="user-loading">Cargando perfil...</p>;
-  if (error) return <p className="user-error">{error}</p>;
+  if (loading) {
+    return <p className="user-loading" role="status">Cargando perfil...</p>;
+  }
+
+  if (error) {
+    return <p className="user-error" role="alert">{error}</p>;
+  }
+
+  const {
+    name = "Nombre no disponible",
+    username: uname = "usuario",
+    bio = "Este usuario aún no ha escrito una bio.",
+  } = userData;
 
   return (
-    <div className="user-profile">
-      <div className="user-header">
-        <UserAvatar user={userData} large />
+    <section className="user-profile" aria-label={`Perfil de ${uname}`}>
+      <header className="user-header">
+        <UserAvatar user={userData} size={80} className="user-avatar" />
         <div className="user-info">
-          <h2>{userData.name}</h2>
-          <p>@{userData.username}</p>
-          <span>{userData.bio || "Este usuario aún no ha escrito una bio."}</span>
+          <h2>{name}</h2>
+          <p className="user-info__username">@{uname}</p>
+          <p className="user-info__bio">{bio}</p>
         </div>
-      </div>
+      </header>
 
-      <div className="user-posts">
+      <section className="user-posts" aria-label={`Publicaciones de ${uname}`}>
         <h3>📢 Publicaciones</h3>
         <PostList posts={userPosts} />
-      </div>
-    </div>
+      </section>
+    </section>
   );
 };

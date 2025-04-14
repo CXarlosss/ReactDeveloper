@@ -1,6 +1,6 @@
 // @ts-nocheck
-import React, { useState } from "react"; // 👈 FALTABA ESTO
-import { useAuth } from "../hooks/useAuth";
+import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext"; // ✅ mejor usar directamente el hook oficial
 import { PostForm } from "../components/publication/PostForm";
 import { PostList } from "../components/publication/PostList";
 import "../styles/pages/home.css";
@@ -9,7 +9,6 @@ import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 export const Home = () => {
   const { user } = useAuth();
-
   const [posting, setPosting] = useState(false);
   const [error, setError] = useState(null);
 
@@ -19,14 +18,15 @@ export const Home = () => {
     try {
       setPosting(true);
       setError(null);
+
       await addDoc(collection(db, "posts"), {
-        content: post.content,
+        content: post.content.trim(),
         imageUrl: post.image || "",
         createdAt: Timestamp.now(),
         userId: user.uid,
         author: {
           name: user.displayName || user.email,
-          avatar: user.photoURL || "",
+          avatar: user.photoURL || "/assets/img/user.png",
         },
       });
     } catch (err) {
@@ -38,24 +38,32 @@ export const Home = () => {
   };
 
   return (
-    <section className="home">
-      <div className="home__welcome">
+    <section className="home" aria-label="Inicio">
+      <header className="home__welcome">
         <h2>
           Bienvenido, <span>{user?.displayName || user?.email}</span> 👋
         </h2>
         <p>Comparte tus pensamientos con la comunidad.</p>
-      </div>
+      </header>
 
       <div className="home__form">
-        {posting && <p className="home__info">📤 Publicando...</p>}
-        {error && <p className="home__error">❌ {error}</p>}
+        {posting && (
+          <p className="home__info" role="status">
+            📤 Publicando...
+          </p>
+        )}
+        {error && (
+          <p className="home__error" role="alert">
+            ❌ {error}
+          </p>
+        )}
         <PostForm onSubmit={handlePostSubmit} />
       </div>
 
-      <div className="home__feed">
+      <section className="home__feed" aria-label="Últimas publicaciones">
         <h3>📢 Últimas publicaciones</h3>
-        <PostList />
-      </div>
+        <PostList userId={null} />
+      </section>
     </section>
   );
 };

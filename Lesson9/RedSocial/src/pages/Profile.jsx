@@ -2,31 +2,39 @@
 import React from "react";
 import { PostList } from "../components/publication/PostList";
 import { UserAvatar } from "../components/user/UserAvatar";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../context/AuthContext"; // ✅ mejor directo del contexto
 import "../styles/pages/profile.css";
 
 export const Profile = () => {
-  const { user } = useAuth(); // viene del contexto
+  const { user } = useAuth();
 
   if (!user) {
-    return <p>Cargando perfil...</p>;
+    return <p className="profile__loading">Cargando perfil...</p>;
   }
 
-  return (
-    <div className="profile-page">
-      <div className="profile-header">
-        <UserAvatar user={user} large />
-        <div className="profile-info">
-          <h2>{user.displayName || "Usuario sin nombre"}</h2>
-          <p>@{user.email}</p>
-          <span>{user.bio || "Aquí va tu biografía..."}</span>
-        </div>
-      </div>
+  const {
+    displayName = "Usuario sin nombre",
+    email = "sin-email@correo.com",
+    bio = "Aquí va tu biografía...",
+    uid,
+  } = user;
 
-      <div className="profile-posts">
+  return (
+    <section className="profile-page" aria-label="Perfil de usuario">
+      <header className="profile-header">
+        <UserAvatar user={user} size={80} className="profile-avatar" />
+
+        <div className="profile-info">
+          <h2>{displayName}</h2>
+          <p className="profile-info__email">@{email}</p>
+          <p className="profile-info__bio">{bio}</p>
+        </div>
+      </header>
+
+      <section className="profile-posts" aria-label="Tus publicaciones">
         <h3>Publicaciones</h3>
-        <PostList userId={user.uid} />
-      </div>
-    </div>
+        <PostList userId={uid} />
+      </section>
+    </section>
   );
 };

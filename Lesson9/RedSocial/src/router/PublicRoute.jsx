@@ -1,15 +1,14 @@
 // src/router/PublicRoute.jsx
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../context/AuthContext";
 
 const PublicRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return <div className="loader">Cargando...</div>;
 
-  // Si está autenticado, redirige a inicio
-  return !user ? children : <Navigate to="/" />;
+  return !user ? children : <Navigate to="/" replace />;
 };
 
 export default PublicRoute;
