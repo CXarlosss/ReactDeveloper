@@ -31,4 +31,62 @@
     display: flex;
     align-items: center;
   }
+  .cart-dropdown {
+    position: relative;
+  }
+  .cart-icon {
+    width: 50px;
+    height: 500px;
+    object-fit: contain;
+  }
+  
+  
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: red;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-weight: bold;
+  }
+  
+  .cart-preview {
+    display: none;
+    position: absolute;
+    top: 60%; /* Justo debajo */
+    right: 0;
+    margin-top: 8px; /* Pequeña separación */
+    width: 300px;
+    background: white;
+    color: #000;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  /* Esto es clave: se muestra mientras estés sobre el icono O el preview */
+.cart-dropdown:hover .cart-preview {
+  display: block;
+}
+  
+  .cart-preview-items {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: red;
+    color: white;
+    font-size: 0.75rem;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-weight: bold;
+  }
   

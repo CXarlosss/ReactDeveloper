@@ -77,3 +77,36 @@
     }
   }
   
+  .cart-dropdown {
+    position: relative;
+    max-width: 2.5rem;
+    cursor: pointer;
+    z-index: 999;
+  }
+  
+  .cart-dropdown img {
+    width: 32px;
+    transition: transform 0.2s ease;
+  }
+  
+  .cart-dropdown:hover img {
+    transform: scale(1.1);
+  }
+  
+  .cart-dropdown #carrito {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 370px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.25s ease-in-out;
+    overflow: hidden;
+  }
+  
+  .cart-dropdown:hover #carrito {
+    display: block;
+  }
+  
