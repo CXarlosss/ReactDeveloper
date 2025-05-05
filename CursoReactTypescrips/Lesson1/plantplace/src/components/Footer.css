@@ -1,0 +1,15 @@
+.footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .footer-link {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+    font-size: 0.9rem;
+  }
+  
+  .footer-link:hover {
+    color: white;
+  }
+  
