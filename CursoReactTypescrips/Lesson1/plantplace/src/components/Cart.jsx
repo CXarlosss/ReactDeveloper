@@ -5,10 +5,10 @@ const Cart = () => {
   const cartItems = [
     {
       id: 1,
-      name: 'SRV',
-      price: 299,
+      name: 'Areca',
+      price: 29.99,
       quantity: 1,
-      image: '/img/Areca17.webp'
+      image: '/img/Areca1.jpg'
     }
   ]
 

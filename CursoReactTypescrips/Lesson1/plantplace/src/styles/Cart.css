@@ -1,0 +1,79 @@
+.carrito {
+    position: relative;
+    max-width: 2.5rem;
+    cursor: pointer;
+    z-index: 999;
+  }
+  
+  .carrito img {
+    width: 32px;
+    transition: transform 0.2s ease;
+  }
+  
+  .carrito:hover img {
+    transform: scale(1.1);
+  }
+  
+  #carrito {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 370px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.25s ease-in-out;
+    overflow: hidden;
+  }
+  
+  .carrito:hover #carrito {
+    display: block;
+  }
+  
+  #carrito table th {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #555;
+  }
+  
+  #carrito table td {
+    vertical-align: middle;
+  }
+  
+  #carrito img {
+    width: 40px;
+    height: auto;
+    border-radius: 6px;
+  }
+  
+  #carrito .btn-danger {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 50%;
+  }
+  
+  #carrito .btn-dark {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    background-color: #094104;
+    border: none;
+  }
+  
+  #carrito .btn-dark:hover {
+    background-color: #0c5c0b;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

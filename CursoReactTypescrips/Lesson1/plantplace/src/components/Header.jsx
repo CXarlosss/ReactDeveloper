@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Cart from './Cart'
-import './Header.css'
+import '../styles/Header.css'
 
 const Header = ({ isAuthenticated, setIsAuthenticated }) => {
   return (

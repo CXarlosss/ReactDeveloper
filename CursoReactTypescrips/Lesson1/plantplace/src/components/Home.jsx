@@ -1,13 +1,22 @@
-import React from 'react'
+import React from "react";
+import products from "../data/products";
+import ProductCard from "./ProductCard";
 
-const Home = () => {
+const Home = ({ addToCart }) => {
   return (
-    <div className="container text-center py-5">
-      <h1 className="mb-4">Página de inicio</h1>
-      <p className="lead">Bienvenido a <strong>PlantPlace 🪴</strong></p>
-      <button className="btn btn-primary mt-4">Explorar productos</button>
+    <div className="container-xl py-5">
+      <h2 className="mb-4 text-center">Nuestras plantas</h2>
+      <div className="row justify-content-center g-4">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            addToCart={addToCart}
+          />
+        ))}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
