@@ -1,8 +1,7 @@
 import React from "react";
 import products from "../data/products";
 import ProductCard from "./ProductCard";
-
-const Home = ({ addToCart }) => {
+const Home = ({ addToCart, cartItems }) => {
   return (
     <div className="container-xl py-5">
       <h2 className="mb-4 text-center">Nuestras plantas</h2>
@@ -12,11 +11,13 @@ const Home = ({ addToCart }) => {
             key={product.id}
             product={product}
             addToCart={addToCart}
+            cartItems={cartItems}
           />
         ))}
       </div>
     </div>
   );
 };
+
 
 export default Home;

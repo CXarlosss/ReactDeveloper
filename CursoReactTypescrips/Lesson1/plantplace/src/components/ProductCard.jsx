@@ -1,11 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-const ProductCard = ({ product, addToCart }) => {
+const ProductCard = ({ product, addToCart, cartItems = [] }) => {
+  const isInCart = cartItems.some(item => item.id === product.id);
+
   return (
     <div className="col-12 col-md-6 mb-4 d-flex justify-content-center">
       <div className="card flex-row shadow-sm border-0 rounded-4 product-card-horizontal" style={{ maxWidth: '600px' }}>
         
-        {/* Imagen a la izquierda */}
+        {/* Imagen */}
         <div className="product-img-wrapper">
           <img
             src={product.images[0]}
@@ -13,28 +15,31 @@ const ProductCard = ({ product, addToCart }) => {
             className="img-fluid product-img"
             onMouseOver={e => e.currentTarget.src = product.images[1]}
             onMouseOut={e => e.currentTarget.src = product.images[0]}
+            style={{ width: '200px', height: 'auto', objectFit: 'cover', borderRadius: '8px 0 0 8px' }}
           />
         </div>
 
-        {/* Contenido a la derecha */}
-        <div className="card-body d-flex flex-column justify-content-between p-3">
+        {/* Contenido */}
+        <div className="card-body d-flex flex-column justify-content-between p-3 w-100">
           <div>
-            <h5 className="text-success fw-bold fs-5">{product.name}</h5>
-            <p className="text-muted small">{product.description}</p>
+            <h2 className="fw-bold fs-4 text-success text-center">{product.name}</h2>
+            <p className="text-muted small mt-2 text-center">{product.description}</p>
           </div>
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <span className="fw-bold fs-6 text-dark">${product.price.toFixed(2)}</span>
+
+          <div className="text-center mt-3">
+            <p className="fs-5 text-success fw-bold">${product.price.toFixed(2)}</p>
             <button
-              className="btn btn-dark btn-sm text-uppercase"
-              onClick={() => addToCart(product)}
+              className={`btn btn-${isInCart ? 'secondary' : 'green'} btn-sm w-100 text-uppercase`}
+              onClick={() => !isInCart && addToCart(product)}
+              disabled={isInCart}
             >
-              Añadir
+              {isInCart ? 'Añadido ✅' : 'Añadir a la cesta'}
             </button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductCard
+export default ProductCard;

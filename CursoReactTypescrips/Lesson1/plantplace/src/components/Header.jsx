@@ -21,9 +21,10 @@ const Header = ({
             <img
               src="/img/Logo1.png"
               alt="Logo de PlantPlace"
-              className="logo"
+              style={{ width: "100px", height: "auto", display: "block" }}
             />
           </Link>
+          
         </div>
 
         {/* Título */}
