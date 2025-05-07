@@ -2,6 +2,27 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/Header.css";
 
+/**
+ * @typedef {Object} CartItem
+ * @property {number} id
+ * @property {string} name
+ * @property {string} image
+ * @property {number} price
+ * @property {number} quantity
+ */
+
+/**
+ * Header con logo, título, autenticación y vista previa del carrito.
+ * 
+ * @param {{
+ *  isAuthenticated: boolean,
+ *  setIsAuthenticated: (auth: boolean) => void,
+ *  cartItems?: CartItem[],
+ *  increaseQty: (id: number) => void,
+ *  decreaseQty: (id: number) => void,
+ *  removeFromCart: (id: number) => void
+ * }} props
+ */
 const Header = ({
   isAuthenticated,
   setIsAuthenticated,
@@ -24,7 +45,6 @@ const Header = ({
               style={{ width: "100px", height: "auto", display: "block" }}
             />
           </Link>
-          
         </div>
 
         {/* Título */}
@@ -36,10 +56,8 @@ const Header = ({
         <div className="header-cart d-flex align-items-center gap-3 position-relative">
           <div className="cart-dropdown position-relative">
             <img className="cart-icon" src="/img/carrito.png" alt="Carrito" />
-
             {totalItems > 0 && <span className="cart-count">{totalItems}</span>}
 
-            {/* Mini resumen del carrito */}
             <div className="cart-preview">
               {cartItems.length === 0 ? (
                 <p className="text-center">Carrito vacío 🛒</p>

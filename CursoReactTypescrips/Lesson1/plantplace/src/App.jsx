@@ -73,8 +73,12 @@ function App() {
 
       <main className="flex-grow-1">
         <Routes>
-          <Route path="/" element={<Home addToCart={addToCart} cartItems={cart} />
-} />
+        <Route
+  path="/"
+  element={<Home addToCart={addToCart} cartItems={cart} />}
+/>
+
+
           <Route
             path="/cart"
             element={

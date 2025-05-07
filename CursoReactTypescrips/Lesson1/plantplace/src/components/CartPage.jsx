@@ -1,6 +1,25 @@
 import React from "react";
 import CartItem from "./CartItem";
 
+/**
+ * @typedef {Object} Item
+ * @property {number} id
+ * @property {string} name
+ * @property {string} image
+ * @property {number} price
+ * @property {number} quantity
+ */
+
+/**
+ * @typedef {Object} Props
+ * @property {Item[]} cartItems
+ * @property {(id: number) => void} increaseQty
+ * @property {(id: number) => void} decreaseQty
+ * @property {(id: number) => void} removeFromCart
+ * @property {() => void} clearCart
+ */
+
+/** @param {Props} props */
 const CartPage = ({
   cartItems = [],
   increaseQty,
@@ -14,8 +33,8 @@ const CartPage = ({
   );
 
   return (
-<div className="cart-page container-xl py-5">
-<h2 className="text-center mb-4">Carrito de Compras</h2>
+    <div className="cart-page container-xl py-5">
+      <h2 className="text-center mb-4">Carrito de Compras</h2>
 
       {cartItems.length === 0 ? (
         <p className="text-center">El carrito está vacío 🛒</p>

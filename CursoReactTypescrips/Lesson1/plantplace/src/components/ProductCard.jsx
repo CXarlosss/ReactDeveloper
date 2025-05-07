@@ -1,5 +1,33 @@
 import React from "react";
-import "../styles/ProductCard.css"; // Asegúrate de que la ruta sea correcta
+import "../styles/ProductCard.css"; // Asegúrate de que esta ruta exista
+
+/**
+ * @typedef {Object} Product
+ * @property {number} id
+ * @property {string} name
+ * @property {string[]} images
+ * @property {string} description
+ * @property {number} price
+ */
+
+/**
+ * @typedef {Object} CartItem
+ * @property {number} id
+ * @property {string} name
+ * @property {string} image
+ * @property {number} price
+ * @property {number} quantity
+ */
+
+/**
+ * Componente de tarjeta para mostrar un producto.
+ * 
+ * @param {{
+ *  product: Product,
+ *  addToCart: (product: Product) => void,
+ *  cartItems?: CartItem[]
+ * }} props
+ */
 const ProductCard = ({ product, addToCart, cartItems = [] }) => {
   const isInCart = cartItems.some((item) => item.id === product.id);
 
@@ -44,7 +72,7 @@ const ProductCard = ({ product, addToCart, cartItems = [] }) => {
             <button
               className={`btn ${
                 isInCart ? "btn-secondary" : "btn-black"
-              } btn-sm w-100 text-uppercase`}
+              } btn-sm w-100 text-uppercase product-btn`}
               onClick={() => !isInCart && addToCart(product)}
               disabled={isInCart}
             >

@@ -1,6 +1,23 @@
-// CartItem.jsx
 import React from "react";
 
+/**
+ * @typedef {Object} Item
+ * @property {number} id
+ * @property {string} name
+ * @property {string} image
+ * @property {number} price
+ * @property {number} quantity
+ */
+
+/**
+ * @typedef {Object} Props
+ * @property {Item} item
+ * @property {(id: number) => void} increaseQty
+ * @property {(id: number) => void} decreaseQty
+ * @property {(id: number) => void} removeFromCart
+ */
+
+/** @param {Props} props */
 const CartItem = ({ item, increaseQty, decreaseQty, removeFromCart }) => {
   return (
     <tr>
