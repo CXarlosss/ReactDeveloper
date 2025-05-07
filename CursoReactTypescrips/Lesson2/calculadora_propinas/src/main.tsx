@@ -1,17 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
+// main.tsx o main.ts
+import React from 'react'
+import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import { OrderProvider } from "./context/OrderContext"; // 👈
+import './index.css'
+import { AuthProvider } from './context/AuthContext'
 
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-   <OrderProvider>
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <AuthProvider>
       <App />
-    </OrderProvider>
-  </StrictMode>,
+    </AuthProvider>
+  </React.StrictMode>,
 )
+
 
 //nvm use --delete-prefix 22.13.0 Para iniciar el proyecto por que da error esta en otro node16 de normal y asi me lo abre con la version de node 22.13.0
 //npm run dev

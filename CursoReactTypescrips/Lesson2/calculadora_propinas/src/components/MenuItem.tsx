@@ -1,19 +1,18 @@
-// components/MenuItem.tsx
-import type { MenuItem as MenuItemType } from "../types";
+import type {  MenuItem } from "../types";
 
 type MenuItemProps = {
-  item: MenuItemType;
-  addItem: (item: MenuItemType) => void;
-};
+  item: MenuItem,
+  addItem: (item: MenuItem) => void
+}
 
-export default function MenuItem({ item, addItem }: MenuItemProps) {
+export default function MenuItem({item, addItem} : MenuItemProps) {
   return (
-    <button
-      className="border-2 border-teal-400 hover:bg-teal-200 w-full p-3 flex justify-between mb-5"
-      onClick={() => addItem(item)}
-    >
-      <p>{item.name}</p>
-      <p className="font-bold">${item.price}</p>
-    </button>
-  );
+      <button 
+        className=' border-2 border-teal-400 hover:bg-teal-200 p-3 text-lg  rounded-lg flex justify-between w-full'
+        onClick={() => addItem(item)}
+      > 
+          <p>{item.name}</p> 
+          <p className='font-black'>${item.price}</p>
+      </button>
+  )
 }
