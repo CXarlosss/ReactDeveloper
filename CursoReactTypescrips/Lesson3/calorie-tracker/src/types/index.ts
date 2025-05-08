@@ -9,5 +9,6 @@ export type Category = {
     category: number;
     name: string;
     calories: number;
+    date: string; // <-- añadimos esto
   };
   
