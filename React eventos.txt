@@ -1,0 +1,54 @@
+Evento mouse
+export const EventosComponente = () =>{
+	const hasDadoClick = (e,nombre) =>{
+	alert("Has dado click al boton ???" + nombre);
+	}
+	Function hasDadoDoubleClick(e){
+	alert("has dado doble click");
+	}
+	const hasEntrado = (e)=>{
+	alert("Has"+accion+" entrado en la caja");
+	}
+}
+<div>
+	<h1>Eventos en React</h1>
+	<p>
+		{/*Evento CLick*/}
+		<button onclick={e => hasDadoClick(e."Carlos")}>Dame click </button>
+	</p>
+	<p>
+		{/*Evento DobleCLick*/}
+		<button onDoubleclick={hasDadoDoubleClick }>Dame click </button>
+	</p>
+	<div id="caja"
+		onMouseEnter = {e => hasEntrado(e,"entrado")}>
+		onMouseLeave = {e => hasSalido(e,"Salido")}
+		{/*Evento MouseEnter*/}
+		/*Pasa Por encima /meter estilos en css*/
+	</div>
+
+</div>
+/*EVENTO BLUR Y FOCUS*/
+
+const FocusBlurComponent = () => {
+  const inputRef = useRef(null);
+
+  const handleFocus = () => {
+    console.log('Input has focus');
+  };
+
+  const handleBlur = () => {
+    console.log('Input lost focus');
+  };
+
+  return (
+    <div>
+      <input 
+        ref={inputRef}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        placeholder="Focus and Blur me" 
+      />
+    </div>
+  );
+};

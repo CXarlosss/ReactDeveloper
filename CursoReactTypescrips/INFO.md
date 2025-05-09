@@ -5,4 +5,8 @@ Despues cambiar la version de node por que tenemos la 16 y se necesita para vite
 --nvm use --delete-prefix 22.13.0
 Y ya despues
 --npm run dev 
+nvm install 20.11.1
+nvm use 20.11.1
+
+
 -->
