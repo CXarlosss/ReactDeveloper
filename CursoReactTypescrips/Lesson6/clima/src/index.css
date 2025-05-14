@@ -1,0 +1,40 @@
+:root {
+  --white: #ffffff;
+  --primary: #f59e0b;
+  --primary-hover: #ed8936;  /* Corrección: Cambiado a un valor diferente para hover */
+  --black: #000000;
+  --gray-100: #f7fafc;
+  --gray-200: #edf2f7;
+  --gray-300: #e2e8f0;
+  --gray-400: #cbd5e0;
+  --gray-500: #a0aec0;
+  --gray-600: #718096;
+  --gray-700: #4a5568;
+  --gray-800: #2d3748;
+  --gray-900: #1a202c;
+  --red-500: #f56565;
+  --red-700: #c53030;
+  --green-500: #48bb78;
+  --green-700: #2d9951;
+  --blue-500: #4299e1;
+  --blue-700: #2b6cb0;
+  --yellow-500: #f6e05e;
+  --yellow-700: #d69e2e;
+  --purple-500: #805ad5;
+  --purple-700: #6b46c1;
+}
+
+html{
+  font-size: 62.5%;
+}
+
+body{
+   font-family:'Outfit', sans-serif;
+   background-image: url("../public/bg_clima.jpg");
+   height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--white);
+    font-size: 2rem;
+}
