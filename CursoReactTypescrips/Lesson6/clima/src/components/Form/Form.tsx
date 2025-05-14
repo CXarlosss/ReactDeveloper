@@ -1,63 +1,79 @@
-import { countries } from '../../data/countries';
-import styles from "./Form.module.css";
-import { useState} from 'react';
-import type { ChangeEvent } from 'react';
-import type { SearchType } from '../../types';
+import  { useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { countries } from "../../data/countries";
+import styles from './Form.module.css'
+import Alert from "../Alert/Alert";
 
-export default function Form () {
+export type SearchType = { // Exporta el tipo para que esté disponible
+  city: string;
+  country: string;
+}
+
+interface FormProps {
+  fetchWeather: (search: SearchType) => Promise<void>;
+}
+
+export default function Form({ fetchWeather }: FormProps) {
   const [search, setSearch] = useState<SearchType>({
     city: '',
     country: ''
   });
+  const [alert, setAlert] = useState<string>('');
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
     setSearch({
       ...search,
       [e.target.name]: e.target.value
     });
   };
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!search.city.trim() || !search.country.trim()) {
+      setAlert('Todos los campos son obligatorios');
+      return;
+    }
+    fetchWeather(search);
+  };
+
   return (
-    <div>
-      <form className={styles.form}>
-        <div className={styles.field}>
-          <label htmlFor="city">Ciudad:</label>
-          <input
-            id="city"
-            type="text"
-            name="city"
-            placeholder="Ciudad"
-            className={styles.input}
-            value={search.city}
-            onChange={handleChange}
-          />
-        </div>
+    <form
+      className={styles.form}
+      onSubmit={handleSubmit}
+    >
 
-        <div className={styles.field}>
-          <label htmlFor="country">País:</label>
-          <select
-            id="country"
-            name="country"
-            className={styles.select}
-            value={search.country}
-            onChange={handleChange} // ← corregido
-          >
-            <option value="">--Seleccione un País--</option>
-            {countries.map(country => (
-              <option
-                key={country.code}
-                value={country.code}
-              >
-                {country.name}
-              </option>
-            ))}
-          </select>
-        </div>
+      {alert && <Alert>{alert}</Alert>}
+      <div className={styles.field}>
+        <label htmlFor="city">Ciudad:</label>
+        <input
+          id="city"
+          type="text"
+          name="city"
+          placeholder="Ciudad"
+          value={search.city}
+          onChange={handleChange}
+        />
+      </div>
 
-        <input type="submit" value="Buscar Clima" className={styles.submit} />
-      </form>
-    </div>
+      <div className={styles.field}>
+        <label htmlFor="country">País:</label>
+        <select
+          id="country"
+          name="country"
+          value={search.country}
+          onChange={handleChange}
+        >
+          <option value="">-- Seleccione un País ---</option>
+          {countries.map(country => (
+            <option
+              key={country.code}
+              value={country.code}
+            >{country.name}</option>
+          ))}
+        </select>
+      </div>
+
+      <input className={styles.submit} type="submit" value='Consultar Clima' />
+    </form>
   );
 }

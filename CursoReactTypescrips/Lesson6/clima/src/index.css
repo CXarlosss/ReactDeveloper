@@ -24,17 +24,15 @@
   --purple-700: #6b46c1;
 }
 
-html{
+html {
   font-size: 62.5%;
 }
-
-body{
-   font-family:'Outfit', sans-serif;
-   background-image: url("../public/bg_clima.jpg");
-   height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: var(--white);
-    font-size: 2rem;
+body {
+  font-family: 'Outfit', sans-serif;
+  background-image: url('/bg_clima.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  color: var(--white);
+  font-size: 2rem;
 }
