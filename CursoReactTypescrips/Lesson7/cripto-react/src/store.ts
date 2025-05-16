@@ -22,12 +22,14 @@ export const useCryptoStore = create<CryptoStore>()(devtools((set) => ({
         LASTUPDATE: ''
     },
     loading: false,
-    fetchCryptos: async () => {
-        const cryptocurrencies = await getCryptos()
-        set(() => ({
-            cryptocurrencies
-        }))
-    },
+    // En tu archivo del store
+fetchCryptos: async () => {
+    console.log('fetchCryptos llamado');
+    set({ loading: true });
+    const cryptocurrencies = await getCryptos();
+    console.log('Resultado de getCryptos:', cryptocurrencies);
+    set({ cryptocurrencies, loading: false });
+},
     fetchData: async (pair) => {
         set(() => ({
             loading: true

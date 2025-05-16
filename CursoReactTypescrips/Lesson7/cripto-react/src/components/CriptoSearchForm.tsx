@@ -1,37 +1,42 @@
-import { useCryptoStore } from "../store"
-import { currencies } from "../data"
-import { ChangeEvent, useState } from "react"
-import type { Pair } from "../types"
-import ErrorMessage from "./ErrorMessage"
+import { useCryptoStore } from "../store";
+import { currencies } from "../data";
+import { useState, useEffect } from "react"; // Importa useEffect
+import type { ChangeEvent } from "react";
+import type { Pair } from "../types";
+import ErrorMessage from "./ErrorMessage";
 
 export default function CriptoSearchForm() {
-    const cryptocurrencies = useCryptoStore((state) => state.cryptocurrencies)
-    const fetchData = useCryptoStore((state) => state.fetchData)
+    const cryptocurrencies = useCryptoStore((state) => state.cryptocurrencies);
+    const fetchData = useCryptoStore((state) => state.fetchData);
+    const fetchCryptos = useCryptoStore((state) => state.fetchCryptos); // Obtén la función fetchCryptos del store
 
     const [pair, setPair] = useState<Pair>({
         currency: '',
         criptocurrency: ''
-    })
-    const [error, setError] = useState('')
-    
+    });
+    const [error, setError] = useState('');
+
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
         setPair({
             ...pair,
             [e.target.name]: e.target.value
-        })
+        });
     }
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(Object.values(pair).includes('')) {
-            setError('Todos los campos son obligatorios')
-            return
+            setError('Todos los campos son obligatorios');
+            return;
         }
-        setError('')
-        fetchData(pair)
+        setError('');
+        fetchData(pair);
     }
 
-
+   useEffect(() => {
+    console.log('Ejecutando fetchCryptos al montar el componente');
+    fetchCryptos();
+}, [fetchCryptos]);
     return (
         <form
             className='form'
@@ -42,8 +47,8 @@ export default function CriptoSearchForm() {
 
             <div className='field'>
                 <label htmlFor="currency">Moneda:</label>
-                <select 
-                    name="currency" 
+                <select
+                    name="currency"
                     id="currency"
                     onChange={handleChange}
                     value={pair.currency}
@@ -57,8 +62,8 @@ export default function CriptoSearchForm() {
 
             <div className='field'>
                 <label htmlFor="criptocurrency">Criptomoneda:</label>
-                <select 
-                    name="criptocurrency" 
+                <select
+                    name="criptocurrency"
                     id="criptocurrency"
                     onChange={handleChange}
                     value={pair.criptocurrency}
@@ -75,5 +80,5 @@ export default function CriptoSearchForm() {
 
             <input type='submit' value='Cotizar' />
         </form>
-    )
+    );
 }
