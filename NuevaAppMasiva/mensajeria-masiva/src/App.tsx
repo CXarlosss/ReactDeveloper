@@ -1,15 +1,21 @@
-
-import './App.css'
+// App.tsx
+import { Routes, Route } from 'react-router-dom';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import ChatPage from './pages/ChatPage';
+import AdminPage from './pages/AdminPage';
+import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
-
   return (
-    <>
-    <div>
-      <h1>Hola Mundo</h1>
-    </div>
-    </>
-  )
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+  <Route path="/" element={<PrivateRoute><ChatPage /></PrivateRoute>} />
+      <Route path="/admin" element={<AdminRoute><AdminPage /></AdminRoute>} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;
