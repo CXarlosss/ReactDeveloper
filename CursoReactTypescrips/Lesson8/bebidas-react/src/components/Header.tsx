@@ -19,19 +19,21 @@ export default function Header() {
     setSearchFilters({ ...searchFilters, [e.target.name]: e.target.value })
   }
 
-  const handleSubmit = (e:  React.FormEvent<HTMLFormElement> ) => {
-    e.preventDefault()
-    if(Object.values(searchFilters).includes('')) {
-      showNotification({
-        text: 'Todos los campos son obligatorios',
-        error: true
-      })
-      return
-    }
-    
-    // Consultar las recetas
-    searchRecipes(searchFilters)
+ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+
+  if (Object.values(searchFilters).includes('')) {
+    showNotification({
+      text: 'Todos los campos son obligatorios',
+      error: true
+    });
+    return;
   }
+
+  console.log("Buscando recetas con filtros:", searchFilters); // 👈
+  searchRecipes(searchFilters);
+};
+
 
   
   return (
