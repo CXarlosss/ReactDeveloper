@@ -1,9 +1,8 @@
-import { sumar } from './server.js';
+// index.ts
+import server from './server.js';
 
-console.log('desde index.ts ' + sumar(1, 2));
+const PORT = process.env.PORT || 3000;
 
-sumar(1, 2);
-console.log(sumar(1,2))
-sumar(3,5);
-console.log(sumar(3,5))
-console.log('index');
+server.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
+});
