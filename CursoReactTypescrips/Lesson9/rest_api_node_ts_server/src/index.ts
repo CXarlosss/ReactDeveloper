@@ -1,9 +1,5 @@
-import { sumar } from './server.js';
+import server from "./server";
 
-console.log('desde index.ts ' + sumar(1, 2));
-
-sumar(1, 2);
-console.log(sumar(1,2))
-sumar(3,5);
-console.log(sumar(3,5))
-console.log('index');
+server.listen(4000, () => {
+    console.log("Server is running on port 4000");
+});
