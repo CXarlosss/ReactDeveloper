@@ -1,5 +1,8 @@
-import server from "./server";
+// index.ts
+import server from './server.js';
 
-server.listen(4000, () => {
-    console.log("Server is running on port 4000");
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
