@@ -2,15 +2,14 @@
   "name": "rest_api_node_ts_server",
   "version": "1.0.0",
   "description": "Rest API's con express y typescript",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Carlos de Petronila",
-  "license": "ISC",
   "type": "module",
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec tsx src/index.ts",
+    "start": "tsx src/index.ts"
+  },
   "devDependencies": {
-    "ts-node": "^10.9.2",
+    "nodemon": "^3.1.10",
+    "tsx": "^4.19.4",
     "typescript": "^5.8.3"
   }
 }
