@@ -7,7 +7,7 @@ import colors from 'colors';
 
 // **AÑADE ESTO (O VERIFICA QUE ESTÉ BIEN DEFINIDO Y EXPORTADO)**
 export const validatePartialUpdateProduct = [
-  param('id').isUUID().withMessage('ID de producto inválido'), // Ajusta si tu ID no es UUID
+param('id').isInt({ min: 1 }).withMessage('ID inválido'),
   body('name')
     .optional()
     .isString().withMessage('El nombre debe ser una cadena de texto'),
@@ -30,18 +30,20 @@ export const validatePartialUpdateProduct = [
 
 // **AÑADE ESTO (O VERIFICA QUE ESTÉ BIEN DEFINIDO Y EXPORTADO)**
 export const validateProductId = [
-    param('id').isUUID().withMessage('ID de producto inválido'), // Ajusta si tu ID no es UUID
-    (req: Request, res: Response, next: NextFunction) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            const formattedErrors = errors.array().map(err => err.msg);
-            console.log(colors.red('Errores de validación de ID:'), formattedErrors);
-            return res.status(400).json({ errors: formattedErrors });
-        }
-        next();
+  param('id').isInt({ min: 1 }).withMessage('ID inválido'),
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const formattedErrors = errors.array().map(err => err.msg);
+      console.log(colors.red('Errores de validación de ID:'), formattedErrors);
+      return res.status(400).json({ errors: formattedErrors });
     }
-];export const validateUpdateProduct = [
-  param('id').isUUID().withMessage('ID inválido'),
+    next();
+  }
+];
+
+export const validateUpdateProduct = [
+  param('id').isInt({ min: 1 }).withMessage('ID inválido'),
   body('name').isString().withMessage('El nombre debe ser una cadena de texto'),
   body('price').isFloat({ min: 0 }).withMessage('El precio debe ser un número positivo'),
   body('availability').isBoolean().withMessage('La disponibilidad debe ser un valor booleano'),
@@ -55,6 +57,7 @@ export const validateProductId = [
     next();
   }
 ];
+
 export const validateCreateProduct = [
   body('name')
     .notEmpty()
