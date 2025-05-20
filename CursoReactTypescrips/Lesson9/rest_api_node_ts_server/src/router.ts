@@ -1,13 +1,11 @@
 import { Router } from "express";
-
+import { createProduct } from "./handlers/product.js";
 const router = Router();
 
 router.get("/", (req, res) => {
   res.json("Desde GET");
 });
-router.post("/", (req, res) => {
-  res.json("Desde POST");
-});
+router.post("/products", createProduct); // ✅ ahora apunta a /products
 router.put("/", (req, res) => {
   res.json("Desde PUT");
 });

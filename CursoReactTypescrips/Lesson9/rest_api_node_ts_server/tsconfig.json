@@ -12,7 +12,9 @@
     "rootDir":"./src",
     "lib": ["ESNext"],
     "sourceMap": true,  
-    "declaration": true
+    "declaration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
     
     
   },

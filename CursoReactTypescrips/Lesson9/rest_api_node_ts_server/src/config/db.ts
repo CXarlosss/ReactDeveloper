@@ -1,5 +1,18 @@
-import { Sequelize } from "sequelize";
+import { Product } from './../models/Product.model';
+import { Sequelize } from "sequelize-typescript";
+import dotenv from "dotenv";
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+dotenv.config();
 
-const db  = new Sequelize("postgresql://rest_api_node_typescript_hn5b_user:uu6XzmCpqmqKXK0hr6vP6Wec7mVZr6G6@dpg-d0lltrogjchc73f6v6rg-a.frankfurt-postgres.render.com/rest_api_node_typescript_hn5b?ssl=true", { logging: false });
+// Resolver __dirname de forma compatible con ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const db = new Sequelize(process.env.DATABASE_URL!, {
+  models: [Product],
+  dialect: 'postgres',
+  logging: false
+});
 
 export default db;
