@@ -1,0 +1,45 @@
+# Archivos y directorios de Node.js
+node_modules/
+dist/
+dist-ssr/ # Si tienes una carpeta específica para el SSR
+build/
+*.js.map
+*.ts.map
+
+# Registros (Logs)
+logs/
+*.log
+*-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Archivos de entorno
+.env
+.env.*.local
+
+# Sistema de archivos del editor/SO
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swo
+
+# Configuraciones del IDE
+.vscode/
+!.vscode/extensions.json # Excepción: No ignorar este archivo específico
+.idea/
+
+# Dependencias empaquetadas
+*.local
+
+# Archivos temporales
+tmp/
+temp/
+
+# Archivos de compilación
+*.bak
+*.orig
