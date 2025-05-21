@@ -1,12 +1,13 @@
-import { Sequelize } from "sequelize-typescript";
-import dotenv from "dotenv";
-import { Product } from "../models/Product.model";
+// src/config/db.ts
+import { Sequelize } from 'sequelize-typescript';
+import { Product } from '../models/Product.model';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const db = new Sequelize(process.env.DATABASE_URL!, {
-  models: [Product],
   dialect: 'postgres',
+  models: [Product], // 👈 Muy importante: REGISTRAR MODELO AQUÍ
   logging: false,
 });
 
