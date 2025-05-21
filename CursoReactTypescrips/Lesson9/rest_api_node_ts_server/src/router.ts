@@ -1,5 +1,4 @@
-// router.ts
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import {
   createProduct,
   getProducts,
@@ -7,25 +6,28 @@ import {
   updateProduct,
   partialUpdateProduct,
   deleteProduct,
-} from "./handlers/product.js"; // Asegúrate de que tenga .js
+} from "./handlers/product";
 
 import {
   validateCreateProduct,
   validateUpdateProduct,
   validatePartialUpdateProduct,
   validateProductId
-} from "./middlewares/productValidation.js"; // <--- ¡ESTA ES LA RUTA CORRECTA SI TU ARCHIVO ESTÁ EN 'src/middlewares/productValidation.ts'!
+} from "./middlewares/productValidation";
 
 const router = Router();
 
-router.get("/", (_req, res) => res.json({ message: "API funcionando ✅" }));
+const healthCheck = (_req: Request, res: Response): void => {
+  res.json({ message: "API funcionando ✅" });
+};
 
-// CRUD completo
+router.get("/", healthCheck);
+
 router.get("/products", getProducts);
-router.get("/products/:id", validateProductId, getProductById);
-router.post("/products", validateCreateProduct, createProduct);
-router.put('/products/:id', validateUpdateProduct, updateProduct);
-router.patch("/products/:id", validatePartialUpdateProduct, partialUpdateProduct);
-router.delete("/products/:id", validateProductId, deleteProduct);
+router.get("/products/:id", ...validateProductId, getProductById);
+router.post("/products", ...validateCreateProduct, createProduct);
+router.put("/products/:id", ...validateUpdateProduct, updateProduct);
+router.patch("/products/:id", ...validatePartialUpdateProduct, partialUpdateProduct);
+router.delete("/products/:id", ...validateProductId, deleteProduct);
 
 export default router;

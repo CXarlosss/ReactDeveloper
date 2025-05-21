@@ -1,15 +1,8 @@
-import express from "express";
-import productsRouter from "./router.js"; // Recuerda la extensión .js si usas type: module
-import db from "./config/db.js";
-import colors from "colors";
+// src/server.ts
+import app from './app';
+import db from './config/db';
+import colors from 'colors';
 
-const server = express();
-
-server.use(express.json());
-
-server.use('/', productsRouter);
-
-// Mostrar banner al iniciar el servidor
 function showBanner() {
   console.log(colors.rainbow("════════════════════════════════════════════════════"));
   console.log(colors.green.bold("🚀 Servidor Express con TypeScript levantado con éxito"));
@@ -17,10 +10,8 @@ function showBanner() {
   console.log(colors.rainbow("════════════════════════════════════════════════════"));
 }
 
-// Conexión a la base de datos
 async function connectDB() {
   console.log(colors.blue("🌀 Conectando a la base de datos PostgreSQL..."));
-
   try {
     await db.authenticate();
     await db.sync();
@@ -30,12 +21,10 @@ async function connectDB() {
   }
 }
 
-// Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
   showBanner();
   console.log(colors.yellow(`🌐 Escuchando en http://localhost:${PORT}`));
   connectDB();
 });
-export default server;

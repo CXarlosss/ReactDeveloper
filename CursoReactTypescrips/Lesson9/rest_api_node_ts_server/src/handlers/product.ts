@@ -1,19 +1,17 @@
 import { Request, Response } from 'express';
 import { Product } from '../models/Product.model';
-import colors from 'colors'; // Asegúrate de tener esta línea si usas 'colors'
+import colors from 'colors';
 
-// Función auxiliar para validar tipos
-const validateProductData = (name: any, price: any, availability: any) => {
+const validateProductData = (name: any, price: any, availability: any): string[] => {
   const errors: string[] = [];
 
   if (typeof name !== 'string' || name.trim() === '') {
     errors.push('El campo "name" debe ser una cadena de texto no vacía.');
   }
 
-  // Validar si price es un número real (float)
   if (typeof price !== 'number' || isNaN(price)) {
     errors.push('El campo "price" debe ser un número.');
-  } else if (price < 0) { // Opcional: validar que el precio no sea negativo
+  } else if (price < 0) {
     errors.push('El campo "price" no puede ser negativo.');
   }
 
@@ -24,10 +22,7 @@ const validateProductData = (name: any, price: any, availability: any) => {
   return errors;
 };
 
-// ---
-
-// ✅ Crear producto
-export const createProduct = async (req: Request, res: Response) => {
+export const createProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log(colors.cyan('--- Petición para crear producto ---'));
     const { name, price, availability } = req.body;
@@ -36,7 +31,8 @@ export const createProduct = async (req: Request, res: Response) => {
     if (validationErrors.length > 0) {
       console.log(colors.red('Error de validación al crear producto:'));
       validationErrors.forEach(err => console.log(colors.red(`- ${err}`)));
-      return res.status(400).json({ errors: validationErrors });
+      res.status(400).json({ errors: validationErrors });
+      return;
     }
 
     const product = await Product.create({ name, price, availability });
@@ -48,8 +44,7 @@ export const createProduct = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Obtener todos los productos
-export const getProducts = async (_req: Request, res: Response) => {
+export const getProducts = async (_req: Request, res: Response): Promise<void> => {
   try {
     console.log(colors.cyan('--- Petición para obtener todos los productos ---'));
     const products = await Product.findAll();
@@ -61,14 +56,14 @@ export const getProducts = async (_req: Request, res: Response) => {
   }
 };
 
-// ✅ Obtener un producto por ID
-export const getProductById = async (req: Request, res: Response) => {
+export const getProductById = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log(colors.cyan(`--- Petición para obtener producto con ID: ${req.params.id} ---`));
     const product = await Product.findByPk(req.params.id);
     if (!product) {
       console.log(colors.yellow(`Producto con ID ${req.params.id} no encontrado.`));
-      return res.status(404).json({ error: 'Producto no encontrado' });
+      res.status(404).json({ error: 'Producto no encontrado' });
+      return;
     }
     console.log(colors.green(`Producto encontrado: ${product.name}`));
     res.json(product);
@@ -78,8 +73,7 @@ export const getProductById = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Actualizar producto (PUT)
-export const updateProduct = async (req: Request, res: Response) => {
+export const updateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log(colors.cyan(`--- Petición para actualizar producto con ID: ${req.params.id} (PUT) ---`));
     console.log(colors.blue('BODY RECIBIDO EN PUT:'), req.body);
@@ -88,14 +82,16 @@ export const updateProduct = async (req: Request, res: Response) => {
     const product = await Product.findByPk(req.params.id);
     if (!product) {
       console.log(colors.yellow(`Producto con ID ${req.params.id} no encontrado para actualizar.`));
-      return res.status(404).json({ error: 'Producto no encontrado' });
+      res.status(404).json({ error: 'Producto no encontrado' });
+      return;
     }
 
     const validationErrors = validateProductData(name, price, availability);
     if (validationErrors.length > 0) {
       console.log(colors.red('Error de validación al actualizar producto (PUT):'));
       validationErrors.forEach(err => console.log(colors.red(`- ${err}`)));
-      return res.status(400).json({ errors: validationErrors });
+      res.status(400).json({ errors: validationErrors });
+      return;
     }
 
     product.name = name;
@@ -111,21 +107,20 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Actualizar parcialmente producto (PATCH)
-export const partialUpdateProduct = async (req: Request, res: Response) => {
+export const partialUpdateProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log(colors.cyan(`--- Petición para actualizar parcialmente producto con ID: ${req.params.id} (PATCH) ---`));
     console.log(colors.blue('BODY RECIBIDO EN PATCH:'), req.body);
     const product = await Product.findByPk(req.params.id);
     if (!product) {
       console.log(colors.yellow(`Producto con ID ${req.params.id} no encontrado para actualización parcial.`));
-      return res.status(404).json({ error: 'Producto no encontrado' });
+      res.status(404).json({ error: 'Producto no encontrado' });
+      return;
     }
 
     const { name, price, availability } = req.body;
     const errors: string[] = [];
 
-    // Validar solo los campos que se envían
     if (name !== undefined) {
       if (typeof name !== 'string' || name.trim() === '') {
         errors.push('El campo "name" debe ser una cadena de texto no vacía si se proporciona.');
@@ -155,7 +150,8 @@ export const partialUpdateProduct = async (req: Request, res: Response) => {
     if (errors.length > 0) {
       console.log(colors.red('Error de validación al actualizar parcialmente producto (PATCH):'));
       errors.forEach(err => console.log(colors.red(`- ${err}`)));
-      return res.status(400).json({ errors: errors });
+      res.status(400).json({ errors: errors });
+      return;
     }
 
     await product.save();
@@ -167,14 +163,14 @@ export const partialUpdateProduct = async (req: Request, res: Response) => {
   }
 };
 
-// ✅ Eliminar producto
-export const deleteProduct = async (req: Request, res: Response) => {
+export const deleteProduct = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log(colors.cyan(`--- Petición para eliminar producto con ID: ${req.params.id} ---`));
     const product = await Product.findByPk(req.params.id);
     if (!product) {
       console.log(colors.yellow(`Producto con ID ${req.params.id} no encontrado para eliminar.`));
-      return res.status(404).json({ error: 'Producto no encontrado' });
+      res.status(404).json({ error: 'Producto no encontrado' });
+      return;
     }
 
     await product.destroy();
