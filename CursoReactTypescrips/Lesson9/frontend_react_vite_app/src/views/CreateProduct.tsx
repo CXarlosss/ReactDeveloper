@@ -1,8 +1,8 @@
-// src/views/NuevoProducto.tsx
+// src/views/CreateProduct.tsx
 import { useNavigate } from "react-router-dom";
-import ProductForm from "../components/ProductForm";
+import ProductForm from "../components/ProductForm.tsx";
 
-export default function NuevoProducto() {
+export default function CreateProduct() {
   const navigate = useNavigate();
 
   const handleSubmit = async (data: { name: string; price: number; availability: boolean }) => {
@@ -15,15 +15,15 @@ export default function NuevoProducto() {
 
       if (!res.ok) throw new Error("Error al crear producto");
 
-      navigate("/"); // vuelve al listado
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-4">🆕 Crear Producto</h2>
+    <div className="max-w-2xl mx-auto mt-8">
+      <h2 className="text-xl font-bold mb-4">🆕 Crear Producto</h2>
       <ProductForm submitText="Crear" onSubmit={handleSubmit} />
     </div>
   );

@@ -2,13 +2,15 @@ import { Outlet } from "react-router-dom"
 const Layout = () => {
   return (
     <>
-    <header className="bg-slate-600">
-      <div>
-        <h1 className="text-4xl font-extrabold text-white">CHORLYSOCIAL</h1>
+    <header className="bg-slate-800">
+      <div className="mx-auto max-w-6xl py-10">
+        <h1 className="text-4xl font-extrabold text-white">Administrador de Productos</h1>
       </div>
     </header>
-      <h1>Layout</h1>
-      <Outlet />
+     <main className="mt-10 mx-auto max-w-6xl p-10">
+       <Outlet />
+     </main>
+     
     </>
   )
 }
