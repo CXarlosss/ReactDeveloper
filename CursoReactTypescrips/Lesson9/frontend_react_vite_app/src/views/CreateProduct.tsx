@@ -1,7 +1,6 @@
 // ✅ src/views/CreateProduct.tsx
 import { useNavigate } from "react-router-dom";
 import ProductForm from "../components/ProductForm.tsx";
-// ⬇️ Importamos la función correcta desde el servicio
 import { createProduct } from "../services/ProductServices";
 import { DraftProductSchema } from "../types/index.ts";
 import { safeParse } from "valibot";
@@ -16,36 +15,22 @@ export default function CreateProduct() {
       return;
     }
     try {
-      // ✅ Versión correcta usando servicio:
       await createProduct(result.output);
       navigate("/");
-
-      // ❌ Código anterior incorrecto:
-      /*
-      useEffect(() => {
-        getAllProducts().then(setProducts).catch(console.error);
-      }, []);
-      */
-
-      // ❌ Otra versión que hacía el fetch directo (también se puede usar, pero no reutilizable):
-      /*
-      const res = await fetch("http://localhost:3000/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!res.ok) throw new Error("Error al crear producto");
-      */
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-8">
-      <h2 className="text-xl font-bold mb-4">🆕 Crear Producto</h2>
-      <ProductForm submitText="Crear" onSubmit={handleSubmit} />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 sm:p-6 lg:p-8 flex items-center justify-center">
+      <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg max-w-lg w-full transform transition-all duration-300 hover:shadow-xl">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-6 text-center tracking-tight">
+          🆕 Crear Nuevo Producto
+        </h2>
+        {/* Aquí ya no pasamos las clases de estilo de los inputs/botones */}
+        <ProductForm submitText="Crear Producto" onSubmit={handleSubmit} />
+      </div>
     </div>
   );
 }

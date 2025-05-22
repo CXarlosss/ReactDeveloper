@@ -3,7 +3,7 @@
 // @ts-nocheck
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import ProductForm from "../components/ProductForm.tsx";
+import ProductForm from "../components/ProductForm.tsx"; // Asegúrate de que este ProductForm ya tiene los estilos internos
 import { getProductById, updateProduct } from "../services/ProductServices";
 import { DraftProductSchema } from "../types/index.ts";
 import { safeParse } from "valibot";
@@ -19,6 +19,8 @@ export default function EditProduct() {
 
     getProductById(id)
       .then((data) => {
+        // Asegúrate de que 'data' contenga 'name', 'price', 'availability'
+        // y que sus tipos sean correctos para el formulario.
         setProduct({
           name: data.name,
           price: data.price,
@@ -48,19 +50,36 @@ export default function EditProduct() {
     }
   };
 
-  if (loading) return <p className="text-center">Cargando producto...</p>;
-  if (!product) return <p className="text-center text-red-600">Producto no encontrado.</p>;
+  // Estilos para los mensajes de carga y error
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <p className="text-xl font-semibold text-blue-700 animate-pulse">Cargando producto...</p>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <p className="text-xl font-semibold text-red-600">Producto no encontrado.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="max-w-2xl mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        ✏️ Editar Producto
-      </h2>
-      <ProductForm
-        initialData={product}
-        onSubmit={handleUpdate}
-        submitText="Guardar Cambios"
-      />
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 sm:p-6 lg:p-8 flex items-center justify-center">
+      <div className="bg-white p-6 sm:p-8 rounded-xl shadow-lg max-w-lg w-full transform transition-all duration-300 hover:shadow-xl">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-blue-800 mb-6 text-center tracking-tight">
+          ✏️ Editar Producto
+        </h2>
+        {/* Aquí pasamos el `product` como `defaultValues` */}
+        <ProductForm
+          defaultValues={product}
+          onSubmit={handleUpdate}
+          submitText="Guardar Cambios"
+        />
+      </div>
     </div>
   );
 }
