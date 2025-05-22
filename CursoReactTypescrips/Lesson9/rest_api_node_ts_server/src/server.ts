@@ -1,23 +1,32 @@
-import express from "express";
-import  productsRouter  from "./router";
-import db from "./config/db";
-//Conectar a base de datos
+// src/server.ts
+import express from 'express';
+import productRoutes from './routes/productRoutes'; // Asegúrate de que esta ruta sea correcta y el archivo exista
+import cors from 'cors'; // Si usas CORS, añade esto e instala 'cors' si no lo tienes npm i cors @types/cors
+import { db } from './config/db'; // Asegúrate de que esta ruta sea correcta y el archivo exista
+import colors from 'colors'; // Para logs si lo usas aquí también
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger'; // Asegúrate de que esta ruta sea correcta y el archivo exista
 
-connectDB(); // <-- AÑADE ESTO
+const app = express();
 
-const server = express();
-server.use('/', productsRouter);
-async function connectDB() {
-    try {
-      await db.authenticate();
-      console.log("Conectado a la base de datos de Postgree con exito");
-    } catch (error) {
-      console.error("Error al conectar a la base de datos:", error);
-    }
-    
-}
-server.use('/', productsRouter);
+// Conectar a la base de datos
+db.authenticate()
+    .then(() => db.sync()) // O db.sync({ force: true }) si quieres resetear la DB en cada inicio (¡cuidado en producción!)
+    .then(() => console.log(colors.magenta.bold('Base de datos conectada correctamente')))
+    .catch(error => {
+        console.log(colors.red.bold('Error al conectar la base de datos: ' + error.message));
+        process.exit(1); // Salir si la conexión falla
+    });
 
+// Middlewares
+app.use(express.json()); // Para parsear JSON en las peticiones
+app.use(cors()); // Habilita CORS si es necesario
 
-export default server;
+// Rutas de tu API
+app.use('/products', productRoutes); // Ejemplo de ruta para productos
 
+// Documentación Swagger
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Exporta la instancia de la aplicación
+export default app;
