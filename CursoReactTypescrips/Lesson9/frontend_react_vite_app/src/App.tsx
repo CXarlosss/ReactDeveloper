@@ -1,9 +1,11 @@
+// src/App.tsx
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router'; // Importamos el router que definimos
 
-export default function App() {
-
+function App() {
   return (
-    <>
-<h1 className="text-4xl font-bold text-center text-red-800 mb-8">Lista de Productos</h1>    </>
-  )
+    <RouterProvider router={router} />
+  );
 }
 
+export default App;
