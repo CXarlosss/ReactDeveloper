@@ -1,12 +1,34 @@
-// src/views/CreateProduct.tsx
+// ✅ src/views/CreateProduct.tsx
 import { useNavigate } from "react-router-dom";
 import ProductForm from "../components/ProductForm.tsx";
+// ⬇️ Importamos la función correcta desde el servicio
+import { createProduct } from "../services/ProductServices";
+import { DraftProductSchema } from "../types/index.ts";
+import { safeParse } from "valibot";
 
 export default function CreateProduct() {
   const navigate = useNavigate();
 
   const handleSubmit = async (data: { name: string; price: number; availability: boolean }) => {
+    const result = safeParse(DraftProductSchema, data);
+    if (!result.success) {
+      console.error(result.issues);
+      return;
+    }
     try {
+      // ✅ Versión correcta usando servicio:
+      await createProduct(result.output);
+      navigate("/");
+
+      // ❌ Código anterior incorrecto:
+      /*
+      useEffect(() => {
+        getAllProducts().then(setProducts).catch(console.error);
+      }, []);
+      */
+
+      // ❌ Otra versión que hacía el fetch directo (también se puede usar, pero no reutilizable):
+      /*
       const res = await fetch("http://localhost:3000/products", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -14,8 +36,7 @@ export default function CreateProduct() {
       });
 
       if (!res.ok) throw new Error("Error al crear producto");
-
-      navigate("/");
+      */
     } catch (error) {
       console.error(error);
     }
