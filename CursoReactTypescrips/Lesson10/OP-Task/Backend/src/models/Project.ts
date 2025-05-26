@@ -1,13 +1,11 @@
-// src/models/Project.ts
-import mongoose, { Schema, Document, PopulatedDoc } from "mongoose";
+import mongoose, { Schema, Document, PopulatedDoc, Types } from "mongoose";
 import { ITask } from "./Task.js";
 
 export type ProjectType = Document & {
-  // <-- ¡Aquí está el cambio! Ahora se llama ProjectType
   projectName: string;
   clientName: string;
   description: string;
-  tasks: PopulatedDoc<ITask & Document>[]; // Opcional, si quieres relacionar tareas con el proyecto
+tasks: Types.ObjectId[];
 };
 
 const projectSchema = new Schema<ProjectType>(
@@ -15,7 +13,7 @@ const projectSchema = new Schema<ProjectType>(
     projectName: {
       type: String,
       required: true,
-      trim: true, // Elimina espacios en blanco
+      trim: true,
     },
     clientName: {
       type: String,
@@ -25,6 +23,12 @@ const projectSchema = new Schema<ProjectType>(
       type: String,
       required: true,
     },
+    tasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Task",
+      },
+    ],
   },
   {
     timestamps: true,
