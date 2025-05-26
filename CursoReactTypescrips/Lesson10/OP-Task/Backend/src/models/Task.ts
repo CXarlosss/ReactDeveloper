@@ -2,7 +2,7 @@
 import mongoose, { Schema, Document, Types } from 'mongoose'
 
 // Importamos el modelo Note para usar en el middleware de borrado
-import Note from './Note.js'
+import Note from './Note'
 // Definimos los posibles estados de una tarea como constantes
 const taskStatus = {
     PENDING: 'pending',

@@ -1,17 +1,26 @@
-// src/server.ts
-import express from 'express';
-import dotenv from 'dotenv';
-import { connectDB } from './config/db.js';
+import express from 'express'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import morgan from 'morgan'
+import { corsConfig } from './config/cors'
+import { connectDB } from './config/db'
+import authRoutes from './routes/authRoutes'
+import projectRoutes from './routes/projectRoutes'
 
-dotenv.config();
-connectDB();
-const app = express();
+dotenv.config()
+connectDB()
 
-// Middleware para parsear JSON
-app.use(express.json()); 
+const app = express()
+app.use(cors(corsConfig))
+
+// Logging
+app.use(morgan('dev'))
+
+// Leer datos de formularios
+app.use(express.json())
 
 // Routes
-import projectRoutes from './routes/projectRoutes.js'; // <--- Importando tus rutas
-app.use('/api/projects', projectRoutes); // <--- Asignando tus rutas a un prefijo
+app.use('/api/auth', authRoutes)
+app.use('/api/projects', projectRoutes)
 
-export default app;
+export default app

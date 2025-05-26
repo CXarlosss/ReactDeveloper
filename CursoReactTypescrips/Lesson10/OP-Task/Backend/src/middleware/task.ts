@@ -40,6 +40,10 @@ export async function taskExists(req: Request, res: Response, next: NextFunction
 // ❗ Se usa justo después de `taskExists`, con `router.param('taskId', ...)`
 
 export function taskBelongsToProject(req: Request, res: Response, next: NextFunction) {
+    if (!req.task || !req.project) {
+        const error = new Error('Proyecto o tarea no encontrados')
+        return res.status(404).json({ error: error.message })
+    }
     if (req.task.project.toString() !== req.project.id.toString()) {
         const error = new Error('Acción no válida')
         return res.status(400).json({ error: error.message })
@@ -52,7 +56,11 @@ export function taskBelongsToProject(req: Request, res: Response, next: NextFunc
 // ❗ Se puede usar en PUT/DELETE de proyectos, tareas, etc.
 
 export function hasAuthorization(req: Request, res: Response, next: NextFunction) {
-    if (req.user.id.toString() !== req.project.manager.toString()) {
+    if (!req.user || !req.project) {
+        const error = new Error('Usuario o proyecto no encontrados')
+        return res.status(404).json({ error: error.message })
+    }
+    if (req.user.id.toString() !== req.project.manager?.toString()) {
         const error = new Error('Acción no válida')
         return res.status(400).json({ error: error.message })
     }

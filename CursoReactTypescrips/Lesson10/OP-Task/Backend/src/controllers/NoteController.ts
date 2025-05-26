@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import Note, {INote} from '../models/Note.js'
+import Note, {INote} from '../models/Note'
 import { Types } from 'mongoose'
 
 type NoteParams = {
@@ -11,6 +11,10 @@ export class NoteController {
         const { content } = req.body
 
         const note = new Note()
+        if (!req.user) {
+  return res.status(401).json({ error: 'No autorizado' });
+}
+
         note.content = content
         note.createdBy = req.user.id
         note.task = req.task.id
@@ -33,27 +37,34 @@ export class NoteController {
         }
     }
 
-    static deleteNote = async (req: Request<NoteParams>, res: Response) => {
-        const { noteId } = req.params
-        const note = await Note.findById(noteId)
+    static deleteNote = async (req: Request, res: Response) => {
+    const { noteId } = req.params as { noteId: string };
 
-        if(!note) {
-            const error = new Error('Nota no encontrada')
-            return res.status(404).json({error: error.message})
-        }
+    const note = await Note.findById(noteId);
 
-        if(note.createdBy.toString() !== req.user.id.toString()) {
-            const error = new Error('Acción no válida')
-            return res.status(401).json({error: error.message})
-        }
-
-        req.task.notes = req.task.notes.filter( note => note.toString() !== noteId.toString())
-
-        try {
-            await Promise.allSettled([req.task.save(), note.deleteOne()])
-            res.send('Nota Eliminada')
-        } catch (error) {
-            res.status(500).json({error: 'Hubo un error'})
-        }
+    if (!note) {
+        const error = new Error('Nota no encontrada');
+        return res.status(404).json({ error: error.message });
     }
+if (!req.user) {
+  return res.status(401).json({ error: 'No autorizado' });
+}
+
+    if (note.createdBy.toString() !== req.user.id.toString()) {
+        const error = new Error('Acción no válida');
+        return res.status(401).json({ error: error.message });
+    }
+
+    req.task.notes = req.task.notes.filter(
+        (n: { toString: () => string }) => n.toString() !== noteId.toString()
+    );
+
+    try {
+        await Promise.allSettled([req.task.save(), note.deleteOne()]);
+        res.send('Nota Eliminada');
+    } catch (error) {
+        res.status(500).json({ error: 'Hubo un error' });
+    }
+};
+
 }

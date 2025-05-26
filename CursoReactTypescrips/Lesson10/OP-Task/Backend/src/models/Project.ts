@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, PopulatedDoc, Types } from 'mongoose';
-import Task, { ITask } from './Task.js';
-import { IUser } from './User.js';
-import Note from './Note.js';
+import Task, { ITask } from './Task';
+import { IUser } from './User';
+import Note from './Note';
 
 // INTERFAZ para definir el tipo de un Proyecto en TypeScript
 export interface IProject extends Document {

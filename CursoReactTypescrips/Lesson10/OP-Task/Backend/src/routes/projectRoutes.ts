@@ -1,13 +1,13 @@
 import { Router } from 'express'
 import { body, param } from 'express-validator'
-import { ProjectController } from '../controllers/ProjectController.js'
-import { handleInputErrors } from '../middleware/validation.js'
-import { TaskController } from '../controllers/TaskController.js'
-import { projectExists } from '../middleware/project.js'
-import { hasAuthorization, taskBelongsToProject, taskExists } from '../middleware/task.js'
-import { authenticate } from '../middleware/auth.js'
-import { TeamMemberController } from '../controllers/TeamController.js'
-import { NoteController } from '../controllers/NoteController.js'
+import { ProjectController } from '../controllers/ProjectController'
+import { handleInputErrors } from '../middleware/validation'
+import { TaskController } from '../controllers/TaskController'
+import { projectExists } from '../middleware/project'
+import { hasAuthorization, taskBelongsToProject, taskExists } from '../middleware/task'
+import { authenticate } from '../middleware/auth'
+import { TeamMemberController } from '../controllers/TeamController'
+import { NoteController } from '../controllers/NoteController'
 
 const router = Router()
 

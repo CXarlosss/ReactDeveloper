@@ -1,4 +1,4 @@
-import { transporter } from "../config/nodemailer.js"
+import { transporter } from "../config/nodemailer"
 
 interface IEmail {
     email: string

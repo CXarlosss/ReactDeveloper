@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import Project, { IProject } from '../models/Project.js';
+import Project, { IProject } from '../models/Project';
 import mongoose from 'mongoose';
 
 declare global {

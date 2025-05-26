@@ -5,6 +5,9 @@ export class TaskController {
     static createTask = async (req: Request, res: Response) => {
         try {
             const task = new Task(req.body)
+            if (!req.project) {
+                return res.status(401).json({error: 'No autorizado'})
+            }
             task.project = req.project.id
             req.project.tasks.push(task.id)
             await Promise.allSettled([task.save(), req.project.save() ])
@@ -16,6 +19,9 @@ export class TaskController {
 
     static getProjectTasks = async (req: Request, res: Response) => {
         try {
+            if (!req.project) {
+                return res.status(401).json({error: 'No autorizado'})
+            }
             const tasks = await Task.find({project: req.project.id}).populate('project')
             res.json(tasks)
         } catch (error) {
@@ -47,7 +53,10 @@ export class TaskController {
 
     static deleteTask = async (req: Request, res: Response) => {
         try {
-            req.project.tasks = req.project.tasks.filter( task => task.toString() !== req.task.id.toString() )
+            if (!req.project) {
+                return res.status(401).json({error: 'No autorizado'})
+            }
+            req.project.tasks = req.project.tasks.filter( task => task?.toString() !== req.task.id.toString() )
             await Promise.allSettled([ req.task.deleteOne(), req.project.save() ])
             res.send("Tarea Eliminada Correctamente")
         } catch (error) {
@@ -59,7 +68,12 @@ export class TaskController {
         try {
             const { status } = req.body
             req.task.status = status
+            if (!req.user) {
+  return res.status(401).json({ error: 'No autorizado' });
+}
+
             const data = {
+                
                 user: req.user.id,
                 status
             }
