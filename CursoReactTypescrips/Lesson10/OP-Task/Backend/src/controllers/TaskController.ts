@@ -1,98 +1,73 @@
-import type { Request, Response } from 'express';
-import mongoose from "mongoose";
-import Project from '../models/Project.js';
-import Task from '../models/Task.js';
+import type {Request, Response} from 'express'
+import Task from '../models/Task'
 
 export class TaskController {
-  // Crear una tarea en un proyecto
-  static createTask = async (req: Request, res: Response) => {
-    const { projectId } = req.params;
-    const { name, description, dueDate } = req.body;
-
-    try {
-      const project = await Project.findById(projectId);
-      if (!project) {
-        return res.status(404).json({ error: "Project not found" });
-      }
-
-      const task = await Task.create({
-        name,
-        description,
-        dueDate,
-        project: project._id,
-      });
-
-      project.tasks.push(task._id as mongoose.Types.ObjectId);
-      await project.save();
-
-      res.status(201).json(task);
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: "Error creating task" });
+    static createTask = async (req: Request, res: Response) => {
+        try {
+            const task = new Task(req.body)
+            task.project = req.project.id
+            req.project.tasks.push(task.id)
+            await Promise.allSettled([task.save(), req.project.save() ])
+            res.send('Tarea creada correctamente')
+        } catch (error) {
+            res.status(500).json({error: 'Hubo un error'})
+        }
     }
-  };
 
-  // Obtener todas las tareas de un proyecto
-  static getTasks = async (req: Request, res: Response) => {
-    const { projectId } = req.params;
-
-    try {
-      const project = await Project.findById(projectId).populate('tasks');
-      if (!project) {
-        return res.status(404).json({ error: "Project not found" });
-      }
-
-      res.status(200).json(project.tasks);
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: "Error fetching tasks" });
+    static getProjectTasks = async (req: Request, res: Response) => {
+        try {
+            const tasks = await Task.find({project: req.project.id}).populate('project')
+            res.json(tasks)
+        } catch (error) {
+            res.status(500).json({error: 'Hubo un error'})
+        }
     }
-  };
 
-  // Actualizar una tarea específica
-  static updateTask = async (req: Request, res: Response) => {
-    const { taskId } = req.params;
-    const { name, description, dueDate, status } = req.body;
-
-    try {
-      const task = await Task.findByIdAndUpdate(
-        taskId,
-        { name, description, dueDate, status },
-        { new: true, runValidators: true }
-      );
-
-      if (!task) {
-        return res.status(404).json({ error: "Task not found" });
-      }
-
-      res.status(200).json(task);
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: "Error updating task" });
+    static getTaskById = async (req: Request, res: Response) => {
+        try {
+            const task = await Task.findById(req.task.id)
+                            .populate({path: 'completedBy.user', select: 'id name email'})
+                            .populate({path: 'notes', populate: {path: 'createdBy', select: 'id name email' }})
+            res.json(task)
+        } catch (error) {
+            res.status(500).json({error: 'Hubo un error'})
+        }
     }
-  };
 
-  // Eliminar una tarea específica
-  static deleteTask = async (req: Request, res: Response) => {
-    const { taskId } = req.params;
-
-    try {
-      const task = await Task.findByIdAndDelete(taskId);
-      if (!task) {
-        return res.status(404).json({ error: "Task not found" });
-      }
-
-      // Opcional: eliminar la tarea del array tasks en el proyecto
-      await Project.findByIdAndUpdate(task.project, {
-        $pull: { tasks: task._id },
-      });
-
-      res.status(200).json({ message: "Task deleted successfully" });
-    } catch (error: any) {
-      console.error(error);
-      res.status(500).json({ error: "Error deleting task" });
+    static updateTask = async (req: Request, res: Response) => {
+        try {
+            req.task.name = req.body.name
+            req.task.description = req.body.description
+            await req.task.save()
+            res.send("Tarea Actualizada Correctamente")
+        } catch (error) {
+            res.status(500).json({error: 'Hubo un error'})
+        }
     }
-  };
+
+    static deleteTask = async (req: Request, res: Response) => {
+        try {
+            req.project.tasks = req.project.tasks.filter( task => task.toString() !== req.task.id.toString() )
+            await Promise.allSettled([ req.task.deleteOne(), req.project.save() ])
+            res.send("Tarea Eliminada Correctamente")
+        } catch (error) {
+            res.status(500).json({error: 'Hubo un error'})
+        }
+    }
+
+    static updateStatus = async (req: Request, res: Response) => {
+        try {
+            const { status } = req.body
+            req.task.status = status
+            const data = {
+                user: req.user.id,
+                status
+            }
+            req.task.completedBy.push(data)
+            await req.task.save()
+            res.send('Tarea Actualizada')
+        } catch (error) {
+            res.status(500).json({error: 'Hubo un error'})
+        }
+    }
 }
-
-export default TaskController;

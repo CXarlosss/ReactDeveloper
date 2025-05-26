@@ -1,34 +1,37 @@
 import type { Request, Response, NextFunction } from 'express';
-import Project from '../models/Project.js';
+import Project, { IProject } from '../models/Project.js';
 import mongoose from 'mongoose';
-export async function validateProjectExist(req: Request, res: Response, next: NextFunction) {
-  const { projectId } = req.params;
 
-  if (!projectId) {
-    return res.status(400).json({ error: 'Project ID is required' });
-  }
-
-  try {
-    const project = await Project.findById(projectId);
-    if (!project) {
-      return res.status(404).json({ error: 'Project not found' });
+declare global {
+  namespace Express {
+    interface Request {
+      project?: IProject;
     }
-    next();
-  } catch (error) {
-    console.error('Error validating project existence:', error);
-    res.status(500).json({ error: 'Internal server error' });
   }
 }
 
-export function validateProjectIdFormat(req: Request, res: Response, next: NextFunction) {
+// ✅ Middleware combinado que valida el ID y busca el proyecto, guardándolo en req.project
+export async function projectExists(req: Request, res: Response, next: NextFunction) {
   const { projectId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(projectId)) {
     return res.status(400).json({ error: "Invalid project ID format" });
   }
 
-  next();
+  try {
+    const project = await Project.findById(projectId);
+    if (!project) {
+      return res.status(404).json({ error: "Project not found" });
+    }
+
+    req.project = project;
+    next();
+  } catch (error) {
+    res.status(500).json({ error: "Error checking project" });
+  }
 }
+
+// Middleware de validación del body del proyecto
 export function validateProjectBody(req: Request, res: Response, next: NextFunction) {
   const { projectName, clientName, description } = req.body;
 
@@ -40,5 +43,3 @@ export function validateProjectBody(req: Request, res: Response, next: NextFunct
 
   next();
 }
-
-

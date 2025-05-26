@@ -1,14 +1,19 @@
-import mongoose, { Schema, Document, PopulatedDoc, Types } from "mongoose";
-import { ITask } from "./Task.js";
+import mongoose, { Schema, Document, PopulatedDoc, Types } from 'mongoose';
+import Task, { ITask } from './Task.js';
+import { IUser } from './User.js';
+import Note from './Note.js';
 
-export type ProjectType = Document & {
-  projectName: string;
-  clientName: string;
-  description: string;
-tasks: Types.ObjectId[];
-};
+// INTERFAZ para definir el tipo de un Proyecto en TypeScript
+export interface IProject extends Document {
+  projectName: string;                             // nombre del proyecto
+  clientName: string;                              // cliente que lo encarga
+  description: string;                             // descripción general
+  tasks: PopulatedDoc<ITask & Document>[];         // array de tareas referenciadas
+  manager: PopulatedDoc<IUser & Document>;         // usuario que creó el proyecto
+  team: PopulatedDoc<IUser & Document>[];          // otros usuarios invitados
+}
 
-const projectSchema = new Schema<ProjectType>(
+const ProjectSchema: Schema = new Schema(
   {
     projectName: {
       type: String,
@@ -18,22 +23,43 @@ const projectSchema = new Schema<ProjectType>(
     clientName: {
       type: String,
       required: true,
+      trim: true,
     },
     description: {
       type: String,
       required: true,
+      trim: true,
     },
     tasks: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Task",
+        type: Types.ObjectId,
+        ref: 'Task', // se puede hacer .populate('tasks')
+      },
+    ],
+    manager: {
+      type: Types.ObjectId,
+      ref: 'User',  // creador del proyecto
+    },
+    team: [
+      {
+        type: Types.ObjectId,
+        ref: 'User',  // miembros invitados al proyecto
       },
     ],
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true } // createdAt, updatedAt
 );
+ProjectSchema.pre('deleteOne', {document: true}, async function() {
+    const projectId = this._id
+    if(!projectId) return
 
-const Project = mongoose.model<ProjectType>("Project", projectSchema);
-export default Project;
+    const tasks = await Task.find({ project: projectId })
+    for(const task of tasks) {
+        await Note.deleteMany({ task: task.id})
+    }
+
+    await Task.deleteMany({project: projectId})
+})
+
+const Project = mongoose.model<IProject>('Project', ProjectSchema)
+export default Project
