@@ -2,37 +2,25 @@
 import { Router } from "express";
 import { ProjectController } from "../controllers/ProjectController.js";
 import { TaskController } from "../controllers/TaskController.js";
+import { validateProjectExist,validateProjectIdFormat,validateProjectBody} from "../middleware/project.js";
 
 const router = Router();
-
 // Rutas para /api/projects
-
-// Obtener todos los proyectos
-router.get("/", ProjectController.getAllProjects);
-
-// Crear un nuevo proyecto
-router.post("/", ProjectController.createProject);
-
-// Obtener un solo proyecto por ID
-router.get("/:id", ProjectController.getProjectById); 
-
-// Actualizar un proyecto por ID
-router.put("/:id", ProjectController.updateProject);
-
-// Eliminar un proyecto por ID
-router.delete("/:id", ProjectController.deleteProject);
-
+// Crear proyecto
+router.post("/", validateProjectBody, ProjectController.createProject);
+// Actualizar
+router.put("/:id", validateProjectIdFormat, validateProjectExist, validateProjectBody, ProjectController.updateProject);
+// Obtener uno
+router.get("/:id", validateProjectIdFormat, validateProjectExist, ProjectController.getProjectById);
+// Eliminar
+router.delete("/:id", validateProjectIdFormat, validateProjectExist, ProjectController.deleteProject);
 //Routes for tasks in a project
-
-// Crear tarea
-router.post("/:projectId/tasks", TaskController.createTask);
-
-// Obtener tareas de un proyecto
-router.get("/:projectId/tasks", TaskController.getTasks);
-
+// Crear tarea en un proyecto existente
+router.post("/:projectId/tasks", validateProjectExist, TaskController.createTask);
+// Obtener tareas de un proyecto existente
+router.get("/:projectId/tasks", validateProjectExist, TaskController.getTasks);
 // Actualizar tarea por ID
 router.put("/tasks/:taskId", TaskController.updateTask);
-
 // Eliminar tarea por ID
 router.delete("/tasks/:taskId", TaskController.deleteTask);
 
