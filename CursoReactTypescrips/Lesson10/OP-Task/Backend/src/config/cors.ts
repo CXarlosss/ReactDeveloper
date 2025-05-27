@@ -1,6 +1,10 @@
+// src/config/cors.ts
+import dotenv from 'dotenv'
+dotenv.config()
+
 import { CorsOptions } from "cors";
 
-const whitelist = [process.env.FRONTEND_URL!];
+const whitelist = [process.env.FRONTEND_URL!]; // Ahora sí cargará bien
 
 export const corsOptions: CorsOptions = {
   origin: function (origin, callback) {
