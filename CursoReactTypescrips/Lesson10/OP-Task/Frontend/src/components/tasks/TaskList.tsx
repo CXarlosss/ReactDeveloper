@@ -5,7 +5,7 @@ import { Project, TaskProject, TaskStatus } from "@/types/index";
 // Componentes
 import TaskCard from "./TaskCard";
 import { statusTranslations } from "@/locales/es";
-import DropTask from "./DropTask";
+import DropTask from "./DropTaskModal";
 // React Query para mutación y control de caché
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateStatus } from "@/api/TaskAPI";

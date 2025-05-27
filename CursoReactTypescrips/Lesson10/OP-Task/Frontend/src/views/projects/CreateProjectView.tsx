@@ -1,119 +1,70 @@
-import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
-import ErrorMessage from "@/components/ErrorMessage";
-
-type FormFields = {
-  projectName: string;
-  clientName: string;
-  description: string;
-};
-
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import ProjectForm from "@/components/projects/ProjectForm";
+import { ProjectFormData } from "@/types/index";
+import { createProject } from "@/api/ProjectAPI";
 
 export default function CreateProjectView() {
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm<FormFields>({
-    defaultValues: {
-      projectName: "",
-      clientName: "",
-      description: "",
-    },
-  });
-  const handleForm = (data: FormFields) => {
-    console.log("Datos del proyecto:", data);
-    // Aquí puedes hacer la petición a tu API o lo que necesites
-    navigate("/dashboard");
+
+  const initialValues: ProjectFormData = {
+    projectName: "",
+    clientName: "",
+    description: ""
   };
 
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: initialValues
+  });
+
+  const { mutate } = useMutation({
+    mutationFn: createProject,
+    onError: (error) => {
+      toast.error(error.message)
+    },
+    onSuccess: (data) => {
+      toast.success(data)
+      navigate('/')
+    }
+  });
+
+  const handleForm = (formData: ProjectFormData) => mutate(formData);
+
   return (
-    <div className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold text-purple-700 mb-6">
-        Crear Proyecto
-      </h1>
+    <div className="max-w-3xl mx-auto">
+      <h1 className="text-5xl font-black text-green-700">Crear Proyecto</h1>
+      <p className="text-2xl font-light text-green-700 mt-5">
+        Llena el siguiente formulario para crear un proyecto
+      </p>
 
+      {/* Navegación */}
+      <nav className="my-5">
+        <Link
+          className="bg-green-500 hover:bg-green-600 px-10 py-3 text-white text-xl font-bold rounded transition-colors"
+          to='/'
+        >
+          ← Volver a Proyectos
+        </Link>
+      </nav>
+
+      {/* Formulario */}
       <form
+        className="mt-10 bg-green-50 shadow-md p-10 rounded-lg space-y-5"
         onSubmit={handleSubmit(handleForm)}
-        className="bg-white p-6 shadow-md rounded-lg space-y-6"
+        noValidate
       >
-        {/* Nombre del Proyecto */}
-        <div>
-          <label
-            htmlFor="projectName"
-            className="text-sm font-semibold text-gray-700 uppercase"
-          >
-            Nombre del Proyecto
-          </label>
-          <input
-            id="projectName"
-            type="text"
-            placeholder="Nombre del Proyecto"
-            className="w-full px-4 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition"
-            {...register("projectName", {
-              required: "El título del proyecto es obligatorio",
-            })}
-          />
-          {errors.projectName && (
-            <ErrorMessage>{errors.projectName.message}</ErrorMessage>
-          )}
-        </div>
+        <ProjectForm
+          register={register}
+          errors={errors}
+        />
 
-        {/* Nombre del Cliente */}
-        <div>
-          <label
-            htmlFor="clientName"
-            className="text-sm font-semibold text-gray-700 uppercase"
-          >
-            Nombre del Cliente
-          </label>
-          <input
-            id="clientName"
-            type="text"
-            placeholder="Nombre del Cliente"
-            className="w-full px-4 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition"
-            {...register("clientName", {
-              required: "El nombre del cliente es obligatorio",
-            })}
-          />
-          {errors.clientName && (
-            <ErrorMessage>{errors.clientName.message}</ErrorMessage>
-          )}
-        </div>
-
-        {/* Descripción */}
-        <div>
-          <label
-            htmlFor="description"
-            className="text-sm font-semibold text-gray-700 uppercase"
-          >
-            Descripción
-          </label>
-          <textarea
-            id="description"
-            placeholder="Descripción del Proyecto"
-            rows={4}
-            className="w-full px-4 py-2 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition resize-none"
-            {...register("description", {
-              required: "La descripción del proyecto es obligatoria",
-            })}
-          />
-          {errors.description && (
-            <ErrorMessage>{errors.description.message}</ErrorMessage>
-          )}
-        </div>
-
-        <div className="flex justify-between items-center">
-          <Link
-            to="/dashboard"
-            className="text-purple-600 hover:underline text-sm"
-          >
-            ← Volver al Dashboard
-          </Link>
-          <button
-            type="submit"
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-md font-semibold transition"
-          >
-            Crear Proyecto
-          </button>
-        </div>
+        <input
+          type="submit"
+          value="Crear Proyecto"
+          className="bg-green-600 hover:bg-green-700 w-full p-3 text-white uppercase font-bold rounded cursor-pointer transition"
+        />
       </form>
     </div>
   );

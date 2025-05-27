@@ -41,10 +41,10 @@ export default function ProfileForm({ data }: ProfileFormProps) {
 
     // Renderiza el componente del formulario de perfil.
     return (
-        <>
+            <>
             <div className="mx-auto max-w-3xl g">
-                <h1 className="text-5xl font-black ">Mi Perfil</h1> {/* Título principal. */}
-                <p className="text-2xl font-light text-gray-500 mt-5">Aquí puedes actualizar tu información</p> {/* Subtítulo. */}
+                <h1 className="text-5xl font-black ">Mi Perfil</h1> 
+                <p className="text-2xl font-light text-gray-500 mt-5">Aquí puedes actualizar tu información</p> 
 
                 <form
                     onSubmit={handleSubmit(handleEditProfile)} // Maneja el envío del formulario con `handleSubmit`.
@@ -76,8 +76,7 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                     <div className="mb-5 space-y-3">
                         <label
                             className="text-sm uppercase font-bold"
-                            htmlFor="password" {/* El `htmlFor` apunta a `password` pero el id del input es `text` y el register `email`, esto podría ser un error tipográfico en el código original. Se asume que es para el email. */}
-                        >E-mail</label>
+                            htmlFor="password"  >E-mail</label>
                         <input
                             id="text" // ID del campo, que debería ser 'email' para coincidir con la etiqueta y el registro.
                             type="email" // Tipo de entrada de email.
