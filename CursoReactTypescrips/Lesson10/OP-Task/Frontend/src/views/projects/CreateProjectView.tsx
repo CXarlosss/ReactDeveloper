@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
-import ErrorMessage from "@/views/ErrorMessage";
+import ErrorMessage from "@/components/ErrorMessage";
 
 type FormFields = {
   projectName: string;
