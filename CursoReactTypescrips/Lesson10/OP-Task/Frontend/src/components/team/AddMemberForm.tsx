@@ -28,6 +28,7 @@ export default function AddMemberForm() {
 
     // Resetear formulario y estado de mutación
     const resetData = () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         reset(), mutation.reset()
     }
     return (

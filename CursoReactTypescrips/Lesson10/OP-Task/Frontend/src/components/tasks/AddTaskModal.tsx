@@ -98,7 +98,7 @@ export default function AddTaskModal() {
                                     </Dialog.Title>
 
                                     {/* Texto de introducción */}
-                                    <p className="text-xl font-bold">Llena el formulario y crea  {''}
+                                    <p className="text-xl font-bold">Llena el formulario y crea 
                                         <span className="text-fuchsia-600">una tarea</span>
                                     </p>
 
