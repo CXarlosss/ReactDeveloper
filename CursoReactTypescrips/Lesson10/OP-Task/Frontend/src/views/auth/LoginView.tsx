@@ -28,8 +28,11 @@ export default function LoginView() {
     }
   })
 
-  const handleLogin = (formData: UserLoginForm) => mutate(formData)
+  const handleLogin = (formData: UserLoginForm) => {
+      console.log("📦 Datos enviados al login:", formData)
 
+    mutate(formData)
+  }
   return (
     <>
       {/* Título principal */}

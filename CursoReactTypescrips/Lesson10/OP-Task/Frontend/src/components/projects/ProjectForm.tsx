@@ -1,5 +1,6 @@
 import { UseFormRegister, FieldErrors } from "react-hook-form";
-import ErrorMessage from "../ErrorMessage";
+import ErrorMessage from "@/components/ErrorMessage";
+
 import { ProjectFormData } from "types";
 
 // Define el tipo de las props para el componente ProjectForm.
@@ -11,6 +12,8 @@ type ProjectFormProps = {
 // Componente funcional `ProjectForm` que renderiza los campos comunes de un formulario de proyecto.
 // Recibe `errors` y `register` como props para integrarse con `react-hook-form`.
 export default function ProjectForm({ errors, register }: ProjectFormProps) {
+  console.log("🧪 ErrorMessage:", ErrorMessage)
+
   return (
     <>
       {/* Campo para el nombre del proyecto */}

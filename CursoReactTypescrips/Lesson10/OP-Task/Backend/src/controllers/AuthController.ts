@@ -114,40 +114,41 @@ export class AuthController {
   };
 
   static requestConfirmationCode = async (req: Request, res: Response) => {
-    try {
-      const { email } = req.body;
+  try {
+    const { email } = req.body;
 
-      // Usuario existe
-      const user = await User.findOne({ email });
-      if (!user) {
-        const error = new Error("El Usuario no esta registrado");
-        return res.status(404).json({ error: error.message });
-      }
-
-      if (user.confirmed) {
-        const error = new Error("El Usuario ya esta confirmado");
-        return res.status(403).json({ error: error.message });
-      }
-
-      // Generar el token
-      const token = new Token();
-      token.token = generateToken();
-      token.user = user.id;
-
-      // enviar el email
-      AuthEmail.sendConfirmationEmail({
-        email: user.email,
-        name: user.name,
-        token: token.token,
-      });
-
-      await Promise.allSettled([user.save(), token.save()]);
-
-      res.send("Se envió un nuevo token a tu e-mail");
-    } catch (error) {
-      res.status(500).json({ error: "Hubo un error" });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "El Usuario no está registrado" });
     }
-  };
+
+    if (user.confirmed) {
+      return res.status(403).json({ error: "El Usuario ya está confirmado" });
+    }
+
+    // ✅ BORRAR tokens anteriores para ese usuario
+    await Token.deleteMany({ user: user._id });
+
+    // ✅ Crear un nuevo token
+    const token = new Token();
+    token.token = generateToken(); // 6 dígitos probablemente
+    token.user = user._id as Types.ObjectId;
+
+
+    await token.save();
+
+    AuthEmail.sendConfirmationEmail({
+      email: user.email,
+      name: user.name,
+      token: token.token,
+    });
+
+    res.send("Se envió un nuevo token a tu e-mail");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Hubo un error" });
+  }
+};
 
   static forgotPassword = async (req: Request, res: Response) => {
     try {

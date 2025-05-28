@@ -6,7 +6,8 @@ import ErrorMessage from "@/components/ErrorMessage";
 import { requestConfirmationCode } from "@/api/AuthAPI";
 import { toast } from "react-toastify";
 
-export default function RequestConfirmationCodeView() {
+export default function RequestNewCodeView() {
+
   const initialValues: RequestConfirmationCodeForm = {
     email: ''
   }

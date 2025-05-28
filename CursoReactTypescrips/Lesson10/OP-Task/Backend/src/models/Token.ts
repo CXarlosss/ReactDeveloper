@@ -10,21 +10,25 @@ export interface IToken extends Document {
 }
 // ESQUEMA de Mongoose que define la estructura del token en la base de datos
 
-const tokenSchema: Schema = new Schema({
-  token: {
-    type: String,
-    required: true, // El token es obligatorio
+const tokenSchema = new Schema<IToken>(
+  {
+    token: {
+      type: String,
+      required: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
-  user: {
-    type: Types.ObjectId,
-    ref: 'User',     // Relación con el modelo User
-  },
-  expiresAt: {
-    type: Date,
-    default: Date.now(), // Se pone la fecha actual al crearlo
-    expires: '10m'       // TTL: este documento se elimina automáticamente a los 10 minutos
+  {
+    timestamps: true // crea automáticamente createdAt y updatedAt
   }
-});
-// Exportamos el modelo con su tipado
+);
+
+// TTL de 10 minutos basado en `createdAt`
+tokenSchema.index({ createdAt: 1 }, { expireAfterSeconds: 600 });
+
 const Token = mongoose.model<IToken>('Token', tokenSchema);
 export default Token;
