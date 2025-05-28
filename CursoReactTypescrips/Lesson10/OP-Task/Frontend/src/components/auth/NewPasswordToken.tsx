@@ -17,7 +17,6 @@ type NewPasswordTokenProps = {
   setToken: React.Dispatch<React.SetStateAction<string>>; // Función para actualizar el estado del token.
   setIsValidToken: React.Dispatch<React.SetStateAction<boolean>>; // Función para indicar si el token es válido.
 };
-
 // Define el componente funcional `NewPasswordToken`.
 export default function NewPasswordToken({
   token,

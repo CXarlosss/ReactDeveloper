@@ -77,29 +77,36 @@ export type TaskStatus = z.infer<typeof taskStatusSchema>
 
 // Esquema completo de tarea (versión detallada con todo)
 export const taskSchema = z.object({
+  _id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  project: z.string(),
+  status: taskStatusSchema,
+  completedBy: z.array(z.object({
     _id: z.string(),
-    name: z.string(),
-    description: z.string(),
-    project: z.string(), // ID del proyecto
-    status: taskStatusSchema,
-    completedBy: z.array(z.object({
-        _id: z.string(),
-        user: userSchema,
-        status: taskStatusSchema
-    })),
-    notes: z.array(noteSchema.extend({
-        createdBy: userSchema // se asegura que `createdBy` tiene estructura completa de user
-    })),
-    createdAt: z.string(),
-    updatedAt: z.string()
+    user: userSchema,
+    status: taskStatusSchema
+  })),
+  notes: z.array(noteSchema.extend({
+    createdBy: userSchema
+  })),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+
+  // 👇 NUEVAS propiedades
+  dueDate: z.string().optional(),
+  priority: z.enum(['alta', 'media', 'baja']).optional(),
+  assignedTo: userSchema.optional()
 })
 
-// Versión simplificada para mostrar tareas en la vista de proyectos
 export const taskProjectSchema = taskSchema.pick({
-    _id: true,
-    name: true,
-    description: true,
-    status: true
+  _id: true,
+  name: true,
+  description: true,
+  status: true,
+  dueDate: true,
+  priority: true,
+  assignedTo: true
 })
 
 export type Task = z.infer<typeof taskSchema>

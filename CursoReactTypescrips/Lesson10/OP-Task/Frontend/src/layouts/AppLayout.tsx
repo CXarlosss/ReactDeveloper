@@ -2,7 +2,7 @@ import { Link, Outlet, Navigate } from 'react-router-dom' // Navegación y subru
 import { ToastContainer } from 'react-toastify' // Contenedor de notificaciones
 import 'react-toastify/dist/ReactToastify.css' // Estilos por defecto de react-toastify
 import Logo from '@/components/Logo' // Componente del logo
-import NavMenu from '@/components/NavMenu' // Menú de navegación del usuario
+import NavMenu from "@/components/NavMenu";
 import { useAuth } from '@/hooks/useAuth' // Hook personalizado para verificar si el usuario está autenticado
 
 

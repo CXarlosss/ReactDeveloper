@@ -25,8 +25,8 @@ export default function Tabs() {
   // Inicializa el hook `useNavigate` para la navegación programática.
   const navigate = useNavigate(); // Inicializa el hook `useLocation` para obtener la información de la URL actual.
   const location = useLocation(); // Determina la pestaña actual filtrando el array `tabs` para encontrar la pestaña cuyo `href` coincide con la ruta actual. // Se asume que siempre habrá una pestaña que coincida, por lo que se accede directamente a la primera (`[0].href`).
-  const currentTab = tabs.filter((tab) => tab.href === location.pathname)[0]
-    .href;
+const currentTab = tabs.find((tab) => tab.href === location.pathname)?.href || tabs[0].href;
+
   return (
     <div className="mb-10">
  

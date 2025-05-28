@@ -12,8 +12,6 @@ type ProjectFormProps = {
 // Componente funcional `ProjectForm` que renderiza los campos comunes de un formulario de proyecto.
 // Recibe `errors` y `register` como props para integrarse con `react-hook-form`.
 export default function ProjectForm({ errors, register }: ProjectFormProps) {
-  console.log("🧪 ErrorMessage ProjectForm:", ErrorMessage)
-
   return (
     <>
       {/* Campo para el nombre del proyecto */}

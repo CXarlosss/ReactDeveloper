@@ -13,7 +13,10 @@ type EditProjectFormProps = {
 };
 
 // Componente funcional para editar un proyecto existente.
-export default function EditProjectForm({
+export default function EditProjectForm(
+    {
+
+    // Props que recibe el componente: los datos del proyecto y su ID.
     data,
     projectId,
 }: EditProjectFormProps) {

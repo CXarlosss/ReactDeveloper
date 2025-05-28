@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
+import { useForm } from "react-hook-form";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 import ProjectForm from "@/components/projects/ProjectForm";
 import { ProjectFormData } from "@/types/index";
 import { createProject } from "@/api/ProjectAPI";
@@ -12,58 +12,55 @@ export default function CreateProjectView() {
   const initialValues: ProjectFormData = {
     projectName: "",
     clientName: "",
-    description: ""
+    description: "",
   };
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: initialValues
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: initialValues });
 
   const { mutate } = useMutation({
     mutationFn: createProject,
-    onError: (error) => {
-      toast.error(error.message)
-    },
+    onError: (error) => toast.error(error.message),
     onSuccess: (data) => {
-      toast.success(data)
-      navigate('/')
-    }
+      toast.success(data);
+      navigate("/");
+    },
   });
 
   const handleForm = (formData: ProjectFormData) => mutate(formData);
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-5xl font-black text-green-700">Crear Proyecto</h1>
-      <p className="text-2xl font-light text-green-700 mt-5">
-        Llena el siguiente formulario para crear un proyecto
+    <div className="max-w-3xl mx-auto px-6 py-10">
+      <h1 className="text-5xl sm:text-6xl font-extrabold text-blue-900 text-center drop-shadow-sm">
+        Nuevo Proyecto
+      </h1>
+      <p className="text-lg sm:text-xl text-blue-600 text-center mt-3 text-opacity-80">
+        Completa los campos para comenzar tu proyecto
       </p>
 
-      {/* Navegación */}
-      <nav className="my-5">
+      <nav className="my-8 text-center">
         <Link
-          className="bg-green-500 hover:bg-green-600 px-10 py-3 text-white text-xl font-bold rounded transition-colors"
-          to='/'
+          className="inline-block bg-blue-100 hover:bg-blue-200 text-blue-800 px-6 py-2 rounded-full font-semibold transition shadow-sm"
+          to="/"
         >
           ← Volver a Proyectos
         </Link>
       </nav>
 
-      {/* Formulario */}
       <form
-        className="mt-10 bg-green-50 shadow-md p-10 rounded-lg space-y-5"
+        className="mt-6 bg-white border border-blue-100 shadow-md p-8 sm:p-10 rounded-2xl space-y-6"
         onSubmit={handleSubmit(handleForm)}
         noValidate
       >
-        <ProjectForm
-          register={register}
-          errors={errors}
-        />
+        <ProjectForm register={register} errors={errors} />
 
         <input
           type="submit"
           value="Crear Proyecto"
-          className="bg-green-600 hover:bg-green-700 w-full p-3 text-white uppercase font-bold rounded cursor-pointer transition"
+          className="bg-blue-700 hover:bg-blue-800 w-full py-3 text-white uppercase font-bold rounded-lg cursor-pointer transition-all duration-200 ring-2 ring-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-400"
         />
       </form>
     </div>

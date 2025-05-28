@@ -20,6 +20,7 @@ type NewPasswordFormProps = {
 
 // Define el componente funcional `NewPasswordForm`.
 export default function NewPasswordForm({ token }: NewPasswordFormProps) {
+
   // Inicializa `useNavigate` para poder redirigir al usuario después de una acción.
   const navigate = useNavigate(); // Define los valores iniciales para el formulario de nueva contraseña.
   const initialValues: NewPasswordForm = {

@@ -40,7 +40,6 @@ export async function updateTask({projectId, taskId, formData}: Pick<TaskAPI, 'p
     try {
         const url = `/projects/${projectId}/tasks/${taskId}`
         const {data } = await api.put<string>(url, formData)
-        console.log(data)
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {

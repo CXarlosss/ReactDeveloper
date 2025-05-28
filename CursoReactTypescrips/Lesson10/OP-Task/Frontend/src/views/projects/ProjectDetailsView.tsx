@@ -12,49 +12,58 @@ import { useMemo } from "react";
 export default function ProjectDetailsView() {
   const { data: user, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const { projectId } = useParams();
 
-  const params = useParams();
-  const projectId = params.projectId!;
   const { data, isLoading, isError } = useQuery({
     queryKey: ['project', projectId],
-    queryFn: () => getFullProject(projectId),
+    queryFn: () => getFullProject(projectId!),
     retry: false
   });
 
   const canEdit = useMemo(() => data?.manager === user?._id, [data, user]);
 
-  if (isLoading || authLoading) return <p className="text-green-700">Cargando proyecto...</p>;
+  if (isLoading || authLoading) return 'Cargando...';
   if (isError) return <Navigate to="/404" />;
 
-  if (data && user) return (
-    <>
-      <h1 className="text-5xl font-black text-green-700">{data.projectName}</h1>
-      <p className="text-2xl font-light text-green-700 mt-5">{data.description}</p>
+  if (data && user) {
+    return (
+      <div className="max-w-5xl mx-auto px-4 py-10">
+        <h1 className="text-5xl font-extrabold text-blue-800 mb-4 drop-shadow-sm">
+          {data.projectName}
+        </h1>
+        <p className="text-xl text-gray-700 mb-8">
+          {data.description}
+        </p>
 
-      {isManager(data.manager, user._id) && (
-        <nav className="my-5 flex flex-col sm:flex-row gap-4">
-          <button
-            type="button"
-            className="bg-green-600 hover:bg-green-700 px-10 py-3 text-white text-xl font-bold rounded transition"
-            onClick={() => navigate(location.pathname + '?newTask=true')}
-          >
-            Agregar Tarea
-          </button>
+        {isManager(data.manager, user._id) && (
+          <nav className="mb-10 flex flex-col sm:flex-row gap-4">
+            <button
+              type="button"
+              className="bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold px-8 py-3 rounded-lg transition focus:outline-none focus:ring-4 focus:ring-blue-300"
+              onClick={() => navigate(location.pathname + "?newTask=true")}
+            >
+              ➕ Agregar Tarea
+            </button>
 
-          <Link
-            to="team"
-            className="bg-green-500 hover:bg-green-600 px-10 py-3 text-white text-xl font-bold rounded transition"
-          >
-            Colaboradores
-          </Link>
-        </nav>
-      )}
+            <Link
+              to="team"
+              className="bg-blue-100 hover:bg-blue-200 text-blue-900 text-lg font-semibold px-8 py-3 rounded-lg transition focus:outline-none focus:ring-4 focus:ring-blue-200"
+            >
+              👥 Colaboradores
+            </Link>
+          </nav>
+        )}
 
-      <TaskList tasks={data.tasks} canEdit={canEdit} />
+        <section className="mb-10">
+          <TaskList tasks={data.tasks} canEdit={canEdit} />
+        </section>
 
-      <AddTaskModal />
-      <EditTaskData />
-      <TaskModalDetails />
-    </>
-  );
+        <AddTaskModal />
+        <EditTaskData />
+        <TaskModalDetails />
+      </div>
+    );
+  }
+
+  return null;
 }

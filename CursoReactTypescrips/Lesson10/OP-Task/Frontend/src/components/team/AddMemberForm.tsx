@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form"; // Manejo de formularios
 import { useParams } from "react-router-dom"; // Para obtener el projectId de la URL
 import { useMutation } from "@tanstack/react-query"; // Para manejar peticiones POST/async
 import ErrorMessage from "../ErrorMessage"; // Componente visual para mostrar errores
-console.log("✅ ErrorMessage en TaskForm:", ErrorMessage);
 
 import { TeamMemberForm } from "@/types/index"; // Tipo TypeScript para el formulario
 import { findUserByEmail } from "@/api/TeamAPI"; // Función que hace la búsqueda por email

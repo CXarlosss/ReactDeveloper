@@ -6,6 +6,7 @@ type NotesPanelProps = {
     notes: Task['notes'];
 }
 export default function NotesPanel({ notes }: NotesPanelProps) {
+
     return (
         <>
          <AddNoteForm />

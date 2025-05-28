@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 // Componente modal para agregar una nueva tarea.
 export default function AddTaskModal() {
   const navigate = useNavigate(); // Hook para la navegación programática.
-console.log('TaskForm', TaskForm);
 
   // Determina si el modal debe mostrarse basado en los query params de la URL.
   const location = useLocation();
