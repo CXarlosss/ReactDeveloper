@@ -4,6 +4,9 @@ import { TeamMember } from "@/types/index"
 import { addUserToProject } from "@/api/TeamAPI"
 import { toast } from "react-toastify"
 import { useNavigate, useParams } from "react-router-dom"
+import ErrorMessage from "../ErrorMessage" // Componente para mostrar errores
+console.log("✅ ErrorMessage en SearchResult:", ErrorMessage);
+
 
 // Props del componente: usuario encontrado y función para limpiar estado
 type SearchResultProps = {

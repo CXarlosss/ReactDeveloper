@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "@/layouts/AppLayout";
 import DashboardView from "@/views/DashboardView";
 import CreateProjectView from "./views/projects/CreateProjectView";
-import EditProjectView from "./views/projects/EditProjectView";
+import EditProjectView from "@/views/projects/EditProjectView";
 import ProjectDetailsView from "./views/projects/ProjectDetailsView";
 import AuthLayout from "./layouts/AuthLayout";
 import LoginView from "./views/auth/LoginView";
@@ -15,67 +15,41 @@ import ProjectTeamView from "./views/projects/ProjectTeamView";
 import ProfileView from "./views/profile/ProfileView";
 import ChangePasswordView from "./views/profile/ChangePasswordView";
 import ProfileLayout from "./layouts/ProfileLayout";
-import NotFound from "./views/404/NotFound";
+import NotFound from "@/views/404/NotFound";
 
 export default function Router() {
- /*  console.log({
-    DashboardView,
-    CreateProjectView,
-    EditProjectView,
-    ProjectDetailsView,
-    ProjectTeamView,
-    ProfileView,
-    ChangePasswordView,
-    LoginView,
-    RegisterView,
-    ConfirmAccountView,
-    RequestNewCodeView,
-    ForgotPasswordView,
-    NewPasswordView,
-    NotFound,
-  });
-  console.log({
-    AppLayout,
-    AuthLayout,
-    ProfileLayout,
-    DashboardView,
-    CreateProjectView,
-    EditProjectView,
-    ProjectDetailsView,
-    ProjectTeamView,
-    ProfileView,
-    ChangePasswordView,
-    LoginView,
-    RegisterView,
-    ConfirmAccountView,
-    RequestNewCodeView,
-    ForgotPasswordView,
-    NewPasswordView,
-    NotFound,
-  }) */;
-/* console.group("🔍 Views");
-console.log("LoginView:", LoginView);
-console.log("DashboardView:", DashboardView);
-console.log("CreateProjectView:", CreateProjectView);
-console.log("EditProjectView:", EditProjectView);
-console.log("ProjectDetailsView:", ProjectDetailsView);
-console.log("ProjectTeamView:", ProjectTeamView);
-console.log("ProfileView:", ProfileView);
-console.log("ChangePasswordView:", ChangePasswordView);
-console.log("ConfirmAccountView:", ConfirmAccountView);
-console.log("RequestNewCodeView:", RequestNewCodeView);
-console.log("ForgotPasswordView:", ForgotPasswordView);
-console.log("NewPasswordView:", NewPasswordView);
-console.groupEnd();
+  // Diagnostic logs
+  console.group("🔍 Component Status");
+  
+  console.group("🖼️ Layouts");
+  console.log("AppLayout:", AppLayout);
+  console.log("AuthLayout:", AuthLayout);
+  console.log("ProfileLayout:", ProfileLayout);
+  console.groupEnd();
+  
+  console.group("📄 Views (Absolute Imports)");
+  console.log("DashboardView:", DashboardView);
+  console.log("EditProjectView:", EditProjectView);
+  console.log("NotFound:", NotFound);
+  console.groupEnd();
+  
+  console.group("📄 Views (Relative Imports)");
+  console.log("CreateProjectView:", CreateProjectView);
+  console.log("ProjectDetailsView:", ProjectDetailsView);
+  console.log("ProjectTeamView:", ProjectTeamView);
+  console.log("LoginView:", LoginView);
+  console.log("RegisterView:", RegisterView);
+  console.log("ConfirmAccountView:", ConfirmAccountView);
+  console.log("RequestNewCodeView:", RequestNewCodeView);
+  console.log("ForgotPasswordView:", ForgotPasswordView);
+  console.log("NewPasswordView:", NewPasswordView);
+  console.log("ProfileView:", ProfileView);
+  console.log("ChangePasswordView:", ChangePasswordView);
+  console.groupEnd();
+  
+  console.groupEnd();
 
-console.group("🔍 Layouts");
-console.log("AppLayout:", AppLayout);
-console.log("AuthLayout:", AuthLayout);
-console.log("ProfileLayout:", ProfileLayout);
-console.groupEnd();
-
-console.log("🔍 NotFound:", NotFound)   ; */
-return (
+  return (
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}>
