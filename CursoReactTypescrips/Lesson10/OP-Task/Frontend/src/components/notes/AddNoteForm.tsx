@@ -84,7 +84,7 @@ export default function AddNoteForm() {
       <input
         type="submit" // Tipo de botón de envío.
         value="Crear Nota" // Texto del botón.
-        className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-2 text-white font-black cursor-pointer" // Clases CSS para el estilo del botón.
+        className=" bg-blue-600 hover:bg-blue-700 w-full p-2 text-white font-black cursor-pointer" // Clases CSS para el estilo del botón.
       />
     </form>
   );

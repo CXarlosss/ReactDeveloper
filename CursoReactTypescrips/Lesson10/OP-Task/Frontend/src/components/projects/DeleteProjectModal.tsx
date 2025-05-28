@@ -97,7 +97,7 @@ export default function DeleteProjectModal() {
                                 {/* Texto de confirmación */}
                                 <p className="text-xl font-bold">
                                     Confirma la eliminación del proyecto
-                                    <span className="text-fuchsia-600">
+                                    <span className="text-blue-600">
                                         colocando tu password
                                     </span>
                                 </p>
@@ -137,7 +137,7 @@ export default function DeleteProjectModal() {
 
                                     <input
                                         type="submit"
-                                        className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black  text-xl cursor-pointer"
+                                        className=" bg-blue-600 hover:bg-blue-700 w-full p-3  text-white font-black  text-xl cursor-pointer"
                                         value="Eliminar Proyecto"
                                     />
                                 </form>

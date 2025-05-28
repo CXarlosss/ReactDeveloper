@@ -1,8 +1,7 @@
-
-export const statusTranslations : {[key:string]: string} = {
+export const statusTranslations: { [key: string]: string } = {
     pending: 'Pendiente',
-    onhold: 'En Espera',
-    inprogress: 'En Progreso',
+    onHold: 'En Espera',
+    inProgress: 'En Progreso',
     completed: 'Completado',
     underReview: 'En Revisión'
-}	
+}

@@ -106,7 +106,7 @@ export default function AddTaskModal() {
                   {/* Texto de introducción */}
                   <p className="text-xl font-bold">
                     Llena el formulario y crea
-                    <span className="text-fuchsia-600">una tarea</span>
+                    <span className="text-blue-600">una tarea</span>
                   </p>
 
                   {/* Formulario para crear una nueva tarea */}
@@ -124,7 +124,7 @@ export default function AddTaskModal() {
                     {/* Botón para guardar la nueva tarea. */}
                     <input
                       type="submit"
-                      className=" bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
+                      className=" bg-blue-600 hover:bg-blue-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors"
                       value="Guardar Tarea"
                     />
                   </form>

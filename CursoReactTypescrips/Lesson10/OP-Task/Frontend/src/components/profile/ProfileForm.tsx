@@ -97,7 +97,7 @@ export default function ProfileForm({ data }: ProfileFormProps) {
                     <input
                         type="submit"
                         value='Guardar Cambios' // Texto del botón.
-                        className="bg-fuchsia-600 w-full p-3 text-white uppercase font-bold hover:bg-fuchsia-700 cursor-pointer transition-colors" // Clases CSS para el estilo del botón.
+                        className="bg-blue-600 w-full p-3 text-white uppercase font-bold hover:bg-blue-700 cursor-pointer transition-colors" // Clases CSS para el estilo del botón.
                     />
                 </form>
             </div> </>)

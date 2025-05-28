@@ -1,46 +1,48 @@
-import { Link, Outlet, Navigate } from 'react-router-dom' // Navegación y subrutas
-import { ToastContainer } from 'react-toastify' // Contenedor de notificaciones
-import 'react-toastify/dist/ReactToastify.css' // Estilos por defecto de react-toastify
-import Logo from '@/components/Logo' // Componente del logo
-import NavMenu from "@/components/NavMenu";
-import { useAuth } from '@/hooks/useAuth' // Hook personalizado para verificar si el usuario está autenticado
-
+import { Link, Outlet, Navigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import Logo from '@/components/Logo'
+import NavMenu from '@/components/NavMenu'
+import { useAuth } from '@/hooks/useAuth'
+// Notificación con estilo personalizado
 
 export default function AppLayout() {
-    // Llamamos al hook personalizado que probablemente use React Query
-    const { data, isError, isLoading } = useAuth()
+  const { data, isError, isLoading } = useAuth()
 
-    // Mientras se carga la info del usuario, mostramos un mensaje
-    if (isLoading) return 'Cargando...'
+  if (isLoading) return <p className="text-center mt-20 text-gray-500 text-lg">Cargando datos del usuario...</p>
 
-    // Si hay error (no autenticado, token inválido...), redirigimos al login
-    if (isError) {
-        return <Navigate to='/auth/login' />
-    }
-    // Si todo va bien y tenemos datos del usuario:
-    if (data) return (
-        <>
-            {/* HEADER */}
-            <header className='bg-gray-800 py-5'>
-                <div className='max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center'>
-                    <div className='w-64'>
-                        <Link to={'/'}>
-                            <Logo /> {/* Logo clicable */}
-                        </Link>
-                    </div>
+  if (isError) return <Navigate to='/auth/login' />
 
-                    <NavMenu name={data.name} /> {/* Menú de navegación con nombre del usuario */}
-                </div>
-            </header>
-            {/* CONTENIDO PRINCIPAL: donde se renderizan las rutas hijas */}
-            <section className='max-w-screen-2xl mx-auto mt-10 p-5'>
-                <Outlet />
-            </section>
-            {/* CONTENEDOR GLOBAL DE TOASTS */}
-            <ToastContainer
-                pauseOnHover={false}
-                pauseOnFocusLoss={false}
-            />
-        </>
+  if (data) {
+    return (
+      <>
+        {/* HEADER */}
+        <header className='bg-blue-500 text-white shadow-md py-4'>
+          <div className='max-w-screen-2xl mx-auto px-6 flex flex-col lg:flex-row justify-between items-center gap-4'>
+            <Link to='/' className='w-48'>
+              <Logo />
+            </Link>
+
+            <NavMenu name={data.name} />
+          </div>
+        </header>
+
+        {/* CONTENIDO PRINCIPAL */}
+        <main className='max-w-screen-2xl mx-auto px-6 py-8'>
+          <Outlet />
+        </main>
+
+        {/* TOASTS */}
+        <ToastContainer
+          pauseOnHover={false}
+          pauseOnFocusLoss={false}
+          position="top-center"
+          autoClose={3000}
+          theme="colored"
+        />
+      </>
     )
+  }
+
+  return null
 }

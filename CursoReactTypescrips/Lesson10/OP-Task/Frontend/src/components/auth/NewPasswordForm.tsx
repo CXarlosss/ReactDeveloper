@@ -122,7 +122,7 @@ export default function NewPasswordForm({ token }: NewPasswordFormProps) {
         <input
           type="submit"
           value="Establecer Password" // Texto del botón.
-          className="bg-fuchsia-600 hover:bg-fuchsia-700 w-full p-3  text-white font-black  text-xl cursor-pointer" // Clases CSS para estilos.
+          className="bg-blue-600 hover:bg-blue-700 w-full p-3  text-white font-black  text-xl cursor-pointer" // Clases CSS para estilos.
         />
     
       </form>
