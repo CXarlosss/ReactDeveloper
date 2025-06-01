@@ -3,31 +3,7 @@
 /* CORRECTO para Tailwind CSS v4: Una única importación */
 @import "tailwindcss";
 
-/* Tus variables CSS personalizadas */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-/* La directiva @theme inline es una característica de Tailwind CSS v4 */
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  /* Si estás usando Geist y Geist Mono de Next.js 15, asegúrate de que estén importadas
-     correctamente en tu layout.tsx o page.tsx si no están en globals.css */
-  /* --font-sans: var(--font-geist-sans); */
-  /* --font-mono: var(--font-geist-mono); */
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #b9b6b6;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif; /* Puedes mantener tu fuente fallback */
+body{
+  font-family: Arial, Helvetica, sans-serif;
 }
