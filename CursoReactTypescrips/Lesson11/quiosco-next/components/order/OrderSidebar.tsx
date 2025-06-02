@@ -1,11 +1,21 @@
-import React from 'react'
+import { getCategories } from "@/src/lib/queries"
+import CategoryIcon from "./ui/CategoryIcon"
 
-export default function OrderSidebar ()  {
+export default async function OrderSidebar() {
+  const categories = await getCategories()
+
   return (
-   <aside className='md:w-72 md:h-screen bg-white'>
- OrderSidebar
-   </aside>
+    <aside className="md:w-72 md:h-screen bg-white p-4">
+      <h2 className="text-xl font-bold mb-4">Categorías</h2>
+      <nav className="mt-10">
+        <ul>
+          {categories.map((category) => (
+            <li key={category.id} className="mb-2">
+              <CategoryIcon category={category} />
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
   )
 }
-
- 
