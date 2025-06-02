@@ -1,4 +1,5 @@
-import { formatCurrency } from "@/src/lib/utils";
+import { formatCurrency } from "@/src/utils";
+
 
 type ProductCardProps = {
   product: {
