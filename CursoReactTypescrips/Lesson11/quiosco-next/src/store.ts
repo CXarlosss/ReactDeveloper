@@ -15,6 +15,7 @@ export const useStore = create<Store>((set, get) => ({
   order: [],
 
   addToOrder: (item) => {
+    console.log("Añadiendo al pedido: ", item);
     const existing = get().order.find((i) => i.id === item.id);
     if (existing) {
       set({
