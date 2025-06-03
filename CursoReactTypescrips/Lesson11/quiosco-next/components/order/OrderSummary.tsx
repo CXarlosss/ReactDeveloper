@@ -13,11 +13,18 @@ export default function OrderSummary() {
     [order]
   );
 
-  const handleCreateOrder = () => {
-    createOrder();
-    
-    
-  }
+  const handleCreateOrder = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get("name");
+
+    console.log("Nombre:", name);
+    console.log("Pedido:", order);
+
+    // Aquí podrías enviar el pedido al backend
+    await createOrder({ name, order });
+  };
+
   return (
     <aside className="lg:h-screen lg:overflow-y-scroll md:w-64 lg:w-96 p-5 bg-gray-50 shadow-inner">
       <h1 className="text-4xl text-center font-black">Mi Pedido</h1>
@@ -31,6 +38,7 @@ export default function OrderSummary() {
           ))}
         </div>
       )}
+
       <div className="mt-10 p-5 bg-indigo-100 rounded-xl shadow-md text-center">
         <p className="text-xl font-semibold text-indigo-700 mb-2">
           Total a pagar:
@@ -38,16 +46,22 @@ export default function OrderSummary() {
         <p className="text-3xl font-extrabold text-indigo-900">
           {formatCurrency(total)}
         </p>
-
       </div>
-      <form action="{handleCreateOrder}" className="w-full mt-10 space-y-5">
-<input type="text" name="name" id="name" placeholder="Tu Nombre" className="bg-white border border-gray-200 rounded-md p-2 w-full"/>
 
-
-        <input type="submit" name="submit" id="submit"
+      <form onSubmit={handleCreateOrder} className="w-full mt-10 space-y-5">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          placeholder="Tu Nombre"
+          required
+          className="bg-white border border-gray-200 rounded-md p-2 w-full"
+        />
+        <input
+          type="submit"
           value="Confirmar Pedido"
-          className="py-2 rounded uppercase text-white bg-black hover:bg-indigo-800 w-full text-center cursor-pointer font-bold" />
-
+          className="py-2 rounded uppercase text-white bg-black hover:bg-indigo-800 w-full text-center cursor-pointer font-bold"
+        />
       </form>
     </aside>
   );
