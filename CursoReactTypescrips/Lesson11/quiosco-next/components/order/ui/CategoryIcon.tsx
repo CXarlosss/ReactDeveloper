@@ -17,7 +17,7 @@ export default function CategoryIcon({ category }: CategoryIconProps) {
         src={`/icon_${category.slug}.svg`} 
         alt='Imagen de la categoría' 
         fill
-        className='dark:invert' 
+       /*  className='dark:invert'  */
       />
       
        </div>
