@@ -2,9 +2,11 @@
 
 import { useStore } from "@/src/store";
 import ProductDetails from "@/components/order/ProductDetails";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { formatCurrency } from "@/src/utils";
 import { createOrder } from "@/actions/create-order-action";
+import { OrderSchema } from "@/src/schema/index";
+import { toast } from "react-toastify";
 
 export default function OrderSummary() {
   const order = useStore((state) => state.order);
@@ -13,16 +15,42 @@ export default function OrderSummary() {
     [order]
   );
 
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleCreateOrder = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const name = formData.get("name");
 
-    console.log("Nombre:", name);
-    console.log("Pedido:", order);
+    const data = {
+      name,
+      order,
+    };
 
-    // Aquí podrías enviar el pedido al backend
-    await createOrder({ name, order });
+    const result = OrderSchema.safeParse(data);
+
+    if (!result.success) {
+      const errorMessage =
+        result.error.format().name?._errors?.[0] || "Datos inválidos";
+        toast.error(errorMessage )
+      setError(errorMessage);
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      await createOrder(result.data);
+      setSuccess(true);
+    } catch (err) {
+      setError("Error al enviar el pedido");
+      console.log("Error al enviar el pedido:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -57,10 +85,15 @@ export default function OrderSummary() {
           required
           className="bg-white border border-gray-200 rounded-md p-2 w-full"
         />
+        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {success && (
+          <p className="text-green-600 text-sm font-medium">Pedido enviado 🎉</p>
+        )}
         <input
           type="submit"
-          value="Confirmar Pedido"
-          className="py-2 rounded uppercase text-white bg-black hover:bg-indigo-800 w-full text-center cursor-pointer font-bold"
+          value={isLoading ? "Enviando..." : "Confirmar Pedido"}
+          disabled={isLoading}
+          className="py-2 rounded uppercase text-white bg-black hover:bg-indigo-800 w-full text-center cursor-pointer font-bold disabled:opacity-50 disabled:cursor-not-allowed"
         />
       </form>
     </aside>

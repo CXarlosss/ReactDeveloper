@@ -1,6 +1,8 @@
 import { prisma } from "@/src/lib/prisma";
 import ProductCard from "@/components/products/ProductCard";
 
+export const dynamic = "force-static";
+export const dynamicParams = true;
 // Obtener productos con categoría incluida
 async function getProducts(categorySlug: string) {
   return await prisma.product.findMany({
@@ -28,8 +30,19 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function OrderPage({ params }: { params: { category: string } }) {
-  const products = await getProducts(params.category);
+// ✔️ OrderPage segura y compatible con App Router
+export default async function OrderPage(props: { params: { category?: string } }) {
+  const categorySlug = props.params?.category;
+
+  if (!categorySlug) {
+    return (
+      <div className="p-10 text-center text-red-600 text-lg">
+        Categoría no válida
+      </div>
+    );
+  }
+
+  const products = await getProducts(categorySlug);
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
@@ -38,7 +51,7 @@ export default async function OrderPage({ params }: { params: { category: string
       </h1>
 
       <h2 className="text-2xl font-semibold text-gray-700 mb-10 text-center">
-        Categoría: {products[0]?.category.name ?? params.category}
+        Categoría: {products[0]?.category.name ?? categorySlug}
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
