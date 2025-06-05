@@ -32,6 +32,7 @@ export default function OrderSummary() {
     const result = OrderSchema.safeParse(data);
 
     if (!result.success) {
+      
       const errorMessage =
         result.error.format().name?._errors?.[0] || "Datos inválidos";
         toast.error(errorMessage )
@@ -45,6 +46,9 @@ export default function OrderSummary() {
     try {
       await createOrder(result.data);
       setSuccess(true);
+            toast.success(`✅ Pedido de ${result.data.name} por un total de ${formatCurrency(total)} creado correctamente`);
+
+
     } catch (err) {
       setError("Error al enviar el pedido");
       console.log("Error al enviar el pedido:", err);
