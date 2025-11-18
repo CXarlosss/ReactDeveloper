@@ -1,0 +1,14 @@
+
+[
+  {
+    "id": 1,
+    "title": "The Shire Edition",
+    "date": "2025-01-01",
+    "theme": "Lord of the Rings – The Shire",
+    "reactChallenge": "Crear un componente <CharacterCard> con variantes de raza.",
+    "culturalLesson": "Tolkien creó el Quenya inspirado en el finlandés.",
+    "creativeTask": "Crear 3 imágenes temáticas del día.",
+    "reflection": "Hoy aprendí que…",
+    "images": ["/shire1.jpg", "/shire2.jpg"]
+  }
+]
