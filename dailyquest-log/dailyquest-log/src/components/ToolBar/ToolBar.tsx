@@ -1,186 +1,91 @@
 "use client";
 
-import { v4 as uuid } from "uuid";
+import dynamic from "next/dynamic";
+import { memo, useMemo } from "react";
+
 import ToolbarButton from "./ToolbarButton";
 import ToolbarSection from "./ToolbarSection";
-import ImageUploader from "./ImageUploader";
-import ColorPicker from "./ColorPicker";
-import StickerPicker from "./StickerPicker";
-import CodeSnippetPicker from "./CodeSnippetPicker";
-import FactGenerator from "./FactGenerator";
+
+import { TOOLBAR_SECTIONS } from "@/data/tools"; // catálogo de herramientas
+import { createBlock } from "@/lib/createBlock"; // factory centralizada
+
+// Mapeo de componentes especiales
+const COMPONENT_MAP: Record<string, any> = {
+  ImageUploader: dynamic(() => import("./ImageUploader")),
+  ColorPicker: dynamic(() => import("./ColorPicker")),
+  StickerPicker: dynamic(() => import("./StickerPicker")),
+  CodeSnippetPicker: dynamic(() => import("./CodeSnippetPicker")),
+  QuoteGenerator: dynamic(() => import("./QuoteGenerator")),
+};
 
 interface Props {
   onAddBlock: (block: any) => void;
+  compact?: boolean;
 }
 
-export default function Toolbar({ onAddBlock }: Props) {
-  // Helper: crear bloque base
- const createBlock = (data: Partial<any>) => {
-  return {
-    id: uuid(),
-
-    // Posición
-    x: data.x ?? 200,
-    y: data.y ?? 200,
-
-    // Tamaño
-    width: data.width ?? 220,
-    height: data.height ?? 80,
-
-    // Contenido
-    content: data.content ?? "",
-    type: data.type ?? "text",
-
-    // Estilos
-    color: data.color ?? "#000000",              // color de texto
-    backgroundColor: data.backgroundColor ?? "", // fondo
-    backgroundGradient: data.backgroundGradient ?? "",
-
-    fontSize: data.fontSize ?? 18,
-    fontFamily: data.fontFamily ?? "Inter",
-    fontWeight: data.fontWeight ?? "normal",
-    fontStyle: data.fontStyle ?? "normal",
-    textAlign: data.textAlign ?? "left",
-
-    // Extras
-    zIndex: data.zIndex ?? 1,
-    language: data.language ?? "txt",
-
-    ...data,
-  };
-};
-
+function ToolBar({ onAddBlock, compact = false }: Props) {
+  // Solo se calcula 1 vez
+  const sections = useMemo(() => TOOLBAR_SECTIONS, []);
 
   return (
-    <div
-      className="
-        fixed left-4 top-4 w-[260px]
-        bg-white/80 backdrop-blur-xl
-        border shadow-xl rounded-2xl
+    <aside
+      className={`
+        fixed left-4 top-4
+        ${compact ? "w-[72px]" : "w-[260px]"}
+        bg-white/90 backdrop-blur-xl
+        border border-neutral-200
+        shadow-2xl rounded-2xl
         p-4 space-y-6 z-50
-      "
+        transition-all duration-300
+      `}
     >
-      {/* ---------------------- TEXTO ---------------------- */}
-      <ToolbarSection title="Texto">
-        <ToolbarButton
-          label="Título"
-          icon={"🅣"}
-          onClick={() =>
-            onAddBlock(
-              createBlock({
-                type: "title",
-                content: "Nuevo Título",
-                fontSize: 32,
-                bold: true,
-                width: 300,
-                height: 60,
-              })
-            )
-          }
-        />
+      {sections.map((section) => {
+        const DynamicComponent = section.component
+          ? COMPONENT_MAP[section.component]
+          : null;
 
-        <ToolbarButton
-          icon={"📝"}
-          label="Texto"
-          onClick={() =>
-            onAddBlock(
-              createBlock({
-                type: "text",
-                content: "Escribe aquí...",
-                fontSize: 18,
-              })
-            )
-          }
-        />
-      </ToolbarSection>
+        return (
+          <ToolbarSection
+            key={section.title}
+            title={section.title}
+            dense={compact}
+            withDivider
+          >
+            {/* Botones simples */}
+            {section.tools?.map((tool: any) => (
+              <ToolbarButton
+                key={tool.label}
+                compact={compact}
+                label={tool.label}
+                icon={tool.icon}
+                onClick={() => {
+                  const block = tool.block
+                    ? tool.block(createBlock)
+                    : tool.action(createBlock);
 
-      {/* ---------------------- IMÁGENES ---------------------- */}
-      <ToolbarSection title="Imágenes">
-        <ImageUploader
-          onSelect={(url) =>
-            onAddBlock(
-              createBlock({
-                type: "image",
-                content: url,
-                width: 260,
-                height: 200,
-              })
-            )
-          }
-        />
-      </ToolbarSection>
+                  onAddBlock(block);
+                }}
+              />
+            ))}
 
-      {/* ---------------------- FORMAS / COLORES ---------------------- */}
-      <ToolbarSection title="Formas / Colores">
-        <ColorPicker
-          onSelect={(color) =>
-            onAddBlock(
-              createBlock({
-                type: "shape",
-                color,
-                content: "",
-                width: 200,
-                height: 150,
-              })
-            )
-          }
-        />
-      </ToolbarSection>
+            {/* Componentes interactivos */}
+            {DynamicComponent && (
+              <DynamicComponent
+                onSelect={(payload: any) => {
+                  const block =
+                    payload?.id !== undefined
+                      ? payload
+                      : createBlock(payload);
 
-      {/* ---------------------- STICKERS ---------------------- */}
-      <ToolbarSection title="Stickers">
-        <StickerPicker
-          onSelect={(emoji) =>
-            onAddBlock(
-              createBlock({
-                type: "text",
-                content: emoji,
-                fontSize: 40,
-                width: 80,
-                height: 80,
-              })
-            )
-          }
-        />
-      </ToolbarSection>
-
-      {/* ---------------------- CÓDIGO ---------------------- */}
-      <ToolbarSection title="Código">
-        <CodeSnippetPicker
-          onSelect={(code) =>
-            onAddBlock(
-              createBlock({
-                type: "code",
-                content: code,
-                language: "tsx",
-                width: 380,
-                height: 140,
-                fontFamily: "monospace",
-                fontSize: 14,
-                color: "#111827",
-              })
-            )
-          }
-        />
-      </ToolbarSection>
-
-      {/* ---------------------- CULTURA + APRENDIZAJE ---------------------- */}
-      <ToolbarSection title="Aprende algo nuevo">
-        <FactGenerator
-          onSelect={(fact) =>
-            onAddBlock(
-              createBlock({
-                type: "text",
-                content: fact,
-                fontSize: 18,
-                italic: true,
-                width: 280,
-                height: 100,
-              })
-            )
-          }
-        />
-      </ToolbarSection>
-    </div>
+                  onAddBlock(block);
+                }}
+              />
+            )}
+          </ToolbarSection>
+        );
+      })}
+    </aside>
   );
 }
+
+export default memo(ToolBar);

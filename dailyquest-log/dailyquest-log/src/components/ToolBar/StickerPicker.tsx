@@ -1,22 +1,13 @@
 "use client";
 
+import { memo, useCallback } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-const STICKERS = [
-  { id: "st1", symbol: "🔥" },
-  { id: "st2", symbol: "⭐" },
-  { id: "st3", symbol: "🌱" },
-  { id: "st4", symbol: "🧠" },
-  { id: "st5", symbol: "🐺" },
-  { id: "st6", symbol: "🌙" },
-  { id: "st7", symbol: "⚡" },
-  { id: "st8", symbol: "🍄" },
-];
+import { STICKERS } from "@/data/stickers";
 
 interface Props {
   onSelect: (block: {
     id: string;
-    type: "text";
+    type: "sticker";
     content: string;
     fontSize: number;
     x: number;
@@ -25,35 +16,40 @@ interface Props {
   }) => void;
 }
 
-export default function StickerPicker({ onSelect }: Props) {
-  function addSticker(emoji: string) {
-    onSelect({
-      id: uuidv4(),
-      type: "text",
-      content: emoji,
-      fontSize: 48, // tamaño por defecto
-      x: 120,
-      y: 120,
-      rotation: Math.random() * 15 - 7, // inclinación random aesthetic
-    });
-  }
+function StickerPicker({ onSelect }: Props) {
+  const handleAddSticker = useCallback(
+    (emoji: string) => {
+      onSelect({
+        id: uuidv4(),
+        type: "sticker",
+        content: emoji,
+        fontSize: 48,
+        x: 150 + Math.random() * 80 - 40,
+        y: 150 + Math.random() * 80 - 40,
+        rotation: Math.random() * 20 - 10,
+      });
+    },
+    [onSelect]
+  );
 
   return (
     <div className="grid grid-cols-4 gap-2">
       {STICKERS.map((s) => (
         <button
           key={s.id}
-          onClick={() => addSticker(s.symbol)}
+          onClick={() => handleAddSticker(s.symbol)}
           className="
-            text-2xl 
+            text-3xl 
             p-2 
             bg-white 
             hover:bg-neutral-100
             rounded-xl 
             shadow-sm 
             hover:scale-110 
+            active:scale-95
             transition
           "
+          aria-label={`Insertar sticker ${s.symbol}`}
         >
           {s.symbol}
         </button>
@@ -61,3 +57,5 @@ export default function StickerPicker({ onSelect }: Props) {
     </div>
   );
 }
+
+export default memo(StickerPicker);

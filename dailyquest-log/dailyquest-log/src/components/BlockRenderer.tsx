@@ -18,7 +18,20 @@ export default function BlockRenderer({ block }: { block: DayBlock }) {
       return <ImageBlock content={block.content} />;
 
     case "quote":
-      return <QuoteBlock content={block.content} />;
+  return (
+    <div
+      style={{
+        fontSize: block.fontSize ?? 18,
+        fontStyle: block.fontStyle ?? "italic",
+        color: block.color ?? "#334155",
+        background: block.backgroundColor ?? "#f8fafc",
+        padding: block.padding ?? 16,
+        borderLeft: block.borderLeft ?? "4px solid #94a3b8",
+      }}
+    >
+      {block.content}
+    </div>
+  );
 
     case "separator":
       return <SeparatorBlock />;
