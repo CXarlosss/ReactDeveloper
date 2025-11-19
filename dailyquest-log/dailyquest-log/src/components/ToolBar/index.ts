@@ -7,4 +7,4 @@ export { default as ImageUploader } from "./ImageUploader";
 export { default as ColorPicker } from "./ColorPicker";
 export { default as StickerPicker } from "./StickerPicker";
 export { default as CodeSnippetPicker } from "./CodeSnippetPicker";
-export { default as FactGenerator } from "./FactGenerator";
+export { default as FactGenerator } from "./QuoteGenerator";
