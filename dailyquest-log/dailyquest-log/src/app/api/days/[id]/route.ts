@@ -6,7 +6,7 @@ export async function GET(
   context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
-  const day = getDay(Number(id));
+  const day = getDay(id);
   return NextResponse.json(day);
 }
 
@@ -16,7 +16,7 @@ export async function PUT(
 ) {
   const { id } = await context.params;
   const patch = await req.json();
-  updateDay(Number(id), patch);
+  updateDay(id, patch);
   return NextResponse.json({ updated: true });
 }
 
@@ -25,6 +25,6 @@ export async function DELETE(
   context: { params: Promise<{ id: string }> }
 ) {
   const { id } = await context.params;
-  deleteDay(Number(id));
+  deleteDay(id);
   return NextResponse.json({ deleted: true });
 }

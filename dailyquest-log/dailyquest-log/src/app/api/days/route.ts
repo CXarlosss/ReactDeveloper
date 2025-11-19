@@ -3,16 +3,16 @@ import { getAllDays, createDay } from "../../../lib/utils";
 import { Day } from "@/types/Day";
 
 export async function GET() {
-  return NextResponse.json(getAllDays());
+  const all = getAllDays();
+  return NextResponse.json(all ?? []); // <-- extra seguro
 }
 
 export async function POST(req: Request) {
   const body = await req.json();
 
   const newDay: Day = {
-    id: Date.now(),
-    images: [],
-    ...body
+    id: crypto.randomUUID(),
+    ...body,
   };
 
   createDay(newDay);

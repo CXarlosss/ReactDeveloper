@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
   useLayoutEffect,
+  useId,
   memo,
 } from "react";
 import clsx from "clsx";
@@ -16,8 +17,8 @@ interface Props {
   collapsible?: boolean;
   defaultOpen?: boolean;
   dense?: boolean;
-  description?: string;    // opcional
-  withDivider?: boolean;   // opcional
+  description?: string;
+  withDivider?: boolean;
   className?: string;
 }
 
@@ -31,77 +32,92 @@ function ToolbarSection({
   withDivider = false,
   className,
 }: Props) {
-  const [open, setOpen] = useState(defaultOpen);
+  const uniqueId = useId();
   const bodyRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number | undefined>(
-    defaultOpen ? undefined : 0
+
+  const [open, setOpen] = useState(defaultOpen);
+  const [height, setHeight] = useState<number | "auto">(
+    defaultOpen ? "auto" : 0
   );
 
-  // Actualizar altura real del contenido
+  // animación: recalcular altura cuando cambia "open"
   useLayoutEffect(() => {
-    if (!bodyRef.current) return;
+    const el = bodyRef.current;
+    if (!el) return;
 
     if (open) {
-      const contentHeight = bodyRef.current.scrollHeight;
-      setHeight(contentHeight);
+      const fullHeight = el.scrollHeight;
 
-      // después de animar, fijar auto para que crezca dinámicamente
-      const timer = setTimeout(() => setHeight(undefined), 200);
+      // primero: set real height
+      setHeight(fullHeight);
+
+      // después de la animación: set auto
+      const timer = setTimeout(() => setHeight("auto"), 180);
       return () => clearTimeout(timer);
-    } else {
-      setHeight(bodyRef.current.scrollHeight);
-      requestAnimationFrame(() => setHeight(0));
     }
+
+    // cerrar
+    const current = el.scrollHeight;
+    setHeight(current);
+    requestAnimationFrame(() => {
+      setHeight(0);
+    });
   }, [open]);
 
   return (
-    <div className={clsx("mb-3", className)}>
-      {/* HEADER */}
+    <div className={clsx("mb-4", className)}>
+      {/* === HEADER === */}
       <button
         role="button"
         aria-expanded={open}
-        aria-controls={`section-body-${title}`}
-        onClick={() => collapsible && setOpen(!open)}
+        aria-controls={`section-body-${uniqueId}`}
+        onClick={() => collapsible && setOpen((v) => !v)}
         className={clsx(
           "flex items-center justify-between w-full",
           "text-xs font-semibold text-neutral-500 select-none",
-          "uppercase tracking-wide transition",
+          "uppercase tracking-wide transition-colors",
           dense ? "px-1 py-1" : "px-2 py-1",
           "hover:text-neutral-700"
         )}
       >
-        <div className="flex flex-col text-left">
+        <div className="flex flex-col text-left leading-tight">
           <span>{title}</span>
           {description && (
-            <span className="text-[10px] text-neutral-400 normal-case">
+            <span className="text-[10px] text-neutral-400 normal-case mt-[1px]">
               {description}
             </span>
           )}
         </div>
 
         {collapsible && (
-          <span className="transition-transform">
-            {open ? (
-              <ChevronDown size={14} />
-            ) : (
-              <ChevronRight size={14} />
+          <span
+            className={clsx(
+              "transition-transform duration-200",
+              open ? "rotate-0" : "rotate-90"
             )}
+          >
+            <ChevronDown size={14} />
           </span>
         )}
       </button>
 
-      {/* BODY */}
+      {/* === BODY === */}
       <div
-        id={`section-body-${title}`}
+        id={`section-body-${uniqueId}`}
         ref={bodyRef}
         style={{
-          height: height,
+          height: height === "auto" ? "auto" : `${height}px`,
           overflow: "hidden",
-          transition: "height 200ms ease, opacity 150ms ease",
+          transition: "height 180ms ease, opacity 140ms ease",
         }}
         className={clsx(open ? "opacity-100" : "opacity-0")}
       >
-        <div className={clsx(dense ? "space-y-1" : "space-y-2", "px-1 pt-2")}>
+        <div
+          className={clsx(
+            dense ? "space-y-1" : "space-y-2",
+            "px-1 pt-2 pb-1"
+          )}
+        >
           {children}
         </div>
       </div>

@@ -24,9 +24,9 @@ function StickerPicker({ onSelect }: Props) {
         type: "sticker",
         content: emoji,
         fontSize: 48,
-        x: 150 + Math.random() * 80 - 40,
-        y: 150 + Math.random() * 80 - 40,
-        rotation: Math.random() * 20 - 10,
+        x: 200 + Math.random() * 60 - 30,
+        y: 200 + Math.random() * 60 - 30,
+        rotation: Math.random() * 24 - 12,
       });
     },
     [onSelect]
@@ -38,18 +38,20 @@ function StickerPicker({ onSelect }: Props) {
         <button
           key={s.id}
           onClick={() => handleAddSticker(s.symbol)}
+          aria-label={`Insertar sticker ${s.symbol}`}
           className="
-            text-3xl 
-            p-2 
-            bg-white 
+            text-3xl
+            p-2
+            bg-white
+            border
+            border-neutral-200
+            rounded-xl
+            shadow-sm
             hover:bg-neutral-100
-            rounded-xl 
-            shadow-sm 
-            hover:scale-110 
+            hover:scale-110
             active:scale-95
             transition
           "
-          aria-label={`Insertar sticker ${s.symbol}`}
         >
           {s.symbol}
         </button>

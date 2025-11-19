@@ -1,22 +1,33 @@
+export type BlockType =
+  | "title"
+  | "text"
+  | "image"
+  | "shape"
+  | "code"
+  | "quote"
+  | "separator"
+    | "sticker";
+
+
 export interface DayBlock {
   id: string;
+  type: BlockType;
 
-  type: "title" | "text" | "image" | "shape" | "code";
+  // contenido genérico (texto, url imagen, código...)
+  content: string;
 
-  content: string; // texto o URL imagen
-
-  // Posición y tamaño
+  // posición y tamaño
   x: number;
   y: number;
   width?: number;
   height?: number;
 
-  // Estilos generales
+  // estilos globales
   rotation?: number;
   opacity?: number;
   zIndex?: number;
 
-  // Estilos de texto
+  // estilos de texto
   fontSize?: number;
   fontFamily?: string;
   fontWeight?: "normal" | "bold";
@@ -24,21 +35,32 @@ export interface DayBlock {
   textDecoration?: "none" | "underline" | "line-through";
   textAlign?: "left" | "center" | "right";
   color?: string;
+  lineHeight?: number;
+  padding?: number;
 
-  // Estilos de fondo
+  // estilos de fondo
   backgroundColor?: string;
-  backgroundGradient?: string; // linear-gradient(...)
+  backgroundGradient?: string;
   borderRadius?: number;
   borderColor?: string;
   borderWidth?: number;
-  boxShadow?: string;
+  boxShadow?: string; // shadow PRO
+letterSpacing?: number;
 
-  // Para shapes
+
+  // para shapes
   shapeType?: "rectangle" | "circle" | "rounded" | "note";
 
-  // Para imágenes
+  // para imágenes
   objectFit?: "cover" | "contain" | "fill";
 
-  // Para código
+  // para código
   language?: string;
+
+  // para QuoteBlock
+  borderLeft?: string;
+
+  // para SeparatorBlock
+  marginTop?: number;
+  marginBottom?: number;
 }

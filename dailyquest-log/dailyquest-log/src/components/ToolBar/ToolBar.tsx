@@ -6,16 +6,16 @@ import { memo, useMemo } from "react";
 import ToolbarButton from "./ToolbarButton";
 import ToolbarSection from "./ToolbarSection";
 
-import { TOOLBAR_SECTIONS } from "@/data/tools"; // catálogo de herramientas
-import { createBlock } from "@/lib/createBlock"; // factory centralizada
+import { TOOLBAR_SECTIONS } from "@/data/tools";
+import { createBlock } from "@/lib/createBlock";
 
-// Mapeo de componentes especiales
-const COMPONENT_MAP: Record<string, any> = {
-  ImageUploader: dynamic(() => import("./ImageUploader")),
-  ColorPicker: dynamic(() => import("./ColorPicker")),
-  StickerPicker: dynamic(() => import("./StickerPicker")),
-  CodeSnippetPicker: dynamic(() => import("./CodeSnippetPicker")),
-  QuoteGenerator: dynamic(() => import("./QuoteGenerator")),
+// El mapa de componentes DEBE usar la ruta real
+const COMPONENT_MAP: Record<string, React.ComponentType<any>> = {
+  ImageUploader: dynamic(() => import("./tools/ImageUploader")),
+  ColorPicker: dynamic(() => import("./tools/ColorPicker")),
+  StickerPicker: dynamic(() => import("./tools/StickerPicker")),
+  CodeSnippetPicker: dynamic(() => import("./tools/CodeSnippetPicker")),
+  QuoteGenerator: dynamic(() => import("./tools/QuoteGenerator")),
 };
 
 interface Props {
@@ -24,7 +24,6 @@ interface Props {
 }
 
 function ToolBar({ onAddBlock, compact = false }: Props) {
-  // Solo se calcula 1 vez
   const sections = useMemo(() => TOOLBAR_SECTIONS, []);
 
   return (
@@ -52,7 +51,7 @@ function ToolBar({ onAddBlock, compact = false }: Props) {
             withDivider
           >
             {/* Botones simples */}
-            {section.tools?.map((tool: any) => (
+            {section.tools?.map((tool) => (
               <ToolbarButton
                 key={tool.label}
                 compact={compact}
@@ -61,14 +60,16 @@ function ToolBar({ onAddBlock, compact = false }: Props) {
                 onClick={() => {
                   const block = tool.block
                     ? tool.block(createBlock)
-                    : tool.action(createBlock);
+                    : tool.action?.(createBlock);
+
+                  if (!block) return;
 
                   onAddBlock(block);
                 }}
               />
             ))}
 
-            {/* Componentes interactivos */}
+            {/* Componentes dinámicos que generan bloques */}
             {DynamicComponent && (
               <DynamicComponent
                 onSelect={(payload: any) => {

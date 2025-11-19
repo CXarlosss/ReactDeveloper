@@ -3,15 +3,23 @@
 import { useEffect, useState } from "react";
 import { DayBlock } from "@/types/DayBlock";
 import { Toolbar } from "../../components/ToolBar";
-import MuralCanvas from "../../components/MuralCanva";
-import { v4 as uuid } from "uuid";
+import Canvas from "@/components/editor/Canvas";
+import InspectorPanel from "@/components/inspector/InspectorPanel";
 import { useRouter } from "next/navigation";
 
 export default function NewDayPage() {
   const router = useRouter();
 
-  // Estado global de bloques
   const [blocks, setBlocks] = useState<DayBlock[]>([]);
+
+  // 👉 selección activa
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // 👉 inspector
+  const [inspectorBlock, setInspectorBlock] = useState<DayBlock | null>(null);
+
+  // 👉 POS del inspector (no se usa si está fijo)
+  const [inspectorPos, setInspectorPos] = useState({ x: 100, y: 100 });
 
   // Cargar desde localStorage
   useEffect(() => {
@@ -30,17 +38,47 @@ export default function NewDayPage() {
     localStorage.setItem("new-day", JSON.stringify(blocks));
   }, [blocks]);
 
-  // Añadir nuevos bloques
+  // 👉 añadir bloque centrado
   function addBlock(block: DayBlock) {
-    setBlocks((prev) => [...prev, block]);
+    const canvas = document.querySelector(".canvas-area");
+
+    if (!canvas) return;
+
+    const viewW = canvas.clientWidth;
+    const viewH = canvas.clientHeight;
+    const scrollX = canvas.scrollLeft;
+    const scrollY = canvas.scrollTop;
+
+    const centerX = scrollX + viewW / 2;
+    const centerY = scrollY + viewH / 2;
+
+    const centered = {
+      ...block,
+      x: centerX - 100,
+      y: centerY - 50,
+    };
+
+    setBlocks((prev) => [...prev, centered]);
+    setSelectedId(centered.id);
   }
 
-  // Actualizar bloque existente
+  // 👉 actualizar bloque
   function updateBlock(updated: DayBlock) {
     setBlocks((prev) => prev.map((b) => (b.id === updated.id ? updated : b)));
+
+    if (inspectorBlock?.id === updated.id) {
+      setInspectorBlock(updated);
+    }
   }
 
-  // Guardar definitivamente el día
+  // 👉 abrir inspector
+  function openInspector(block: DayBlock, x: number, y: number) {
+    setInspectorBlock(block);
+    setSelectedId(block.id);
+    setInspectorPos({ x, y });
+  }
+
+  // GUARDAR
   async function saveDay() {
     const res = await fetch("/api/days", {
       method: "POST",
@@ -58,14 +96,30 @@ export default function NewDayPage() {
   }
 
   return (
-    <div className="w-full h-screen overflow-hidden relative">
+    <div className="w-full h-screen overflow-hidden flex bg-neutral-100">
+
       {/* TOOLBAR */}
-      <Toolbar onAddBlock={addBlock} />
+      <div className="w-[260px] border-r bg-white shadow-md z-50">
+        <Toolbar onAddBlock={addBlock} />
+      </div>
 
       {/* CANVAS */}
-      <div className="overflow-scroll w-full h-full">
-        <MuralCanvas blocks={blocks} onChange={updateBlock} />
+      <div className="canvas-area flex-1 relative overflow-scroll bg-neutral-200">
+        <Canvas
+          blocks={blocks}
+          onChange={updateBlock}
+          selectedId={selectedId}
+          setSelectedId={setSelectedId}
+          onOpenInspector={openInspector}
+        />
       </div>
+
+      {/* PANEL LATERAL DERECHO fijo */}
+      {inspectorBlock && (
+        <div className="w-[320px] border-l bg-white shadow-xl overflow-y-auto">
+          <InspectorPanel block={inspectorBlock} onUpdate={updateBlock} />
+        </div>
+      )}
 
       {/* BOTÓN GUARDAR */}
       <button

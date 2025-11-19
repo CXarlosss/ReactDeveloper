@@ -1,14 +1,16 @@
+// src/components/ImageGallery.tsx
+
 export default function ImageGallery({ images }: { images: string[] }) {
-  if (!images || images.length === 0)
-    return <p className="text-gray-400">No hay imágenes.</p>;
+  if (!images || images.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 mt-2">
-      {images.map((img, i) => (
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+      {images.map((src, i) => (
         <img
           key={i}
-          src={img}
-          className="w-full h-32 object-cover rounded-xl shadow-sm"
+          src={src}
+          alt={`Imagen ${i + 1}`}
+          className="rounded-lg shadow-sm object-cover w-full h-40"
         />
       ))}
     </div>

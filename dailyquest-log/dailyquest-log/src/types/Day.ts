@@ -1,7 +1,7 @@
 import { DayBlock } from "./DayBlock";
 
 export interface Day {
-  id: number;
+  id: string;
   date: string;
   blocks: DayBlock[];
 }

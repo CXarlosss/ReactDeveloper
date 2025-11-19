@@ -6,6 +6,7 @@ import { memo, useCallback } from "react";
 export interface CodeSnippet {
   lang: string;
   code: string;
+  label?: string; // visible name (opcional)
 }
 
 export interface CodeBlock {
@@ -20,17 +21,21 @@ interface Props {
   onSelect: (block: CodeBlock) => void;
 }
 
+/** Snippets por defecto */
 const DEFAULT_SNIPPETS: CodeSnippet[] = [
   {
     lang: "tsx",
+    label: "Función TS",
     code: "function sum(a: number, b: number) { return a + b; }",
   },
   {
     lang: "react",
+    label: "useState",
     code: "const [count, setCount] = useState(0);",
   },
   {
     lang: "next",
+    label: "Componente Next",
     code: "export default function Page() { return <h1>Hello</h1>; }",
   },
 ];
@@ -54,13 +59,25 @@ function CodeSnippetPicker({ snippets = DEFAULT_SNIPPETS, onSelect }: Props) {
         <button
           key={snip.code}
           onClick={() => handleSelect(snip)}
-          className="w-full text-left bg-neutral-100 hover:bg-neutral-200 active:bg-neutral-300 p-2 rounded border border-neutral-200 transition-colors"
-          aria-label={`Insert ${snip.lang} snippet`}
+          className="
+            w-full text-left p-3 rounded-lg border
+            bg-white hover:bg-neutral-100 active:bg-neutral-200
+            border-neutral-200 transition-colors select-none
+          "
         >
-          <div className="text-[10px] font-medium text-neutral-500 mb-1 uppercase tracking-wide">
-            {snip.lang}
+          {/* Title */}
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-[11px] font-semibold text-neutral-600 uppercase tracking-wide">
+              {snip.label ?? snip.lang}
+            </span>
+
+            <span className="text-[10px] px-2 py-[1px] rounded bg-neutral-200 text-neutral-600">
+              {snip.lang}
+            </span>
           </div>
-          <pre className="text-xs overflow-hidden max-h-[60px] whitespace-pre-wrap">
+
+          {/* Code preview */}
+          <pre className="text-xs max-h-[70px] overflow-hidden whitespace-pre-wrap text-neutral-700">
             {snip.code}
           </pre>
         </button>
